@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Navbar from "../components/Navbar";
 import { MdOutlineMail } from "react-icons/md";
 import { CiLock } from "react-icons/ci";
 import { Link } from "react-router-dom";
@@ -13,21 +12,18 @@ function SignIn() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmitted(true);
-    console.log(email);
-  };
 
-  const handleChange = (e) => {
-    setEmail(e.target.value);
-    if (isSubmitted) setIsSubmitted(false);
+    console.log(email);
   };
 
   const isEmailError = isSubmitted && !email;
   const isPasswordError = isSubmitted && !password;
   return (
-    <div className=" flex-1 h-[80vh] overflow-hidden flex items-center justify-center ">
-      <div className="w-[340px] h-[394px] bg-[#fff] py-[24px] px-5 rounded-[8px]">
+    <div className="h-[80vh] flex items-center justify-center">
+      <div className=" w-[340px] h-[394px] bg-[#fff] py-[24px] px-5 rounded-[8px]">
         <form onSubmit={handleSubmit}>
           <h1 className="text-[#00263E] text-3xl font-semibold ">Sign In</h1>
+
           <p className="text-[#00263E] text-[14px] mt-[20px]">Email</p>
           <div
             className={`flex items-center h-[49px] border ${
@@ -41,7 +37,7 @@ function SignIn() {
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
-              className=" flex-1 outline-none px-2"
+              className=" flex-1 outline-none px-2 bg-transparent"
             />
           </div>
           {isEmailError && (
@@ -49,7 +45,7 @@ function SignIn() {
               <span className="w-[12px] h-[12px] text-[10px] rounded-[50%] flex items-center justify-center text-[#fff] bg-red-500">
                 !
               </span>
-              Plese enter password
+              Enter an email address
             </p>
           )}
           <p className="text-[#00263E] text-[14px] mt-[5px]">Password</p>
@@ -65,7 +61,7 @@ function SignIn() {
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
-              className=" flex-1 outline-none px-2"
+              className=" flex-1 outline-none px-2 bg-transparent"
             />
             <Link
               className="text-[#72849A80] text-[12px]"
@@ -82,7 +78,7 @@ function SignIn() {
               Plese enter password
             </p>
           )}
-          <Link className=" ">
+          <Link to="/ForgotPassword">
             <p className=" text-[#00263E] text-center mt-[10px] underline">
               Forgot your Password?
             </p>

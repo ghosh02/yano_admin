@@ -12,11 +12,13 @@ import Layout from "./layout/Layout.jsx";
 import SignIn from "./SignIn/SignIn.jsx";
 import ForgotPassword from "./SignIn/ForgotPassword.jsx";
 import ResetPasswordLink from "./SignIn/ResetPasswordLink.jsx";
+import User from "./pages/User.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />}>
-      <Route path="" element={<SignIn />} />
+      <Route path="" element={<User />} />
+      {/* <Route path="" element={<SignIn />} /> */}
       <Route path="/ForgotPassword" element={<ForgotPassword />} />
       <Route path="/ResetPasswordLink" element={<ResetPasswordLink />} />
     </Route>

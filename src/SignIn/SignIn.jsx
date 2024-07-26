@@ -1,18 +1,22 @@
 import React, { useState } from "react";
 import { MdOutlineMail } from "react-icons/md";
 import { CiLock } from "react-icons/ci";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [show, setShow] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmitted(true);
-
+    // navigate("/user");
+    if (isSubmitted) {
+      navigate("/user");
+    }
     console.log(email);
   };
 

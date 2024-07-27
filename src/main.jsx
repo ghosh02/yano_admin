@@ -18,11 +18,13 @@ import ChangePassword from "./settings/ChangePassword.jsx";
 import AdminList from "./settings/AdminList.jsx";
 import CreateAdmin from "./settings/CreateAdmin.jsx";
 import CreateUser from "./user/CreateUser.jsx";
+import Overview from "./pages/Overview.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />}>
       <Route path="" element={<SignIn />} />
+      <Route path="/overview" element={<Overview />} />
       <Route path="/user" element={<User />} />
       <Route path="/settings" element={<Settings />} />
       <Route path="/changePassword" element={<ChangePassword />} />

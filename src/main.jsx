@@ -19,6 +19,7 @@ import AdminList from "./settings/AdminList.jsx";
 import CreateAdmin from "./settings/CreateAdmin.jsx";
 import CreateUser from "./user/CreateUser.jsx";
 import Overview from "./pages/Overview.jsx";
+import CallCenter from "./pages/CallCenter.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -26,6 +27,7 @@ const router = createBrowserRouter(
       <Route path="" element={<SignIn />} />
       <Route path="/overview" element={<Overview />} />
       <Route path="/user" element={<User />} />
+      <Route path="/callCenter" element={<CallCenter />} />
       <Route path="/settings" element={<Settings />} />
       <Route path="/changePassword" element={<ChangePassword />} />
       <Route path="/adminList" element={<AdminList />} />

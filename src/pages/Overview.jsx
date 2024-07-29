@@ -1,8 +1,12 @@
+import PieChartComponent from "@/components/PieChartComponent";
 import Sidebar from "@/components/Sidebar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import React, { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { FaArrowRightLong } from "react-icons/fa6";
 import {
+  BarChart,
+  Bar,
   LineChart,
   Line,
   XAxis,
@@ -10,7 +14,86 @@ import {
   Tooltip,
   CartesianGrid,
   ResponsiveContainer,
+  Legend,
+  Cell,
+  PieChart,
+  Pie,
 } from "recharts";
+import {
+  TableHead,
+  TableRow,
+  TableHeader,
+  TableCell,
+  TableBody,
+  Table,
+} from "@/components/ui/table";
+
+const userData = [
+  {
+    userID: 1124,
+    fullName: "Ronald Richards",
+    country: "Mexico",
+    type: "Patient",
+    lastTimeActive: "June 10, 2021",
+    sessions: 158,
+  },
+  {
+    userID: 3524,
+    fullName: "Albert Flores",
+    country: "Mexico",
+    type: "Patient",
+    lastTimeActive: "June 10, 2021",
+    sessions: 154,
+  },
+  {
+    userID: 7571,
+    fullName: "Wade Warren",
+    country: "Mexico",
+    type: "Patient",
+    lastTimeActive: "June 10, 2021",
+    sessions: 152,
+  },
+  {
+    userID: 124,
+    fullName: "Brooklyn Simmons",
+    country: "Mexico",
+    type: "Patient",
+    lastTimeActive: "June 10, 2021",
+    sessions: 149,
+  },
+  {
+    userID: 235,
+    fullName: "Devon Lane",
+    country: "Mexico",
+    type: "Healthcare provider",
+    lastTimeActive: "June 10, 2021",
+    sessions: 145,
+  },
+  {
+    userID: 256,
+    fullName: "Marvin McKinney",
+    country: "Mexico",
+    type: "Healthcare provider",
+    lastTimeActive: "June 10, 2021",
+    sessions: 140,
+  },
+  {
+    userID: 45,
+    fullName: "Savannah Nguyen",
+    country: "Mexico",
+    type: "Healthcare provider",
+    lastTimeActive: "June 10, 2021",
+    sessions: 126,
+  },
+  {
+    userID: 1001,
+    fullName: "Bessie Cooper",
+    country: "Mexico",
+    type: "Healthcare provider",
+    lastTimeActive: "June 10, 2021",
+    sessions: 115,
+  },
+];
 
 const initialData = [
   {
@@ -22,6 +105,8 @@ const initialData = [
     bp: 100,
     mood: 5,
     country: "USA",
+    age: 22,
+    sex: "Female",
   },
   {
     date: "24",
@@ -32,6 +117,8 @@ const initialData = [
     bp: 110,
     mood: 6,
     country: "USA",
+    age: 28,
+    sex: "Male",
   },
   {
     date: "25",
@@ -42,6 +129,8 @@ const initialData = [
     bp: 115,
     mood: 7,
     country: "USA",
+    age: 35,
+    sex: "Male",
   },
   {
     date: "26",
@@ -52,6 +141,8 @@ const initialData = [
     bp: 105,
     mood: 5,
     country: "USA",
+    age: 45,
+    sex: "Male",
   },
   {
     date: "27",
@@ -62,6 +153,8 @@ const initialData = [
     bp: 102,
     mood: 4,
     country: "USA",
+    age: 55,
+    sex: "Female",
   },
   {
     date: "28",
@@ -72,6 +165,8 @@ const initialData = [
     bp: 108,
     mood: 6,
     country: "USA",
+    age: 65,
+    sex: "Female",
   },
   {
     date: "29",
@@ -82,6 +177,8 @@ const initialData = [
     bp: 104,
     mood: 5,
     country: "USA",
+    age: 75,
+    sex: "Female",
   },
   {
     date: "23",
@@ -92,6 +189,8 @@ const initialData = [
     bp: 112,
     mood: 8,
     country: "Canada",
+    age: 23,
+    sex: "Male",
   },
   {
     date: "24",
@@ -102,6 +201,8 @@ const initialData = [
     bp: 106,
     mood: 5,
     country: "Canada",
+    age: 33,
+    sex: "Female",
   },
   {
     date: "25",
@@ -112,6 +213,8 @@ const initialData = [
     bp: 109,
     mood: 6,
     country: "Canada",
+    age: 43,
+    sex: "Male",
   },
   {
     date: "26",
@@ -122,6 +225,8 @@ const initialData = [
     bp: 107,
     mood: 5,
     country: "Canada",
+    age: 53,
+    sex: "Female",
   },
   {
     date: "27",
@@ -132,6 +237,8 @@ const initialData = [
     bp: 111,
     mood: 7,
     country: "Canada",
+    age: 63,
+    sex: "Female",
   },
   {
     date: "28",
@@ -142,6 +249,8 @@ const initialData = [
     bp: 104,
     mood: 4,
     country: "Canada",
+    age: 73,
+    sex: "Female",
   },
   {
     date: "29",
@@ -152,6 +261,8 @@ const initialData = [
     bp: 110,
     mood: 6,
     country: "Canada",
+    age: 83,
+    sex: "Female",
   },
 ];
 
@@ -193,18 +304,18 @@ const CustomTooltip = ({ active, payload, label }) => {
 
 const LineGraph = ({ data, valueKey }) => {
   return (
-    <div className="w-full h-64">
+    <div className="w-full h-[336px] ">
       <ResponsiveContainer>
         <LineChart data={data}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="date" />
-          <YAxis domain={domainMapping[valueKey]} />
+          <YAxis domain={domainMapping[valueKey]} orientation="right" />
           <Tooltip content={<CustomTooltip />} />
           <Line
             type="monotone"
             dataKey={valueKey}
-            stroke="#82ca9d"
-            strokeWidth={2}
+            stroke="#76BC21"
+            strokeWidth={3}
           />
         </LineChart>
       </ResponsiveContainer>
@@ -268,10 +379,105 @@ const Overview = () => {
     setFilteredData(filtered.slice(-days));
   }, [country, days]);
 
+  const [selectedCountry, setSelectedCountry] = useState("All");
+  const [selectedMetric, setSelectedMetric] = useState("bloodGlucose");
+
+  const handleCountryChange = (e) => {
+    setSelectedCountry(e.target.value);
+  };
+
+  const handleMetricChange = (e) => {
+    setSelectedMetric(e.target.value);
+  };
+
+  const filteredBarData =
+    selectedCountry === "All"
+      ? initialData
+      : initialData.filter((item) => item.country === selectedCountry);
+
+  const ageRanges = [
+    "18-24",
+    "25-34",
+    "35-44",
+    "45-54",
+    "55-64",
+    "65-74",
+    "75+",
+  ];
+  const ageRangeData = ageRanges.map((range) => {
+    const [min, max] = range.includes("+")
+      ? [75, 100]
+      : range.split("-").map((age) => parseInt(age));
+    const groupData = filteredBarData.filter(
+      (item) => item.age >= min && item.age <= max
+    );
+    const avgMetric =
+      groupData.reduce((sum, item) => sum + item[selectedMetric], 0) /
+        groupData.length || 0;
+    return { ageRange: range, avgMetric };
+  });
+  const maxAvgMetric = Math.max(...ageRangeData.map((item) => item.avgMetric));
+
+  //pi chart section
+  const COLORS = ["#FF0000", "#0000FF"]; // Red for Female, Blue for Male
+  const [piedata, setPieData] = useState([]);
+  const [pieChartdays, setPieChartdays] = useState(7);
+  useEffect(() => {
+    let filtered = initialData;
+    setPieData(filtered.slice(-days));
+  }, [pieChartdays]);
+
+  const aggregateData = (data) => {
+    const counts = data.reduce(
+      (acc, item) => {
+        acc[item.sex]++;
+        return acc;
+      },
+      { Male: 0, Female: 0 }
+    );
+    return [
+      { name: "Female", value: counts.Female },
+      { name: "Male", value: counts.Male },
+    ];
+  };
+
+  const renderCustomizedLabel = ({
+    cx,
+    cy,
+    midAngle,
+    innerRadius,
+    outerRadius,
+    percent,
+    index,
+  }) => {
+    const RADIAN = Math.PI / 180;
+    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+    return (
+      <text
+        x={x}
+        y={y}
+        fill="white"
+        textAnchor={x > cx ? "start" : "end"}
+        dominantBaseline="central"
+      >
+        {`${(percent * 100).toFixed(0)}%`}
+      </text>
+    );
+  };
+
+  //   const filteredPieData = filterDataByDays(initialData, days);
+  const chartData = aggregateData(piedata);
+  const handleDaysChange = (event) => {
+    setPieChartdays(parseInt(event.target.value));
+    console.log(pieChartdays);
+  };
   return (
     <div className="flex">
       <Sidebar />
-      <div className="flex-1 p-[32px]">
+      <div className="flex-1 p-[32px]   ">
         <h1 className="text-[24px] text-[#00263E] font-[700] pl-[10px] pb-[24px]">
           Overview
         </h1>
@@ -339,66 +545,197 @@ const Overview = () => {
             </CardContent>
           </Card>
         </div>
-        <div className="grid gap-2 grid-cols-6 mt-[24px] px-[16px]">
-          {data.map((item, index) => (
-            <NavLink
-              key={item.name}
-              className={`bg-[#eee] p-[16px] hover:bg-[#fff] transition-all border-t-4 rounded-[8px] h-[126px] ${
-                activeIndex === index
-                  ? "border-green-400 bg-[#fff]"
-                  : "border-none "
-              }`}
-              onClick={() => handleClick(index, item.parName)}
-            >
-              <p className="text-[#00263E]">{item.name}</p>
-              <p
-                className={`text-[#00263E]  ${
-                  activeIndex === index ? "font-[700]" : " "
+        <div className="bg-[#fff] rounded-[8px]">
+          <div className="grid  grid-cols-6 mt-[24px] px-[16px]">
+            {data.map((item, index) => (
+              <Link
+                key={item.name}
+                className={`bg-[#EEEEEE] p-[16px] hover:bg-[#FAFAFA] transition-all border-t-4  h-[126px] ${
+                  activeIndex === index
+                    ? "border-[#76BC21] bg-[#fff]"
+                    : "border-none "
                 }`}
+                onClick={() => handleClick(index, item.parName)}
               >
-                Avg
-              </p>
-              <p
-                className={`text-[#00263E]  ${
-                  activeIndex === index ? "font-[700]" : " "
-                }`}
+                <p className="text-[#00263E]">{item.name}</p>
+                <p
+                  className={`text-[#00263E]  ${
+                    activeIndex === index ? "font-[700]" : " "
+                  }`}
+                >
+                  Avg
+                </p>
+                <p
+                  className={`text-[#00263E]  ${
+                    activeIndex === index ? "font-[700]" : " "
+                  }`}
+                >
+                  {item.value}
+                </p>
+                <p>{item.rate}%</p>
+              </Link>
+            ))}
+          </div>
+          <div className="mt-[16px] px-[16px]">
+            <LineGraph data={filteredData} valueKey={valueKey} />
+          </div>
+          <div className="mb-4 flex gap-4 p-[16px]">
+            <div>
+              <select
+                className=" py-2 px-3 border rounded bg-[#FAFAFA] outline-none"
+                value={country}
+                onChange={(e) => setCountry(e.target.value)}
               >
-                {item.value}
-              </p>
-              <p>{item.rate}%</p>
-            </NavLink>
-          ))}
+                <option value="All Countries">All Countries</option>
+                <option value="USA">USA</option>
+                <option value="Canada">Canada</option>
+                {/* Add more countries as needed */}
+              </select>
+            </div>
+            <div>
+              <select
+                className="p-2 border rounded bg-[#FAFAFA] outline-none"
+                value={days}
+                onChange={(e) => setDays(Number(e.target.value))}
+              >
+                <option value={7}>Last 7 days</option>
+                <option value={5}>Last 5 days</option>
+                <option value={3}>Last 3 days</option>
+                <option value={30}>Last Month</option>
+                {/* Add more options as needed */}
+              </select>
+            </div>
+          </div>
         </div>
-        <div className="mt-[16px] px-[16px]">
-          <LineGraph data={filteredData} valueKey={valueKey} />
-        </div>
+        <div className="flex gap-[20px] justify-between">
+          <div className="bg-[#fff] rounded-[8px] p-[16px]">
+            <BarChart width={500} height={250} data={ageRangeData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="ageRange" />
+              <YAxis orientation="right" />
+              <Tooltip />
+              {/* <Legend /> */}
+              <Bar dataKey="avgMetric">
+                {ageRangeData.map((entry, index) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={
+                      entry.avgMetric === maxAvgMetric ? "#416712" : "#76BC21"
+                    }
+                  />
+                ))}
+              </Bar>
+            </BarChart>
+            <div className="mb-4 flex gap-4 pt-[16px]">
+              <label>
+                <select
+                  value={selectedCountry}
+                  onChange={handleCountryChange}
+                  className="p-2 border rounded bg-[#FAFAFA] outline-none"
+                >
+                  <option value="All">All Country</option>
+                  <option value="USA">USA</option>
+                  <option value="Canada">Canada</option>
+                </select>
+              </label>
+              <label>
+                <select
+                  value={selectedMetric}
+                  onChange={handleMetricChange}
+                  className="p-2 border rounded bg-[#FAFAFA] outline-none"
+                >
+                  <option value="bloodGlucose">Blood Glucose</option>
+                  <option value="oxygenSat">Oxygen Saturation</option>
+                  <option value="bodytemp">Body Temperature</option>
+                  <option value="heartrate">Heart Rate</option>
+                  <option value="bp">Blood Pressure</option>
+                  <option value="mood">Mood</option>
+                </select>
+              </label>
+            </div>
+          </div>
+          {/* pie chart of sex */}
 
-        <div className="mb-4 flex gap-4">
-          <div>
-            <select
-              className="p-2 border rounded"
-              value={country}
-              onChange={(e) => setCountry(e.target.value)}
-            >
-              <option value="All Countries">All Countries</option>
-              <option value="USA">USA</option>
-              <option value="Canada">Canada</option>
-              {/* Add more countries as needed */}
-            </select>
+          <div className="bg-[#fff] rounded-[8px] p-[16px]">
+            <h2 className="text-[#00263E] font-[600] text-[16px]">
+              Usage by Sex
+            </h2>
+            <PieChart width={300} height={250}>
+              <Pie
+                data={chartData}
+                cx="50%"
+                cy="50%"
+                outerRadius={100}
+                fill="#8884d8"
+                dataKey="value"
+                className="outline-none"
+                labelLine={false}
+                label={renderCustomizedLabel}
+              >
+                {chartData.map((entry, index) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={COLORS[index % COLORS.length]}
+                  />
+                ))}
+              </Pie>
+              <Legend />
+            </PieChart>
+            <div className="flex items-center justify-center  w-full">
+              <select
+                id="days"
+                value={pieChartdays}
+                onChange={handleDaysChange}
+                className="p-2 border rounded bg-[#FAFAFA] outline-none"
+              >
+                <option value={3}>Last 3 days</option>
+                <option value={7}>Last 7 days</option>
+                <option value={30}>Last Month</option>
+              </select>
+            </div>
           </div>
-          <div>
-            <select
-              className="p-2 border rounded"
-              value={days}
-              onChange={(e) => setDays(Number(e.target.value))}
-            >
-              <option value={7}>Last 7 days</option>
-              <option value={5}>Last 5 days</option>
-              <option value={3}>Last 3 days</option>
-              <option value={30}>Last Month</option>
-              {/* Add more options as needed */}
-            </select>
+          {/* pie chart country */}
+          <div className="bg-[#fff] rounded-[8px]">
+            <PieChartComponent />
           </div>
+        </div>
+        {/* Top user list */}
+        <div className="bg-[#fff] mt-[16px] rounded-[16px] w-full">
+          <div className="flex items-center justify-between p-[16px]">
+            <p>Top User</p>
+            <Link
+              to="/user"
+              className="flex items-center justify-center gap-1 "
+            >
+              <p className="text-[#3E79F7] text-[14px]">See all Users</p>
+              <FaArrowRightLong color="#3E79F7" size={12} />
+            </Link>
+          </div>
+          <Table>
+            <TableHeader className="">
+              <TableRow>
+                <TableHead>User ID</TableHead>
+                <TableHead>Full Name</TableHead>
+                <TableHead>Country</TableHead>
+                <TableHead>Type</TableHead>
+                <TableHead>Last Time Active</TableHead>
+                <TableHead>#Session</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {userData?.map((user) => (
+                <TableRow key={user?.userID}>
+                  <TableCell>{user?.userID}</TableCell>
+                  <TableCell>{user?.fullName}</TableCell>
+                  <TableCell>{user?.country}</TableCell>
+                  <TableCell>{user?.type}</TableCell>
+                  <TableCell>{user?.lastTimeActive}</TableCell>
+                  <TableCell>{user?.sessions}</TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
         </div>
       </div>
     </div>

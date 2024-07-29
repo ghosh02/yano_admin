@@ -700,7 +700,7 @@ const Overview = () => {
           </div>
         </div>
         {/* Top user list */}
-        <div className="bg-[#fff] mt-[16px] rounded-[16px] w-full">
+        <div className="bg-[#fff] mt-[16px] rounded-[8px]">
           <div className="flex items-center justify-between p-[16px]">
             <p>Top User</p>
             <Link
@@ -712,7 +712,7 @@ const Overview = () => {
             </Link>
           </div>
           <Table>
-            <TableHeader className="">
+            <TableHeader>
               <TableRow>
                 <TableHead>User ID</TableHead>
                 <TableHead>Full Name</TableHead>

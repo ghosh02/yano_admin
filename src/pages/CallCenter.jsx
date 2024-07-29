@@ -132,7 +132,7 @@ function CallCenter() {
             className="object-cover w-[56px] h-[56px] rounded-[50%]"
           />
           <div className="border-b-2 p-[16px]">
-            <p>Wade Warren</p>
+            <p className="text-[14px] text-[#00263E] font-[600]">Wade Warren</p>
             <div className="flex gap-[10px] text-[13px] text-[#546E7E]">
               <div>
                 <p>Sex: Male</p>
@@ -147,7 +147,63 @@ function CallCenter() {
               </div>
             </div>
           </div>
-          <div></div>
+          <div className="flex justify-between p-[10px]">
+            <Link className="w-[50%] text-center text-[#00263E] font-[600]">
+              Health Profile
+            </Link>
+            <Link className="w-[50%] text-center text-[#76BC21] font-[600] border-b-4 border-[#76BC21]">
+              Trackers
+            </Link>
+          </div>
+          <div className="flex justify-between px-[10px]">
+            <p>Tracker</p>
+            <p>Measurement</p>
+          </div>
+          {/* Balchal code lekha ache */}
+          <div className="h-[270px] overflow-auto">
+            <div className="flex justify-between p-[10px]">
+              <div>
+                <p className="text-[12px] text-[#00263E] ">Oxygen saturation</p>
+                <p className="text-[12px] text-[#00263E] ">04:04 PM , 31 Aug</p>
+              </div>
+              <p className="text-[14px] text-[#00263E] ">98spO2H</p>
+            </div>
+            <div className="flex justify-between p-[10px]">
+              <div>
+                <p className="text-[12px] text-[#00263E] ">Oxygen saturation</p>
+                <p className="text-[12px] text-[#00263E] ">04:04 PM , 31 Aug</p>
+              </div>
+              <p className="text-[14px] text-[#00263E] ">98spO2H</p>
+            </div>
+            <div className="flex justify-between p-[10px]">
+              <div>
+                <p className="text-[12px] text-[#00263E] ">Oxygen saturation</p>
+                <p className="text-[12px] text-[#00263E] ">04:04 PM , 31 Aug</p>
+              </div>
+              <p className="text-[14px] text-[#00263E] ">98spO2H</p>
+            </div>
+            <div className="flex justify-between p-[10px]">
+              <div>
+                <p className="text-[12px] text-[#00263E] ">Oxygen saturation</p>
+                <p className="text-[12px] text-[#00263E] ">04:04 PM , 31 Aug</p>
+              </div>
+              <p className="text-[14px] text-[#00263E] ">98spO2H</p>
+            </div>
+            <div className="flex justify-between p-[10px]">
+              <div>
+                <p className="text-[12px] text-[#00263E] ">Oxygen saturation</p>
+                <p className="text-[12px] text-[#00263E] ">04:04 PM , 31 Aug</p>
+              </div>
+              <p className="text-[14px] text-[#00263E] ">98spO2H</p>
+            </div>
+            <div className="flex justify-between p-[10px]">
+              <div>
+                <p className="text-[12px] text-[#00263E] ">Oxygen saturation</p>
+                <p className="text-[12px] text-[#00263E] ">04:04 PM , 31 Aug</p>
+              </div>
+              <p className="text-[14px] text-[#00263E] ">98spO2H</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

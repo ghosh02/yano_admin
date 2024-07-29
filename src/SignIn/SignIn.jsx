@@ -14,8 +14,8 @@ function SignIn() {
     e.preventDefault();
     setIsSubmitted(true);
     // navigate("/user");
-    if (isSubmitted) {
-      navigate("/user");
+    if (email && password) {
+      navigate("/overview");
     }
     console.log(email);
   };

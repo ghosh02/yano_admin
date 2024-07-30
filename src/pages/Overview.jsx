@@ -609,6 +609,7 @@ const Overview = () => {
         </div>
         <div className="flex gap-[20px] justify-between">
           <div className="bg-[#fff] rounded-[8px] p-[16px]">
+            <h1 className="text-[#00263E] font-[600] text-[16px]">Age</h1>
             <BarChart width={500} height={250} data={ageRangeData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="ageRange" />

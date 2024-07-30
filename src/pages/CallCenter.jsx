@@ -1,11 +1,12 @@
 import Sidebar from "@/components/Sidebar";
-import React from "react";
+import React, { useState } from "react";
 import patient from "../assets/patient.png";
 import { MdVideoCall } from "react-icons/md";
 import { IoMdCall } from "react-icons/io";
 import { MdCallEnd } from "react-icons/md";
 import { FaRegUserCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import ToggleButton from "@/components/ToggleButton";
 const callData = [
   {
     name: "Ester Howard",
@@ -50,11 +51,21 @@ const callData = [
 ];
 
 function CallCenter() {
+  const [showProfile, setShowProfile] = useState(false);
+  const [mode, setMode] = useState(false);
+  const handleMode = () => {
+    setMode(!mode);
+    setShowProfile(false);
+  };
   return (
-    <div className="flex min-h-[100vh]">
-      <Sidebar />
-      <div className="p-[32px] flex gap-[30px]">
-        <div className="p-[16px] bg-[#fff] w-[343px] rounded-[8px]">
+    <div className="flex ">
+      <Sidebar className="flex-1" />
+      <div className="p-[32px] flex gap-[30px] h-screen">
+        <div
+          className={`h-[550px] p-[16px] bg-[#fff] w-[343px] rounded-[8px] transition-all  ${
+            mode ? "block" : "hidden"
+          }`}
+        >
           <p className="text-[#00263E] text-[18px] font-[600]">
             Live consultations
           </p>
@@ -90,7 +101,10 @@ function CallCenter() {
                 <MdCallEnd color="#fff" />
               </Link>
               <Link className="rounded-[50%] flex items-center justify-center ">
-                <FaRegUserCircle color="#76BC21" />
+                <FaRegUserCircle
+                  color="#76BC21"
+                  onClick={() => setShowProfile(!showProfile)}
+                />
               </Link>
             </div>
           </div>
@@ -125,7 +139,11 @@ function CallCenter() {
             ))}
           </div>
         </div>
-        <div className="p-[16px] bg-[#fff] w-[343px] rounded-[8px]">
+        <div
+          className={`h-[550px] p-[16px] bg-[#fff] w-[343px] rounded-[8px] ${
+            showProfile ? "block" : "hidden"
+          }`}
+        >
           <img
             src={patient}
             alt=""
@@ -202,6 +220,67 @@ function CallCenter() {
                 <p className="text-[12px] text-[#00263E] ">04:04 PM , 31 Aug</p>
               </div>
               <p className="text-[14px] text-[#00263E] ">98spO2H</p>
+            </div>
+            {/* Balchal code lekha ache */}
+          </div>
+        </div>
+        {/* doctor profile */}
+        <div className="p-[16px] bg-[#fff] w-[343px] rounded-[8px] h-[400px]">
+          <img
+            src={patient}
+            alt=""
+            className="object-cover w-[56px] h-[56px] rounded-[50%]"
+          />
+          <p className="text-[16px] text-[#00263E] font-[600] py-[10px]">
+            Dr. Roger Hopkins
+          </p>
+          <p className="text-[14px] text-[#546E7E] ">General medecine</p>
+
+          <div className="flex gap-[10px] border-b-2 py-[16px]">
+            {mode ? (
+              <div className="flex justify-center items-center bg-[#E7F4ED] w-[80px] px-[6px] py-[4px] gap-2 rounded-[45px]">
+                <div className="w-[8px] h-[8px] bg-[#0F8D47] rounded-[8px]" />
+                <p className="text-[12px] text-[#0F8D47] font-[600]">Online</p>
+              </div>
+            ) : (
+              <div className="flex justify-center items-center bg-[#FBE9E9] w-[80px] px-[6px] py-[4px] gap-2 rounded-[45px]">
+                <div className="w-[8px] h-[8px] bg-[#D82724] rounded-[8px]" />
+                <p className="text-[12px] text-[#D82724] font-[600]">Offline</p>
+              </div>
+            )}
+
+            <ToggleButton on={mode} toggle={handleMode} />
+          </div>
+          <div className="grid grid-cols-2">
+            <div className="m-[10px]">
+              <p className="text-[#335165] text-[16px]">Total patient</p>
+              <div className="flex gap-[20px]">
+                <p className="font-[600] text-[18px]">120</p>
+                <p className="text-red-600">-2%</p>
+              </div>
+            </div>
+            <div className="m-[10px]">
+              <p className="text-[#335165] text-[16px]">Average age</p>
+              <div className="flex gap-[20px]">
+                <p className="font-[600] text-[18px]">55</p>
+                <p className="text-red-600">-2%</p>
+              </div>
+            </div>
+            <div className="m-[10px]">
+              <p className="text-[#335165] text-[16px]">
+                Consultations canceled
+              </p>
+              <div className="flex gap-[20px]">
+                <p className="font-[600] text-[18px]">12</p>
+                <p className="text-red-600">-2%</p>
+              </div>
+            </div>
+            <div className="m-[10px]">
+              <p className="text-[#335165] text-[16px]">Average duration</p>
+              <div className="flex gap-[20px]">
+                <p className="font-[600] text-[18px]">30 min</p>
+                <p className="text-red-600">-2%</p>
+              </div>
             </div>
           </div>
         </div>

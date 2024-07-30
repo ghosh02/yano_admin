@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 function ResetPasswordLink() {
   const navigate = useNavigate();
   return (
-    <div className="h-[80vh] flex items-center justify-center">
+    <div className="h-[calc(100vh-80px)] flex items-center justify-center">
       <div className=" w-[340px] h-[394px] bg-[#fff] py-[24px] px-5 rounded-[8px]">
         <div className="w-full flex items-center justify-center">
           <div className=" w-[100px] h-[100px] bg-[#76BC213D] rounded-[50%] flex items-center justify-center  ">
@@ -20,7 +20,7 @@ function ResetPasswordLink() {
         </p>
         <button
           onClick={() => navigate("/")}
-          className=" w-[100%] h-[50px] bg-[#00263E] text-[#fff] rounded-[8px] mt-[30px] "
+          className=" w-[100%] h-[50px] bg-[#00263E] text-[#fff] rounded-[8px] mt-[30px] font-[500] "
         >
           Back to log in
         </button>

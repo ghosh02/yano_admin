@@ -5,7 +5,7 @@ import Navbar from "@/components/Navbar";
 
 function Layout() {
   return (
-    <div className=" bg-[#f5f5f5]">
+    <div className=" bg-[#f5f5f5] min-h-screen font-Poppins">
       <Navbar />
       <Outlet />
     </div>

@@ -53,14 +53,19 @@ const callData = [
 function CallCenter() {
   const [showProfile, setShowProfile] = useState(false);
   const [mode, setMode] = useState(false);
+  const [activeLink, setActiveLink] = useState("Trackers");
+
+  const handleLinkClick = (linkName) => {
+    setActiveLink(linkName);
+  };
   const handleMode = () => {
     setMode(!mode);
     setShowProfile(false);
   };
   return (
-    <div className="flex ">
+    <div className=" flex ">
       <Sidebar className="flex-1" />
-      <div className="p-[32px] flex gap-[30px] h-screen">
+      <div className="p-[32px] flex gap-[30px]  h-[calc(100vh-80px)]">
         <div
           className={`h-[550px] p-[16px] bg-[#fff] w-[343px] rounded-[8px] transition-all  ${
             mode ? "block" : "hidden"
@@ -108,8 +113,8 @@ function CallCenter() {
               </Link>
             </div>
           </div>
-          <p className="mx-[16px]">Queue(4)</p>
-          <div className="gap-2">
+          <p className="mx-[16px] my-[10px]">Queue(4)</p>
+          <div className=" flex flex-col gap-3">
             {callData.map((item) => (
               <div className="flex items-center justify-between mt-2 border-b-[1px]">
                 <div className="flex gap-[8px]">
@@ -166,10 +171,24 @@ function CallCenter() {
             </div>
           </div>
           <div className="flex justify-between p-[10px]">
-            <Link className="w-[50%] text-center text-[#00263E] font-[600]">
+            <Link
+              onClick={() => handleLinkClick("Health Profile")}
+              className={`w-[50%] text-center font-[600] ${
+                activeLink === "Health Profile"
+                  ? "text-[#76BC21] border-b-4 border-[#76BC21]"
+                  : "text-[#00263E]"
+              }`}
+            >
               Health Profile
             </Link>
-            <Link className="w-[50%] text-center text-[#76BC21] font-[600] border-b-4 border-[#76BC21]">
+            <Link
+              onClick={() => handleLinkClick("Trackers")}
+              className={`w-[50%] text-center font-[600] ${
+                activeLink === "Trackers"
+                  ? "text-[#76BC21] border-b-4 border-[#76BC21]"
+                  : "text-[#00263E]"
+              }`}
+            >
               Trackers
             </Link>
           </div>
@@ -251,23 +270,23 @@ function CallCenter() {
 
             <ToggleButton on={mode} toggle={handleMode} />
           </div>
-          <div className="grid grid-cols-2">
+          <div className="grid grid-cols-2 mt-[15px]">
             <div className="m-[10px]">
-              <p className="text-[#335165] text-[16px]">Total patient</p>
+              <p className="text-[#335165] text-[13px]">Total patient</p>
               <div className="flex gap-[20px]">
                 <p className="font-[600] text-[18px]">120</p>
                 <p className="text-red-600">-2%</p>
               </div>
             </div>
             <div className="m-[10px]">
-              <p className="text-[#335165] text-[16px]">Average age</p>
+              <p className="text-[#335165] text-[13px]">Average age</p>
               <div className="flex gap-[20px]">
                 <p className="font-[600] text-[18px]">55</p>
                 <p className="text-red-600">-2%</p>
               </div>
             </div>
             <div className="m-[10px]">
-              <p className="text-[#335165] text-[16px]">
+              <p className="text-[#335165] text-[13px]">
                 Consultations canceled
               </p>
               <div className="flex gap-[20px]">
@@ -276,7 +295,7 @@ function CallCenter() {
               </div>
             </div>
             <div className="m-[10px]">
-              <p className="text-[#335165] text-[16px]">Average duration</p>
+              <p className="text-[#335165] text-[13px]">Average duration</p>
               <div className="flex gap-[20px]">
                 <p className="font-[600] text-[18px]">30 min</p>
                 <p className="text-red-600">-2%</p>

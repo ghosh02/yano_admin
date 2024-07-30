@@ -46,7 +46,11 @@ function CreateAdmin() {
       editMedicalReport: false,
       deleteUser: false,
     },
-    reports: {},
+    reports: {
+      viewMedicalReports: false,
+      viewCountryReports: false,
+      exportReports: false,
+    },
   });
   let name, value;
   const handleInputs = (e) => {
@@ -192,7 +196,7 @@ function CreateAdmin() {
                 </Link>
               </div>
             </div>
-            {/* <ToggleButton /> */}
+
             <Table>
               <TableHeader>
                 <TableRow>

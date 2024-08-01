@@ -20,6 +20,7 @@ import CreateAdmin from "./settings/CreateAdmin.jsx";
 import CreateUser from "./user/CreateUser.jsx";
 import Overview from "./pages/Overview.jsx";
 import CallCenter from "./pages/CallCenter.jsx";
+import VideoCall from "./pages/VideoCall.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -28,11 +29,12 @@ const router = createBrowserRouter(
       <Route path="/overview" element={<Overview />} />
       <Route path="/user" element={<User />} />
       <Route path="/callCenter" element={<CallCenter />} />
+      <Route path="/videoCall" element={<VideoCall />} />
       <Route path="/settings" element={<Settings />} />
-      <Route path="/changePassword" element={<ChangePassword />} />
-      <Route path="/adminList" element={<AdminList />} />
-      <Route path="/createAdmin" element={<CreateAdmin />} />
-      <Route path="/createUser" element={<CreateUser />} />
+      <Route path="/settings/changePassword" element={<ChangePassword />} />
+      <Route path="/settings/adminList" element={<AdminList />} />
+      <Route path="/settings/adminList/createAdmin" element={<CreateAdmin />} />
+      <Route path="/user/createUser" element={<CreateUser />} />
       <Route path="/ForgotPassword" element={<ForgotPassword />} />
       <Route path="/ResetPasswordLink" element={<ResetPasswordLink />} />
     </Route>

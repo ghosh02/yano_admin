@@ -15,9 +15,9 @@ function ChangePassword() {
     setIsSubmitted(true);
   };
   return (
-    <div className="flex">
+    <div className="h-[calc(100vh-80px)] flex">
       <Sidebar />
-      <div className="flex-1 h-screen ml-[32px] mt-[32px]">
+      <div className=" ml-[32px] mt-[32px]">
         <Link to="/settings">
           <div className="w-[92px] h-[40px] flex justify-center items-center bg-[#fff] my-3 gap-2 rounded-[8px]">
             <IoMdArrowBack />

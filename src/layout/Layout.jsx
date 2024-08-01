@@ -1,12 +1,14 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
-import Sidebar from "@/components/Sidebar";
+import { Outlet, useLocation } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 
 function Layout() {
+  const location = useLocation();
+  const pathsWithoutNavbar = ["/videoCall"];
+  const shouldShowNavbar = !pathsWithoutNavbar.includes(location.pathname);
   return (
     <div className=" bg-[#f5f5f5] min-h-screen font-Poppins">
-      <Navbar />
+      {shouldShowNavbar && <Navbar />}
       <Outlet />
     </div>
   );

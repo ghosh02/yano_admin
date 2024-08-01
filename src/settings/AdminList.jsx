@@ -1,5 +1,5 @@
 import Sidebar from "@/components/Sidebar";
-import React from "react";
+import React, { useMemo, useState } from "react";
 import { IoMdArrowBack } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -11,7 +11,6 @@ import {
   Table,
 } from "@/components/ui/table";
 import { SearchIcon } from "lucide-react";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { FaPlus } from "react-icons/fa6";
 
@@ -47,9 +46,45 @@ const admin = [
 ];
 
 function AdminList() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [sortConfig, setSortConfig] = useState(null);
   //   const navigate = useNavigate();
+  const filteredAdmins = useMemo(() => {
+    return admin.filter(
+      (admin) =>
+        admin.full_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        admin.id.includes(searchQuery)
+    );
+  }, [searchQuery, admin]);
+
+  const sortedAdmins = useMemo(() => {
+    if (sortConfig !== null) {
+      return [...filteredAdmins].sort((a, b) => {
+        if (a[sortConfig.key] < b[sortConfig.key]) {
+          return sortConfig.direction === "ascending" ? -1 : 1;
+        }
+        if (a[sortConfig.key] > b[sortConfig.key]) {
+          return sortConfig.direction === "ascending" ? 1 : -1;
+        }
+        return 0;
+      });
+    }
+    return filteredAdmins;
+  }, [filteredAdmins, sortConfig]);
+
+  const requestSort = (key) => {
+    let direction = "ascending";
+    if (
+      sortConfig &&
+      sortConfig.key === key &&
+      sortConfig.direction === "ascending"
+    ) {
+      direction = "descending";
+    }
+    setSortConfig({ key, direction });
+  };
   return (
-    <div className="flex">
+    <div className="h-[calc(100vh-80px)] flex">
       <Sidebar />
       <div className="flex-1 h-screen mx-[32px] mt-[32px]">
         <div className="flex justify-between items-center">
@@ -59,7 +94,7 @@ function AdminList() {
               <p>Back</p>
             </div>
           </Link>
-          <Link to="/createAdmin">
+          <Link to="createAdmin">
             <Button className=" flex gap-3 items-center justify-center ">
               <span>
                 <FaPlus size={12} />
@@ -82,6 +117,8 @@ function AdminList() {
                 className="w-full bg-transparent shadow-none border-none outline-none pl-2 "
                 placeholder="Search..."
                 type="search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
           </form>
@@ -89,22 +126,41 @@ function AdminList() {
           <Table className="">
             <TableHeader>
               <TableRow>
-                <TableHead>
-                  <div className="flex items-center gap-2">
+                <TableHead onClick={() => requestSort("id")}>
+                  <div className="flex items-center gap-2 cursor-pointer">
                     <input type="checkbox" />
                     User ID
                   </div>
                 </TableHead>
-                <TableHead>Full Name</TableHead>
-                <TableHead>Permissions</TableHead>
-
-                <TableHead>Date of creation</TableHead>
-                <TableHead>Status</TableHead>
+                <TableHead
+                  onClick={() => requestSort("full_name")}
+                  className="cursor-pointer"
+                >
+                  Full Name
+                </TableHead>
+                <TableHead
+                  onClick={() => requestSort("permission")}
+                  className="cursor-pointer"
+                >
+                  Permissions
+                </TableHead>
+                <TableHead
+                  onClick={() => requestSort("date_of_creation")}
+                  className="cursor-pointer"
+                >
+                  Date of creation
+                </TableHead>
+                <TableHead
+                  onClick={() => requestSort("status")}
+                  className="cursor-pointer"
+                >
+                  Status
+                </TableHead>
                 <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {admin?.map((admin) => (
+              {sortedAdmins?.map((admin) => (
                 <TableRow key={admin?.id}>
                   <TableCell>
                     <div className="flex items-center gap-2">

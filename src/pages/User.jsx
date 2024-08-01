@@ -68,7 +68,7 @@ export default function User() {
               <p className="text-[#72849A]">Yano's user database</p>
             </div>
 
-            <Link to="/createUser">
+            <Link to="createUser">
               <Button className=" flex gap-3 items-center justify-center ">
                 <span>
                   <FaPlus size={12} />

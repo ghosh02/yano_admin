@@ -19,7 +19,7 @@ function ForgotPassword() {
   const isEmailError = isSubmitted && !email;
   return (
     <div className="h-[calc(100vh-80px)] flex items-center justify-center">
-      <div className=" w-[340px] h-[394px] bg-[#fff] py-[24px] px-5 rounded-[8px]">
+      <div className=" w-[350px] h-[394px] bg-[#fff] py-[24px] px-5 rounded-[8px]">
         <form onSubmit={handleSubmit}>
           <h1 className="text-[#00263E] text-3xl font-semibold ">
             Forgot your password?
@@ -51,7 +51,7 @@ function ForgotPassword() {
                 <span className="w-[12px] h-[12px] text-[10px] rounded-[50%] flex items-center justify-center text-[#fff] bg-red-500">
                   !
                 </span>
-                An account with this email address does not exist
+                Account with this email address does not exist
               </p>
             )}
           </div>

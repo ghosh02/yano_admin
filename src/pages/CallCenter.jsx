@@ -63,7 +63,7 @@ function CallCenter() {
     setShowProfile(false);
   };
   return (
-    <div className=" flex ">
+    <div className="h-[calc(100vh-80px)] flex ">
       <Sidebar className="flex-1" />
       <div className="p-[32px] flex gap-[30px]  h-[calc(100vh-80px)]">
         <div
@@ -99,7 +99,10 @@ function CallCenter() {
               </div>
             </div>
             <div className="flex gap-[10px]">
-              <Link className="w-[32px] h-[32px] rounded-[50%] bg-[#0F8D47] flex items-center justify-center ">
+              <Link
+                to="/videoCall"
+                className="w-[32px] h-[32px] rounded-[50%] bg-[#0F8D47] flex items-center justify-center "
+              >
                 <IoMdCall color="#fff" />
               </Link>
               <Link className="w-[32px] h-[32px] rounded-[50%] bg-[#D82724] flex items-center justify-center ">

@@ -86,7 +86,7 @@ function CreateAdmin() {
     <div className="flex  flex-1">
       <Sidebar />
       <div className="flex-1  ml-[32px] mt-[32px]">
-        <Link to="/adminList">
+        <Link to="/settings/adminList">
           <div className="w-[92px] h-[40px] flex justify-center items-center bg-[#fff] my-3 gap-2 rounded-[8px]">
             <IoMdArrowBack />
             <p>Back</p>

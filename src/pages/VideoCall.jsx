@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import patient from "../assets/patient.png";
 import thumnail from "../assets/thumbnail.png";
+import device from "../assets/device.png";
 import { BiSolidUserDetail } from "react-icons/bi";
 import { MdCallEnd, MdOutlineVideocam, MdVideoCall } from "react-icons/md";
 import { MdOutlineVideocamOff } from "react-icons/md";
@@ -14,6 +15,15 @@ import { TbReportMedical } from "react-icons/tb";
 import { Link } from "react-router-dom";
 import { IoMdCall } from "react-icons/io";
 import { callData } from "../constant/InitialData";
+import { RiBluetoothConnectFill } from "react-icons/ri";
+import { FaAngleRight } from "react-icons/fa6";
+import { IoClose } from "react-icons/io5";
+import { FaPaperclip } from "react-icons/fa";
+import { FaFolder } from "react-icons/fa6";
+import { IoIosSend } from "react-icons/io";
+import { IoAttachOutline } from "react-icons/io5";
+
+// import { IoClose } from "react-icons/io5";
 
 function VideoCall() {
   const [mode, setMode] = useState(false);
@@ -21,7 +31,7 @@ function VideoCall() {
   const handleMode = () => {
     setMode(!mode);
   };
-  const [activeLink, setActiveLink] = useState("video");
+  const [activeLink, setActiveLink] = useState(null);
 
   const handleLinkClick = (link) => {
     setActiveLink(link);
@@ -30,13 +40,53 @@ function VideoCall() {
   const handleLink = (linkName) => {
     setActiveLink(linkName);
   };
+  const handleClose = () => {
+    setActiveLink(null);
+  };
+
+  const [messages, setMessages] = useState([]);
+  const [input, setInput] = useState("");
+  const [file, setFile] = useState(null);
+  const [filePreview, setFilePreview] = useState(null);
+  const fileInputRef = useRef(null);
+
+  const handleSendMessage = (e) => {
+    e.preventDefault();
+    if (input.trim() || file) {
+      const newMessage = { text: input, file, sender: "User" };
+      setMessages([...messages, newMessage]);
+      setInput("");
+      setFile(null);
+      setFilePreview(null);
+    }
+  };
+
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    setFile(selectedFile);
+    if (selectedFile) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFilePreview(reader.result);
+      };
+      reader.readAsDataURL(selectedFile);
+    }
+  };
+
+  const handleIconClick = () => {
+    fileInputRef.current.click();
+  };
   return (
-    <div className="flex items-center py-[48px] px-[68px] gap-[16px]">
+    <div className="flex justify-center  py-[48px] px-[68px] gap-[16px]">
+      {/* <ChatMessenger /> */}
       {activeLink === "queue" && (
         <div className="h-[550px] p-[16px] bg-[#fff] w-[343px] rounded-[8px] transition-all  ">
-          <p className="text-[#00263E] text-[18px] font-[600]">
-            Live consultations
-          </p>
+          <div className="flex items-center justify-between">
+            <p className="text-[#00263E] text-[18px] font-[600]">
+              Live consultations
+            </p>
+            <IoClose className="cursor-pointer" onClick={handleClose} />
+          </div>
           <div className="flex items-center gap-[10px] p-[16px] ">
             <div className="bg-[#0F8D47] h-[8px] w-[8px] rounded-[50%]" />
             <p className="text-[#3D5A6C] texxt-[12px] font-[600]">Active</p>
@@ -139,7 +189,11 @@ function VideoCall() {
               className="flex flex-col items-center"
             >
               <div className="w-[40px] h-[40px] rounded-[50%] border-2 border-[#EEE] flex justify-center items-center">
-                <CiChat1 />
+                {activeLink === "chat" ? (
+                  <MdChatBubble color="#0F8D47" />
+                ) : (
+                  <CiChat1 />
+                )}
               </div>
 
               <p className="text-[12px] text-[#00263E]">Chat</p>
@@ -149,7 +203,9 @@ function VideoCall() {
               className="flex flex-col items-center"
             >
               <div className="w-[40px] h-[40px] rounded-[50%] border-2 border-[#EEE] flex justify-center items-center">
-                <MdOutlineMonitorHeart />
+                <MdOutlineMonitorHeart
+                  color={activeLink === "tools" ? "#0F8D47" : ""}
+                />
               </div>
 
               <p className="text-[12px] text-[#00263E]">Tools</p>
@@ -169,14 +225,17 @@ function VideoCall() {
               <p className="text-[12px] text-[#00263E]">prescription</p>
             </Link>
           </div>
-          <Link className="w-[40px] h-[40px] rounded-[50%] bg-[#D82724] flex items-center justify-center ">
-            <MdCallEnd color="#fff" />
-          </Link>
+          <div className="flex flex-col items-center                                                                                                                                                                                                                                        ">
+            <Link className="w-[40px] h-[40px] rounded-[50%] bg-[#D82724] flex items-center justify-center ">
+              <MdCallEnd color="#fff" />
+            </Link>
+            <p className="text-[12px] text-[#00263E]">End call</p>
+          </div>
         </div>
       </div>
-      <div className="p-4">
-        {activeLink === "video" && (
-          <div className="h-[550px] p-[16px] bg-[#fff] w-[343px] rounded-[8px] ">
+      <div className="">
+        {activeLink === null && (
+          <div className=" p-[16px] bg-[#fff] w-[343px] rounded-[8px] ">
             <img
               src={patient}
               alt=""
@@ -299,8 +358,127 @@ function VideoCall() {
           </div>
         )}
         {activeLink === "mute" && <div>Mute Content</div>}
-        {activeLink === "chat" && <div>Chat Content</div>}
-        {activeLink === "tools" && <div>Tools Content</div>}
+        {/* chat section */}
+        {activeLink === "chat" && (
+          <div className="w-[325px] flex flex-col justify-between  h-[500px] border border-gray-300 rounded-lg ">
+            <div className="flex items-center justify-between px-[12px] py-[16px]">
+              <h1 className="text-[00263E] font-[700]">Chat</h1>
+              <IoClose
+                size={20}
+                className="cursor-pointer"
+                onClick={handleClose}
+              />
+            </div>
+            <div className="flex-1 p-4 overflow-y-auto bg-gray-100">
+              {messages.map((message, index) => (
+                <div
+                  key={index}
+                  className={`mb-4 flex ${
+                    message.sender === "User" ? "justify-end" : "justify-start"
+                  }`}
+                >
+                  <div>
+                    {message.text && (
+                      <p
+                        className={`inline-block p-2 rounded-t-[8px] rounded-bl-[8px] ${
+                          message.sender === "User"
+                            ? "bg-[#00263E] text-white"
+                            : "bg-gray-300"
+                        }`}
+                      >
+                        {message.text}
+                      </p>
+                    )}
+                    {message.file && (
+                      <div className="mt-2 flex items-center">
+                        {message.file.type.startsWith("image/") ? (
+                          <a
+                            href={URL.createObjectURL(message.file)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <img
+                              src={URL.createObjectURL(message.file)}
+                              alt="file"
+                              className="max-w-[180px] rounded-lg"
+                            />
+                          </a>
+                        ) : (
+                          <div className="flex items-center gap-[10px] w-[150px]">
+                            <FaFolder size={50} color="#ffc93c" />
+                            <a
+                              href={URL.createObjectURL(message.file)}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-blue-500 text-[10px] overflow-hidden"
+                            >
+                              {message.file.name}
+                            </a>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <form
+              onSubmit={handleSendMessage}
+              className="flex flex-col p-4 border-t border-gray-300 space-y-2"
+            >
+              {filePreview && (
+                <div className="flex justify-center">
+                  <img
+                    src={filePreview}
+                    alt="Preview"
+                    className="max-w-[100px] h-[50px] rounded-lg mb-2"
+                  />
+                </div>
+              )}
+              <div className="flex space-x-2">
+                <input
+                  type="text"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  placeholder="Type your message..."
+                  className="flex-1 p-2 border border-gray-300 rounded-lg outline-none"
+                />
+                <button type="button" onClick={handleIconClick} className="p-2">
+                  <IoAttachOutline size={25} className="text-gray-500" />
+                </button>
+                <input
+                  type="file"
+                  onChange={handleFileChange}
+                  ref={fileInputRef}
+                  className="hidden"
+                />
+                <button type="submit">
+                  <IoIosSend size={25} color="#00263E" />
+                </button>
+              </div>
+            </form>
+          </div>
+        )}
+        {activeLink === "tools" && (
+          <div className="w-[325px] bg-[#fff] p-[16px] rounded-[8px]">
+            <div className="flex items-center justify-between">
+              <p>Measurement Tools</p>
+              <IoClose className="cursor-pointer" onClick={handleClose} />
+            </div>
+            <div className="flex items-center gap-[20px] py-[10px]">
+              <img src={device} alt="" />
+              <div className="flex flex-col gap-[5px]">
+                <p>Monitor multiparameters</p>
+
+                <div className="w-[103px] px-[8px] py-[4px] flex items-center gap-2 text-[#0F8D47] bg-[#E7F4ED] rounded-[6px]">
+                  <RiBluetoothConnectFill />
+                  <p className="text-[12px]">connected</p>
+                </div>
+              </div>
+              <FaAngleRight className="cursor-pointer" />
+            </div>
+          </div>
+        )}
         {activeLink === "notes" && <div>Notes Content</div>}
         {activeLink === "prescription" && <div>Prescription Content</div>}
       </div>

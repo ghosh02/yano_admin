@@ -355,7 +355,10 @@ const Overview = () => {
                 >
                   {item.value}
                 </p>
-                <p>{item.rate}%</p>
+                <div className="flex gap-1 items-center">
+                  <FaLongArrowAltUp size={12} color="#76BC21" />
+                  <p className="text-[#76BC21]"> {item.rate}%</p>
+                </div>
               </Link>
             ))}
           </div>

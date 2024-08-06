@@ -275,6 +275,18 @@ const initialData = [
     age: 20,
     sex: "Female",
   },
+  {
+    date: "2024-08-06",
+    bloodGlucose: 22,
+    oxygenSat: 26,
+    bodytemp: 40.1,
+    heartrate: 78,
+    bp: 110,
+    mood: 10,
+    country: "USA",
+    age: 20,
+    sex: "Female",
+  },
 ];
 export default initialData;
 export const callData = [

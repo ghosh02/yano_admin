@@ -2,8 +2,15 @@ import PieChartComponent from "@/components/PieChartComponent";
 import Sidebar from "@/components/Sidebar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import React, { useState, useEffect } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { FaArrowRightLong } from "react-icons/fa6";
+import { AiOutlineRise } from "react-icons/ai";
+import { FaLongArrowAltUp } from "react-icons/fa";
+import { FaLongArrowAltDown } from "react-icons/fa";
+import { MdOutlinePeopleOutline } from "react-icons/md";
+import { IoMdLink } from "react-icons/io";
+import { RxDashboard } from "react-icons/rx";
+
 import {
   LineChart,
   Line,
@@ -224,12 +231,17 @@ const Overview = () => {
       const date = new Date(d.date);
       const now = new Date();
       return (now - date) / (24 * 60 * 60 * 1000) <= days;
-      //   return now - date <= days * 24 * 60 * 60 * 1000;
     });
 
     setFilteredData(filteredByDate);
   }, [country, days]);
 
+  const navigate = useNavigate();
+
+  const handleRowClick = (user) => {
+    navigate(`/userDetail/${user?.userID}`, { state: { user } });
+    // console.log(user);
+  };
   return (
     <div className="flex">
       <Sidebar />
@@ -240,64 +252,79 @@ const Overview = () => {
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium">New Users</CardTitle>
-              <Link className="text-sm font-medium underline" to="#">
-                View All
-              </Link>
+              <CardTitle className="text-[16px] font-medium text-[#00263E]">
+                New Users
+              </CardTitle>
+              <CardTitle className="w-[40px] h-[40px] bg-lightgreen flex items-center justify-center rounded-[50%]  ">
+                <AiOutlineRise color="#76BC21" />
+              </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">124</div>
-              <p className="text-xs text-gray-500 dark:text-gray-400">
-                +12 since last month
-              </p>
+              <div className="text-2xl font-bold pb-3">124</div>
+              <div className="flex gap-1 items-center">
+                <FaLongArrowAltUp size={12} color="#76BC21" />
+                <p className="text-xs text-lightgray dark:text-gray-400">
+                  <span className="text-darkgreen">5.3% </span> since last month
+                </p>
+              </div>
             </CardContent>
           </Card>
           <Card>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium">
+              <CardTitle className="text-[16px] font-medium text-[#00263E]">
                 Active Users
               </CardTitle>
-              <Link className="text-sm font-medium underline" to="#">
-                View All
-              </Link>
+              <CardTitle className="w-[40px] h-[40px] bg-lightgreen flex items-center justify-center rounded-[50%]  ">
+                <MdOutlinePeopleOutline color="#76BC21" />
+              </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">124</div>
-              <p className="text-xs text-gray-500 dark:text-gray-400">
-                +12 since last month
-              </p>
+              <div className="text-2xl font-bold pb-3">124</div>
+              <div className="flex gap-1 items-center">
+                <FaLongArrowAltDown size={12} color="red" />
+                <p className="text-xs text-lightgray dark:text-gray-400">
+                  <span className="text-red-600">5.3% </span> since last month
+                </p>
+              </div>
             </CardContent>
           </Card>
           <Card>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium">
+              <CardTitle className="text-[16px] font-medium text-[#00263E]">
                 Most used functions
               </CardTitle>
-              <Link className="text-sm font-medium underline" to="#">
-                View All
-              </Link>
+
+              <CardTitle className="w-[40px] h-[40px] bg-lightgreen flex items-center justify-center rounded-[50%]  ">
+                <RxDashboard color="#76BC21" size={18} />
+              </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">124</div>
-              <p className="text-xs text-gray-500 dark:text-gray-400">
-                +12 since last month
-              </p>
+              <div className="text-2xl font-bold pb-3">Blood Glucose</div>
+              <div className="flex gap-1 items-center">
+                <FaLongArrowAltDown size={12} color="red" />
+                <p className="text-xs text-lightgray dark:text-gray-400">
+                  <span className="text-red-600">5.3% </span> since last month
+                </p>
+              </div>
             </CardContent>
           </Card>
           <Card>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium">
+              <CardTitle className="text-[16px] font-medium text-[#00263E]">
                 Devices connected
               </CardTitle>
-              <Link className="text-sm font-medium underline" to="#">
-                View All
-              </Link>
+              <CardTitle className="w-[40px] h-[40px] bg-lightgreen flex items-center justify-center rounded-[50%]  ">
+                <IoMdLink color="#76BC21" />
+              </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">124</div>
-              <p className="text-xs text-gray-500 dark:text-gray-400">
-                +12 since last month
-              </p>
+              <div className="text-2xl font-bold pb-3">124</div>
+              <div className="flex gap-1 items-center">
+                <FaLongArrowAltDown size={12} color="red" />
+                <p className="text-xs text-lightgray dark:text-gray-400">
+                  <span className="text-red-600">5.3% </span> since last month
+                </p>
+              </div>
             </CardContent>
           </Card>
         </div>
@@ -335,7 +362,7 @@ const Overview = () => {
           <div className="mt-[16px] px-[16px]">
             <LineGraph data={filteredData} valueKey={valueKey} />
           </div>
-          <div className="mb-4 flex gap-4 p-[16px]">
+          <div className="mb-4 flex gap-4 p-[16px] border-t-[1px] ">
             <div>
               <select
                 className=" py-2 px-3 border rounded bg-[#FAFAFA] outline-none"
@@ -374,7 +401,7 @@ const Overview = () => {
         {/* Top user list */}
         <div className="bg-[#fff] mt-[16px] rounded-[8px]">
           <div className="flex items-center justify-between p-[16px]">
-            <p>Top User</p>
+            <p className="font-[600] text-[16px] text-[#00263E]">Top User</p>
             <Link
               to="/user"
               className="flex items-center justify-center gap-1 "
@@ -383,27 +410,44 @@ const Overview = () => {
               <FaArrowRightLong color="#3E79F7" size={12} />
             </Link>
           </div>
-          <Table>
+          <Table className="">
             <TableHeader>
               <TableRow>
-                <TableHead>User ID</TableHead>
-                <TableHead>Full Name</TableHead>
-                <TableHead>Country</TableHead>
-                <TableHead>Type</TableHead>
-                <TableHead>Last Time Active</TableHead>
-                <TableHead>#Session</TableHead>
+                <TableHead className="text-[#00263E] font-[500]">
+                  User ID
+                </TableHead>
+                <TableHead className="text-[#00263E] font-[500]">
+                  Full Name
+                </TableHead>
+                <TableHead className="text-[#00263E] font-[500]">
+                  Country
+                </TableHead>
+                <TableHead className="text-[#00263E] font-[500]">
+                  Type
+                </TableHead>
+                <TableHead className="text-[#00263E] font-[500]">
+                  Last Time Active
+                </TableHead>
+                <TableHead className="text-[#00263E] font-[500] ">
+                  #Session
+                </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {userData?.map((user) => (
-                <TableRow key={user?.userID}>
+                <TableRow
+                  key={user?.userID}
+                  className="cursor-pointer"
+                  onClick={() => handleRowClick(user)}
+                >
                   <TableCell>{user?.userID}</TableCell>
-                  <TableCell>{user?.fullName}</TableCell>
+                  <TableCell className="text-[#3E79F7]">
+                    {user?.fullName}
+                  </TableCell>
                   <TableCell>{user?.country}</TableCell>
                   <TableCell>{user?.type}</TableCell>
                   <TableCell>{user?.lastTimeActive}</TableCell>
                   <TableCell>{user?.sessions}</TableCell>
-                  <TableCell></TableCell>
                 </TableRow>
               ))}
             </TableBody>

@@ -7,7 +7,7 @@ function Layout() {
   const pathsWithoutNavbar = ["/videoCall"];
   const shouldShowNavbar = !pathsWithoutNavbar.includes(location.pathname);
   return (
-    <div className=" bg-[#f5f5f5] min-h-screen font-Poppins">
+    <div className=" bg-[#f5f5f5] min-h-screen font-Poppins ">
       {shouldShowNavbar && <Navbar />}
       <Outlet />
     </div>

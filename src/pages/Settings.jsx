@@ -2,6 +2,7 @@ import React from "react";
 import { CiLock } from "react-icons/ci";
 import { Link } from "react-router-dom";
 import { LuUsers } from "react-icons/lu";
+import { MdOutlinePeopleOutline } from "react-icons/md";
 import Sidebar from "@/components/Sidebar";
 
 function Settings() {
@@ -39,7 +40,7 @@ function Settings() {
                 </p>
               </div>
               <div className="w-[48px] h-[48px] rounded-[50%] bg-[#76BC21] flex items-center justify-center">
-                <LuUsers size={30} color="#fff" />
+                <MdOutlinePeopleOutline size={30} color="#fff" />
               </div>
             </div>
           </Link>

@@ -4,9 +4,15 @@ import { MdDashboard } from "react-icons/md";
 import { FiUsers } from "react-icons/fi";
 import { MdWifiCalling3 } from "react-icons/md";
 import { MdOutlineSettings } from "react-icons/md";
+import { MdOutlinePeopleOutline } from "react-icons/md";
+
 const sidebarData = [
   { navigate: "/overview", name: "Overview", icon: <MdDashboard size={30} /> },
-  { navigate: "/user", name: "Users", icon: <FiUsers size={30} /> },
+  {
+    navigate: "/user",
+    name: "Users",
+    icon: <MdOutlinePeopleOutline size={30} />,
+  },
   {
     navigate: "/callCenter",
     name: "Call Center",

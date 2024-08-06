@@ -38,7 +38,6 @@ function SexRatio() {
     const now = new Date();
     const filteredData = initialData.filter((d) => {
       const date = new Date(d.date);
-      //   return now - date <= pieChartDays * 24 * 60 * 60 * 1000;
       return (now - date) / (24 * 60 * 60 * 1000) <= pieChartDays;
     });
     setPieData(filteredData);

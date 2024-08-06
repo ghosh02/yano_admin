@@ -84,100 +84,97 @@ function AdminList() {
     setSortConfig({ key, direction });
   };
   return (
-    <div className="h-[calc(100vh-80px)] flex">
-      <Sidebar />
-      <div className="flex-1 h-screen mx-[32px] mt-[32px]">
-        <div className="flex justify-between items-center">
-          <Link to="/settings">
-            <div className="w-[92px] h-[40px] flex justify-center items-center bg-[#fff] my-3 gap-2 rounded-[8px]">
-              <IoMdArrowBack />
-              <p>Back</p>
-            </div>
-          </Link>
-          <Link to="createAdmin">
-            <Button className=" flex gap-3 items-center justify-center ">
-              <span>
-                <FaPlus size={12} />
-              </span>
-              Create a new admin
-            </Button>
-          </Link>
-        </div>
-        <div className=" mb-[24px] ">
-          <h1 className="text-[24px] font-[700]">Admin List</h1>
-          <p className="text-[14px] font-[400] text-[#72849A]">
-            Yano's admin user list
-          </p>
-        </div>
-        <div className="bg-[#fff] rounded-[8px] ">
-          <form className="p-[16px]">
-            <div className="flex items-center border rounded-[8px] md:w-2/3 lg:w-1/3 bg-[#EEEEEE] h-[40px] px-2 ">
-              <SearchIcon className="  h-4 w-4 text-gray-500" />
-              <input
-                className="w-full bg-transparent shadow-none border-none outline-none pl-2 "
-                placeholder="Search..."
-                type="search"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-            </div>
-          </form>
+    <div className="flex-1 h-screen mx-[32px] mt-[32px]">
+      <div className="flex justify-between items-center">
+        <Link to="/settings">
+          <div className="w-[92px] h-[40px] flex justify-center items-center bg-[#fff] my-3 gap-2 rounded-[8px]">
+            <IoMdArrowBack />
+            <p>Back</p>
+          </div>
+        </Link>
+        <Link to="createAdmin">
+          <Button className=" flex gap-3 items-center justify-center ">
+            <span>
+              <FaPlus size={12} />
+            </span>
+            Create a new admin
+          </Button>
+        </Link>
+      </div>
+      <div className=" mb-[24px] ">
+        <h1 className="text-[24px] font-[700]">Admin List</h1>
+        <p className="text-[14px] font-[400] text-[#72849A]">
+          Yano's admin user list
+        </p>
+      </div>
+      <div className="bg-[#fff] rounded-[8px] ">
+        <form className="p-[16px]">
+          <div className="flex items-center border rounded-[8px] md:w-2/3 lg:w-1/3 bg-[#EEEEEE] h-[40px] px-2 ">
+            <SearchIcon className="  h-4 w-4 text-gray-500" />
+            <input
+              className="w-full bg-transparent shadow-none border-none outline-none pl-2 "
+              placeholder="Search..."
+              type="search"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
+        </form>
 
-          <Table className="">
-            <TableHeader>
-              <TableRow>
-                <TableHead onClick={() => requestSort("id")}>
-                  <div className="flex items-center gap-2 cursor-pointer">
+        <Table className="">
+          <TableHeader>
+            <TableRow>
+              <TableHead onClick={() => requestSort("id")}>
+                <div className="flex items-center gap-2 cursor-pointer">
+                  <input type="checkbox" />
+                  User ID
+                </div>
+              </TableHead>
+              <TableHead
+                onClick={() => requestSort("full_name")}
+                className="cursor-pointer"
+              >
+                Full Name
+              </TableHead>
+              <TableHead
+                onClick={() => requestSort("permission")}
+                className="cursor-pointer"
+              >
+                Permissions
+              </TableHead>
+              <TableHead
+                onClick={() => requestSort("date_of_creation")}
+                className="cursor-pointer"
+              >
+                Date of creation
+              </TableHead>
+              <TableHead
+                onClick={() => requestSort("status")}
+                className="cursor-pointer"
+              >
+                Status
+              </TableHead>
+              <TableHead>Actions</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {sortedAdmins?.map((admin) => (
+              <TableRow key={admin?.id}>
+                <TableCell>
+                  <div className="flex items-center gap-2">
                     <input type="checkbox" />
-                    User ID
+                    {admin?.id}
                   </div>
-                </TableHead>
-                <TableHead
-                  onClick={() => requestSort("full_name")}
-                  className="cursor-pointer"
-                >
-                  Full Name
-                </TableHead>
-                <TableHead
-                  onClick={() => requestSort("permission")}
-                  className="cursor-pointer"
-                >
-                  Permissions
-                </TableHead>
-                <TableHead
-                  onClick={() => requestSort("date_of_creation")}
-                  className="cursor-pointer"
-                >
-                  Date of creation
-                </TableHead>
-                <TableHead
-                  onClick={() => requestSort("status")}
-                  className="cursor-pointer"
-                >
-                  Status
-                </TableHead>
-                <TableHead>Actions</TableHead>
+                </TableCell>
+                <TableCell>{admin?.full_name}</TableCell>
+                <TableCell>{admin?.permission}</TableCell>
+                <TableCell>{admin?.date_of_creation}</TableCell>
+                <TableCell>{admin?.status}</TableCell>
+                <TableCell></TableCell>
               </TableRow>
-            </TableHeader>
-            <TableBody>
-              {sortedAdmins?.map((admin) => (
-                <TableRow key={admin?.id}>
-                  <TableCell>
-                    <div className="flex items-center gap-2">
-                      <input type="checkbox" />
-                      {admin?.id}
-                    </div>
-                  </TableCell>
-                  <TableCell>{admin?.full_name}</TableCell>
-                  <TableCell>{admin?.permission}</TableCell>
-                  <TableCell>{admin?.date_of_creation}</TableCell>
-                  <TableCell>{admin?.status}</TableCell>
-                  <TableCell></TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
+            ))}
+          </TableBody>
+        </Table>
       </div>
     </div>
   );

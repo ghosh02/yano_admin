@@ -23,8 +23,6 @@ import { FaFolder } from "react-icons/fa6";
 import { IoIosSend } from "react-icons/io";
 import { IoAttachOutline } from "react-icons/io5";
 
-// import { IoClose } from "react-icons/io5";
-
 function VideoCall() {
   const [mode, setMode] = useState(false);
 
@@ -43,7 +41,7 @@ function VideoCall() {
   const handleClose = () => {
     setActiveLink(null);
   };
-
+  // chat
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [file, setFile] = useState(null);
@@ -161,14 +159,16 @@ function VideoCall() {
             className="flex flex-col items-center"
           >
             <div className="w-[40px] h-[40px] rounded-[50%] border-2 border-[#EEE] flex justify-center items-center">
-              <BiSolidUserDetail />
+              <BiSolidUserDetail
+                color={activeLink === "queue" ? "#0F8D47" : ""}
+              />
             </div>
 
             <p className="text-[12px] text-[#00263E]">Queue</p>
           </Link>
           <div className="flex gap-[17px]">
             <Link
-              onClick={() => handleLinkClick("video")}
+              //   onClick={() => handleLinkClick("video")}
               className=" flex flex-col items-center"
             >
               <div className="w-[40px] h-[40px] rounded-[50%] border-2 border-[#EEE] flex justify-center items-center">

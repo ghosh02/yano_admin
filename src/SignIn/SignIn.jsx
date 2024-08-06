@@ -17,7 +17,7 @@ function SignIn() {
     if (email && password) {
       navigate("/overview");
     }
-    console.log(email);
+    // console.log(email);
   };
 
   const isEmailError = isSubmitted && !email;

@@ -21,6 +21,7 @@ import CreateUser from "./user/CreateUser.jsx";
 import Overview from "./pages/Overview.jsx";
 import CallCenter from "./pages/CallCenter.jsx";
 import VideoCall from "./pages/VideoCall.jsx";
+import UserDetail from "./pages/UserDetail.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -37,12 +38,12 @@ const router = createBrowserRouter(
       <Route path="/user/createUser" element={<CreateUser />} />
       <Route path="/ForgotPassword" element={<ForgotPassword />} />
       <Route path="/ResetPasswordLink" element={<ResetPasswordLink />} />
+      <Route path="/userDetail/:userID" element={<UserDetail />} />
     </Route>
   )
 );
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <RouterProvider router={router} />
-    {/* <App /> */}
   </React.StrictMode>
 );

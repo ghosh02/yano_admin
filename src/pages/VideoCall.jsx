@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import patient from "../assets/patient.png";
 import thumnail from "../assets/thumbnail.png";
 import device from "../assets/device.png";
@@ -13,7 +13,7 @@ import { MdOutlineMonitorHeart } from "react-icons/md";
 import { GrNotes } from "react-icons/gr";
 import { TbReportMedical } from "react-icons/tb";
 import { Link } from "react-router-dom";
-import { IoMdCall } from "react-icons/io";
+import { IoMdArrowDropdown, IoMdCall } from "react-icons/io";
 import { callData } from "../constant/InitialData";
 import { RiBluetoothConnectFill } from "react-icons/ri";
 import { FaAngleRight } from "react-icons/fa6";
@@ -22,20 +22,28 @@ import { FaPaperclip } from "react-icons/fa";
 import { FaFolder } from "react-icons/fa6";
 import { IoIosSend } from "react-icons/io";
 import { IoAttachOutline } from "react-icons/io5";
+import { BsClock } from "react-icons/bs";
+import { BsArrowLeft } from "react-icons/bs";
+import { FaHeartCirclePlus } from "react-icons/fa6";
+import { MdCompress } from "react-icons/md";
+import { BiWater } from "react-icons/bi";
+import { FaTemperatureHalf } from "react-icons/fa6";
+import { MdBloodtype } from "react-icons/md";
+import { RxDash } from "react-icons/rx";
+import gsap from "gsap";
 
 function VideoCall() {
-  const [mode, setMode] = useState(false);
-
-  const handleMode = () => {
-    setMode(!mode);
-  };
+  // const [mode, setMode] = useState(false);
   const [activeLink, setActiveLink] = useState(null);
+  const [link, setLink] = useState("Trackers");
+  const [toolShow, setToolShow] = useState(true);
+  const [measurement, setMeasurement] = useState(false);
 
-  const handleLinkClick = (link) => {
-    setActiveLink(link);
+  const handleClick = (l) => {
+    setLink(l);
   };
   const [showProfile, setShowProfile] = useState(false);
-  const handleLink = (linkName) => {
+  const handleLinkClick = (linkName) => {
     setActiveLink(linkName);
   };
   const handleClose = () => {
@@ -73,6 +81,12 @@ function VideoCall() {
 
   const handleIconClick = () => {
     fileInputRef.current.click();
+  };
+  const handleTools = () => {
+    setToolShow(false);
+  };
+  const handleMeasurement = () => {
+    setMeasurement(true);
   };
   return (
     <div className="flex justify-center  py-[48px] px-[68px] gap-[16px]">
@@ -146,8 +160,12 @@ function VideoCall() {
       {/* main video section */}
       <div className="">
         <div className="relative w-[800px] h-[500px]">
-          <div className="w-full h-full bg-red-500">
+          <div className="w-full h-full">
             <img src={patient} alt="" className="w-full h-full object-cover" />
+          </div>
+          <div className="absolute top-0 left-0 bg-[#21212166] rounded-[6px] flex items-center gap-2 m-2 p-[4px]">
+            <BsClock color="white" />
+            <p className="text-[#fff] text-[12px]">1:12:30</p>
           </div>
           <div className="absolute top-0 right-0">
             <img src={thumnail} alt="" />
@@ -235,132 +253,231 @@ function VideoCall() {
       </div>
       <div className="">
         {activeLink === null && (
-          <div className=" p-[16px] bg-[#fff] w-[343px] rounded-[8px] ">
-            <img
-              src={patient}
-              alt=""
-              className="object-cover w-[56px] h-[56px] rounded-[50%]"
-            />
+          <div
+            className={`h-[550px] p-[16px] bg-[#fff] w-[343px] rounded-[8px] `}
+          >
+            <div className="flex  justify-between">
+              <img
+                src={patient}
+                alt=""
+                className="object-cover w-[56px] h-[56px] rounded-[50%]"
+              />
+              <Link onClick={() => setShowProfile(false)}>
+                <IoClose size={25} />
+              </Link>
+            </div>
             <div className="border-b-2 p-[16px]">
-              <p className="text-[14px] text-[#00263E] font-[600]">
+              <p className="text-[18px] text-[#00263E] font-[600]">
                 Wade Warren
               </p>
-              <div className="flex gap-[10px] text-[13px] text-[#546E7E]">
+              <div className="flex gap-[32px] text-[13px] text-[#546E7E]">
                 <div>
-                  <p>Sex: Male</p>
-                  <p>Blood type: O+</p>
-                  <p>Height: 160cm</p>
+                  <p>
+                    Sex: <span className="text-darkblue font-[600]">Male</span>
+                  </p>
+                  <p>
+                    Blood type:{" "}
+                    <span className="text-darkblue font-[600]">O+</span>
+                  </p>
+                  <p>
+                    Height:
+                    <span className="text-darkblue font-[600]"> 160 cm</span>
+                  </p>
                 </div>
 
                 <div>
-                  <p>Age: 68</p>
-                  <p>Weight: 80</p>
-                  <p>Location: Mexico</p>
+                  <p>
+                    Age: <span className="text-darkblue font-[600]">68</span>
+                  </p>
+                  <p>
+                    Weight: <span className="text-darkblue font-[600]">80</span>
+                  </p>
+                  <p>
+                    Location:{" "}
+                    <span className="text-darkblue font-[600]">Mexico</span>
+                  </p>
                 </div>
               </div>
             </div>
             <div className="flex justify-between p-[10px]">
               <Link
-                onClick={() => handleLinkClick("Health Profile")}
+                onClick={() => handleClick("Health Profile")}
                 className={`w-[50%] text-center font-[600] ${
-                  activeLink === "Health Profile"
-                    ? "text-[#76BC21] border-b-4 border-[#76BC21]"
+                  link === "Health Profile"
+                    ? "text-[#76BC21] border-b-2 border-[#76BC21]"
                     : "text-[#00263E]"
                 }`}
               >
                 Health Profile
               </Link>
               <Link
-                onClick={() => handleLinkClick("Trackers")}
+                onClick={() => handleClick("Trackers")}
                 className={`w-[50%] text-center font-[600] ${
-                  activeLink === "Trackers"
-                    ? "text-[#76BC21] border-b-4 border-[#76BC21]"
+                  link === "Trackers"
+                    ? "text-[#76BC21] border-b-2 border-[#76BC21]"
                     : "text-[#00263E]"
                 }`}
               >
                 Trackers
               </Link>
             </div>
-            <div className="flex justify-between px-[10px]">
-              <p>Tracker</p>
-              <p>Measurement</p>
-            </div>
             {/* Balchal code lekha ache */}
-            <div className="h-[270px] overflow-auto">
-              <div className="flex justify-between p-[10px]">
-                <div>
-                  <p className="text-[12px] text-[#00263E] ">
-                    Oxygen saturation
-                  </p>
-                  <p className="text-[12px] text-[#00263E] ">
-                    04:04 PM , 31 Aug
-                  </p>
+            {link === "Trackers" && (
+              <div>
+                <div className="flex justify-between bg-[#f5f5f5] p-[8px]">
+                  <div className="flex gap-3 items-center">
+                    <p className="text-[13px] text-[#1A3353]">Tracker</p>
+                    <IoMdArrowDropdown />
+                  </div>
+                  <div className="flex gap-3 items-center">
+                    <p className="text-[13px] text-[#1A3353]">Measurement</p>
+                    <IoMdArrowDropdown />
+                  </div>
                 </div>
-                <p className="text-[14px] text-[#00263E] ">98spO2H</p>
-              </div>
-              <div className="flex justify-between p-[10px]">
-                <div>
-                  <p className="text-[12px] text-[#00263E] ">
-                    Oxygen saturation
-                  </p>
-                  <p className="text-[12px] text-[#00263E] ">
-                    04:04 PM , 31 Aug
-                  </p>
+                <div className="h-[270px] overflow-auto">
+                  <div className="flex justify-between p-[10px]">
+                    <div>
+                      <p className="text-[12px] text-[#00263E] ">
+                        Oxygen saturation
+                      </p>
+                      <p className="text-[12px] text-[#00263E] ">
+                        04:04 PM , 31 Aug
+                      </p>
+                    </div>
+                    <p className="text-[14px] text-[#00263E] ">98spO2H</p>
+                  </div>
+                  <div className="flex justify-between p-[10px]">
+                    <div>
+                      <p className="text-[12px] text-[#00263E] ">
+                        Oxygen saturation
+                      </p>
+                      <p className="text-[12px] text-[#00263E] ">
+                        04:04 PM , 31 Aug
+                      </p>
+                    </div>
+                    <p className="text-[14px] text-[#00263E] ">98spO2H</p>
+                  </div>
+                  <div className="flex justify-between p-[10px]">
+                    <div>
+                      <p className="text-[12px] text-[#00263E] ">
+                        Oxygen saturation
+                      </p>
+                      <p className="text-[12px] text-[#00263E] ">
+                        04:04 PM , 31 Aug
+                      </p>
+                    </div>
+                    <p className="text-[14px] text-[#00263E] ">98spO2H</p>
+                  </div>
+                  <div className="flex justify-between p-[10px]">
+                    <div>
+                      <p className="text-[12px] text-[#00263E] ">
+                        Oxygen saturation
+                      </p>
+                      <p className="text-[12px] text-[#00263E] ">
+                        04:04 PM , 31 Aug
+                      </p>
+                    </div>
+                    <p className="text-[14px] text-[#00263E] ">98spO2H</p>
+                  </div>
+                  <div className="flex justify-between p-[10px]">
+                    <div>
+                      <p className="text-[12px] text-[#00263E] ">
+                        Oxygen saturation
+                      </p>
+                      <p className="text-[12px] text-[#00263E] ">
+                        04:04 PM , 31 Aug
+                      </p>
+                    </div>
+                    <p className="text-[14px] text-[#00263E] ">98spO2H</p>
+                  </div>
+                  <div className="flex justify-between p-[10px]">
+                    <div>
+                      <p className="text-[12px] text-[#00263E] ">
+                        Oxygen saturation
+                      </p>
+                      <p className="text-[12px] text-[#00263E] ">
+                        04:04 PM , 31 Aug
+                      </p>
+                    </div>
+                    <p className="text-[14px] text-[#00263E] ">98spO2H</p>
+                  </div>
                 </div>
-                <p className="text-[14px] text-[#00263E] ">98spO2H</p>
               </div>
-              <div className="flex justify-between p-[10px]">
-                <div>
-                  <p className="text-[12px] text-[#00263E] ">
-                    Oxygen saturation
-                  </p>
-                  <p className="text-[12px] text-[#00263E] ">
-                    04:04 PM , 31 Aug
-                  </p>
+            )}
+            {link === "Health Profile" && (
+              <div>
+                <div className="bg-[#f5f5f5] p-[8px]">
+                  <p className="text-[13px] text-[#1A3353]">Social history</p>
                 </div>
-                <p className="text-[14px] text-[#00263E] ">98spO2H</p>
-              </div>
-              <div className="flex justify-between p-[10px]">
-                <div>
-                  <p className="text-[12px] text-[#00263E] ">
-                    Oxygen saturation
-                  </p>
-                  <p className="text-[12px] text-[#00263E] ">
-                    04:04 PM , 31 Aug
-                  </p>
+                <div className="flex flex-col gap-1">
+                  <div className="flex items-center ">
+                    <p className="text-[13px] ">Occupation:</p>
+                    <p className="text-[13px] text-[#00263E] font-[500]">
+                      Engineer
+                    </p>
+                  </div>
+                  <div className="flex items-center ">
+                    <p className="text-[13px] ">Education:</p>
+                    <p className="text-[13px] text-[#00263E] font-[500]">
+                      Msc 2008
+                    </p>
+                  </div>
+                  <div className="flex items-center ">
+                    <p className="text-[13px] ">Birthplace:</p>
+                    <p className="text-[13px] text-[#00263E] font-[500]">
+                      Barquisimeto
+                    </p>
+                  </div>
+                  <div className="flex items-center ">
+                    <p className="text-[13px] ">Marital status:</p>
+                    <p className="text-[13px] text-[#00263E] font-[500]">
+                      Married
+                    </p>
+                  </div>
+                  <div className="flex items-center ">
+                    <p className="text-[13px] ">Children: </p>
+                    <p className="text-[13px] text-[#00263E] font-[500]">2</p>
+                  </div>
+                  <div className="flex items-center ">
+                    <p className="text-[13px] ">Religion:</p>
+                    <p className="text-[13px] text-[#00263E] font-[500]">
+                      Agnostic
+                    </p>
+                  </div>
+                  <div className="flex items-center ">
+                    <p className="text-[13px] ">Diet:</p>
+                    <p className="text-[13px] text-[#00263E] font-[500]">
+                      Vegan
+                    </p>
+                  </div>
+                  <div className="flex items-center ">
+                    <p className="text-[13px] ">Sexual orientation :</p>
+                    <p className="text-[13px] text-[#00263E] font-[500]">
+                      Heterosexual
+                    </p>
+                  </div>
+                  <div className="flex items-center ">
+                    <p className="text-[13px] ">Smoking: </p>
+                    <p className="text-[13px] text-[#00263E] font-[500]">No</p>
+                  </div>
+                  <div className="flex items-center ">
+                    <p className="text-[13px] ">Alcohol consumption: </p>
+                    <p className="text-[13px] text-[#00263E] font-[500]">No</p>
+                  </div>
+                  <div className="flex items-center ">
+                    <p className="text-[13px] ">Substance use: </p>
+                    <p className="text-[13px] text-[#00263E] font-[500]">No</p>
+                  </div>
                 </div>
-                <p className="text-[14px] text-[#00263E] ">98spO2H</p>
               </div>
-              <div className="flex justify-between p-[10px]">
-                <div>
-                  <p className="text-[12px] text-[#00263E] ">
-                    Oxygen saturation
-                  </p>
-                  <p className="text-[12px] text-[#00263E] ">
-                    04:04 PM , 31 Aug
-                  </p>
-                </div>
-                <p className="text-[14px] text-[#00263E] ">98spO2H</p>
-              </div>
-              <div className="flex justify-between p-[10px]">
-                <div>
-                  <p className="text-[12px] text-[#00263E] ">
-                    Oxygen saturation
-                  </p>
-                  <p className="text-[12px] text-[#00263E] ">
-                    04:04 PM , 31 Aug
-                  </p>
-                </div>
-                <p className="text-[14px] text-[#00263E] ">98spO2H</p>
-              </div>
-              {/* Balchal code lekha ache */}
-            </div>
+            )}
+            {/* Balchal code lekha ache */}
           </div>
         )}
         {activeLink === "mute" && <div>Mute Content</div>}
         {/* chat section */}
         {activeLink === "chat" && (
-          <div className="w-[325px] flex flex-col justify-between  h-[500px] border border-gray-300 rounded-lg ">
+          <div className="w-[343px] flex flex-col justify-between  h-[500px] border bg-white rounded-lg ">
             <div className="flex items-center justify-between px-[12px] py-[16px]">
               <h1 className="text-[00263E] font-[700]">Chat</h1>
               <IoClose
@@ -369,7 +486,7 @@ function VideoCall() {
                 onClick={handleClose}
               />
             </div>
-            <div className="flex-1 p-4 overflow-y-auto bg-gray-100">
+            <div className="flex-1 p-4 overflow-y-auto ">
               {messages.map((message, index) => (
                 <div
                   key={index}
@@ -379,15 +496,18 @@ function VideoCall() {
                 >
                   <div>
                     {message.text && (
-                      <p
-                        className={`inline-block p-2 rounded-t-[8px] rounded-bl-[8px] ${
+                      <div
+                        className={`inline-block p-1 rounded-t-[8px] rounded-bl-[8px] ${
                           message.sender === "User"
                             ? "bg-[#00263E] text-white"
                             : "bg-gray-300"
                         }`}
                       >
-                        {message.text}
-                      </p>
+                        <p className="text-[13px]">{message.text}</p>
+                        <p className="text-[8px] text-right text-[#B0BCC3]">
+                          5:20 A.M
+                        </p>
+                      </div>
                     )}
                     {message.file && (
                       <div className="mt-2 flex items-center">
@@ -424,24 +544,24 @@ function VideoCall() {
             </div>
             <form
               onSubmit={handleSendMessage}
-              className="flex flex-col p-4 border-t border-gray-300 space-y-2"
+              className="flex h-[48px] flex-col mx-4 mb-4 bg-[#eee] space-y-2"
             >
-              {filePreview && (
-                <div className="flex justify-center">
+              {/* {filePreview && (
+                <div className=" flex justify-left">
                   <img
                     src={filePreview}
                     alt="Preview"
-                    className="max-w-[100px] h-[50px] rounded-lg mb-2"
+                    className="max-w-[50px] h-[50px] rounded-lg mb-2"
                   />
                 </div>
-              )}
-              <div className="flex space-x-2">
+              )} */}
+              <div className="flex px-2 ">
                 <input
                   type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  placeholder="Type your message..."
-                  className="flex-1 p-2 border border-gray-300 rounded-lg outline-none"
+                  placeholder="Message"
+                  className="flex-1 h-[48px] p-2 bg-transparent outline-none"
                 />
                 <button type="button" onClick={handleIconClick} className="p-2">
                   <IoAttachOutline size={25} className="text-gray-500" />
@@ -460,23 +580,162 @@ function VideoCall() {
           </div>
         )}
         {activeLink === "tools" && (
-          <div className="w-[325px] bg-[#fff] p-[16px] rounded-[8px]">
-            <div className="flex items-center justify-between">
-              <p>Measurement Tools</p>
-              <IoClose className="cursor-pointer" onClick={handleClose} />
-            </div>
-            <div className="flex items-center gap-[20px] py-[10px]">
-              <img src={device} alt="" />
-              <div className="flex flex-col gap-[5px]">
-                <p>Monitor multiparameters</p>
-
-                <div className="w-[103px] px-[8px] py-[4px] flex items-center gap-2 text-[#0F8D47] bg-[#E7F4ED] rounded-[6px]">
-                  <RiBluetoothConnectFill />
-                  <p className="text-[12px]">connected</p>
+          <div>
+            {toolShow === true ? (
+              <div className="w-[343px] bg-[#fff] p-[16px] rounded-[8px]">
+                <div className="flex items-center justify-between">
+                  <p>Measurement Tools</p>
+                  <IoClose className="cursor-pointer" onClick={handleClose} />
                 </div>
+                <Link
+                  onClick={handleTools}
+                  className="flex items-center gap-[20px] py-[10px]"
+                >
+                  <img src={device} alt="" />
+                  <div className="flex flex-col gap-[5px]">
+                    <p>Monitor multiparameters</p>
+
+                    <div className="w-[103px] px-[8px] py-[4px] flex items-center gap-2 text-[#0F8D47] bg-[#E7F4ED] rounded-[6px]">
+                      <RiBluetoothConnectFill />
+                      <p className="text-[12px]">connected</p>
+                    </div>
+                  </div>
+                  <FaAngleRight className="cursor-pointer" />
+                </Link>
               </div>
-              <FaAngleRight className="cursor-pointer" />
-            </div>
+            ) : (
+              <div className="w-[343px] p-4 bg-white rounded-[8px]">
+                {measurement === false ? (
+                  <div>
+                    <div className="flex py-4 items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <BsArrowLeft
+                          className="cursor-pointer"
+                          onClick={() => {
+                            setToolShow(false);
+                          }}
+                          size={25}
+                        />
+                        <p className="text-darkblue text-[18px] font-[600]">
+                          Select a measurement
+                        </p>
+                      </div>
+                      <IoClose
+                        className="cursor-pointer"
+                        size={25}
+                        onClick={handleClose}
+                      />
+                    </div>
+                    <div className="flex flex-col ">
+                      <Link
+                        onClick={handleMeasurement}
+                        className="flex items-center justify-between border-b py-4"
+                      >
+                        <div className="flex items-center gap-3">
+                          <FaHeartCirclePlus size={25} color="#5B99C2" />
+                          <p className="text-darkblue text-[16px] font-[600]">
+                            Heart rate
+                          </p>
+                        </div>
+                        <FaAngleRight className="cursor-pointer" />
+                      </Link>
+                      <Link
+                        onClick={handleMeasurement}
+                        className="flex items-center justify-between border-b py-4"
+                      >
+                        <div className="flex items-center gap-3">
+                          <MdCompress size={25} color="red" />
+                          <p className="text-darkblue text-[16px] font-[600]">
+                            Blood pressure
+                          </p>
+                        </div>
+                        <FaAngleRight className="cursor-pointer" />
+                      </Link>
+                      <Link className="flex items-center justify-between border-b py-4">
+                        <div className="flex items-center gap-3">
+                          <BiWater size={25} color="#3FA2F6" />
+                          <p className="text-darkblue text-[16px] font-[600]">
+                            Oxygen saturation
+                          </p>
+                        </div>
+                        <FaAngleRight className="cursor-pointer" />
+                      </Link>
+                      <Link className="flex items-center justify-between border-b py-4">
+                        <div className="flex items-center gap-3">
+                          <FaTemperatureHalf size={25} color="1F316F" />
+                          <p className="text-darkblue text-[16px] font-[600]">
+                            Body temperature
+                          </p>
+                        </div>
+                        <FaAngleRight className="cursor-pointer" />
+                      </Link>
+                      <Link className="flex items-center justify-between border-b py-4">
+                        <div className="flex items-center gap-3">
+                          <MdOutlineMonitorHeart size={25} color="green" />
+                          <p className="text-darkblue text-[16px] font-[600]">
+                            ECG
+                          </p>
+                        </div>
+                        <FaAngleRight className="cursor-pointer" />
+                      </Link>
+                      <Link className="flex items-center justify-between  py-4">
+                        <div className="flex items-center gap-3">
+                          <MdBloodtype size={25} color="red" />
+                          <p className="text-darkblue text-[16px] font-[600]">
+                            Blood glucose
+                          </p>
+                        </div>
+                        <FaAngleRight className="cursor-pointer" />
+                      </Link>
+                    </div>
+                  </div>
+                ) : (
+                  <div>
+                    <div className="flex py-4 items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <BsArrowLeft
+                          className="cursor-pointer"
+                          onClick={() => {
+                            setMeasurement(false);
+                          }}
+                          size={20}
+                        />
+                        <p className="text-darkblue text-[18px] font-[600]">
+                          Heart Rate
+                        </p>
+                      </div>
+                      <IoClose
+                        className="cursor-pointer"
+                        size={25}
+                        onClick={handleClose}
+                      />
+                    </div>
+                    <div className="h-[120px] border rounded-[8px]">
+                      <div className="flex h-full">
+                        <div className="w-[60%] h-full border-r flex flex-col items-center justify-center">
+                          <div className="flex">
+                            <RxDash size={25} />
+                            <RxDash size={25} />
+                          </div>
+                          <p className="">beats/min</p>
+                        </div>
+                        <div className="h-full flex-1 flex flex-col items-center justify-center ">
+                          <p>Blood oxygen</p>
+                          <div className="flex">
+                            <RxDash size={25} />
+                            <RxDash size={25} />
+                          </div>
+                          <p>SpO2H</p>
+                        </div>
+                      </div>
+                    </div>
+                    <button className="w-full bg-darkblue py-3 rounded-[8px] text-white">
+                      start measuring
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         )}
         {activeLink === "notes" && <div>Notes Content</div>}

@@ -239,7 +239,7 @@ const Overview = () => {
   const navigate = useNavigate();
 
   const handleRowClick = (user) => {
-    navigate(`/userDetail/${user?.userID}`, { state: { user } });
+    navigate(`/user/${user?.userID}`, { state: { user } });
     // console.log(user);
   };
   return (
@@ -357,7 +357,7 @@ const Overview = () => {
                 </p>
                 <div className="flex gap-1 items-center">
                   <FaLongArrowAltUp size={12} color="#76BC21" />
-                  <p className="text-[#76BC21]"> {item.rate}%</p>
+                  <p className="text-[#76BC21] text-[13px]"> {item.rate}%</p>
                 </div>
               </Link>
             ))}

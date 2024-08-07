@@ -1,7 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { MdDashboard } from "react-icons/md";
-import { FiUsers } from "react-icons/fi";
 import { MdWifiCalling3 } from "react-icons/md";
 import { MdOutlineSettings } from "react-icons/md";
 import { MdOutlinePeopleOutline } from "react-icons/md";
@@ -37,7 +36,7 @@ function Sidebar() {
                 className={({ isActive }) =>
                   ` flex items-center gap-3 rounded-l-[10px] px-3 py-2  transition-all hover:text-[#00263E] dark:text-gray-400 dark:hover:text-gray-50 ${
                     isActive
-                      ? "bg-[#F5F5F5] border-r-4 border-[#76BC21] text-[#00263E] font-[600]"
+                      ? "bg-[#F5F5F5] border-r-4 border-darkgreen text-[#00263E] font-[600]"
                       : "text-[#455560] "
                   }`
                 }

@@ -1,5 +1,5 @@
 import Sidebar from "@/components/Sidebar";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import patient from "../assets/patient.png";
 import { MdVideoCall } from "react-icons/md";
 import { IoMdCall } from "react-icons/io";
@@ -7,6 +7,10 @@ import { MdCallEnd } from "react-icons/md";
 import { FaRegUserCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import ToggleButton from "@/components/ToggleButton";
+import { IoClose } from "react-icons/io5";
+import { gsap } from "gsap";
+import { IoIosTrendingDown } from "react-icons/io";
+import { IoMdArrowDropdown } from "react-icons/io";
 const callData = [
   {
     name: "Ester Howard",
@@ -54,6 +58,8 @@ function CallCenter() {
   const [showProfile, setShowProfile] = useState(false);
   const [mode, setMode] = useState(false);
   const [activeLink, setActiveLink] = useState("Trackers");
+  const liveConsultationRef = useRef(null);
+  const doctor = useRef(null);
 
   const handleLinkClick = (linkName) => {
     setActiveLink(linkName);
@@ -62,11 +68,47 @@ function CallCenter() {
     setMode(!mode);
     setShowProfile(false);
   };
+  useEffect(() => {
+    if (doctor.current) {
+      if (mode === false) {
+        gsap.fromTo(
+          doctor.current,
+          { x: 400, duration: 0.5 }, // Start position off-screen
+          { x: 0, duration: 0.5 } // End position at the destination
+        );
+      } else {
+        gsap.fromTo(
+          doctor.current,
+          { x: -400, duration: 0.5 }, // Start position off-screen
+          { x: 0, duration: 0.5 } // End position at the destination
+        );
+      }
+    }
+  }, [mode, showProfile]);
+
+  useEffect(() => {
+    if (liveConsultationRef.current) {
+      if (mode === true) {
+        gsap.fromTo(
+          liveConsultationRef.current,
+          { opacity: 0 },
+          { opacity: 1, duration: 0.5 }
+        );
+      } else {
+        gsap.fromTo(
+          liveConsultationRef.current,
+          { opacity: 1 },
+          { opacity: 0, duration: 0.5 }
+        );
+      }
+    }
+  }, [mode]);
   return (
     <div className="h-[calc(100vh-80px)] flex ">
       <Sidebar className="flex-1" />
       <div className="p-[32px] flex gap-[30px]  h-[calc(100vh-80px)]">
         <div
+          ref={liveConsultationRef}
           className={`h-[550px] p-[16px] bg-[#fff] w-[343px] rounded-[8px] transition-all  ${
             mode ? "block" : "hidden"
           }`}
@@ -74,6 +116,7 @@ function CallCenter() {
           <p className="text-[#00263E] text-[18px] font-[600]">
             Live consultations
           </p>
+
           <div className="flex items-center gap-[10px] p-[16px] ">
             <div className="bg-[#0F8D47] h-[8px] w-[8px] rounded-[50%]" />
             <p className="text-[#3D5A6C] texxt-[12px] font-[600]">Active</p>
@@ -108,7 +151,7 @@ function CallCenter() {
               <Link className="w-[32px] h-[32px] rounded-[50%] bg-[#D82724] flex items-center justify-center ">
                 <MdCallEnd color="#fff" />
               </Link>
-              <Link className="rounded-[50%] flex items-center justify-center ">
+              <Link className="w-[32px] h-[32px] border rounded-[50%] flex items-center justify-center ">
                 <FaRegUserCircle
                   color="#76BC21"
                   onClick={() => setShowProfile(!showProfile)}
@@ -152,24 +195,44 @@ function CallCenter() {
             showProfile ? "block" : "hidden"
           }`}
         >
-          <img
-            src={patient}
-            alt=""
-            className="object-cover w-[56px] h-[56px] rounded-[50%]"
-          />
+          <div className="flex  justify-between">
+            <img
+              src={patient}
+              alt=""
+              className="object-cover w-[56px] h-[56px] rounded-[50%]"
+            />
+            <Link onClick={() => setShowProfile(false)}>
+              <IoClose size={25} />
+            </Link>
+          </div>
           <div className="border-b-2 p-[16px]">
-            <p className="text-[14px] text-[#00263E] font-[600]">Wade Warren</p>
-            <div className="flex gap-[10px] text-[13px] text-[#546E7E]">
+            <p className="text-[18px] text-[#00263E] font-[600]">Wade Warren</p>
+            <div className="flex gap-[32px] text-[13px] text-[#546E7E]">
               <div>
-                <p>Sex: Male</p>
-                <p>Blood type: O+</p>
-                <p>Height: 160cm</p>
+                <p>
+                  Sex: <span className="text-darkblue font-[600]">Male</span>
+                </p>
+                <p>
+                  Blood type:{" "}
+                  <span className="text-darkblue font-[600]">O+</span>
+                </p>
+                <p>
+                  Height:
+                  <span className="text-darkblue font-[600]"> 160 cm</span>
+                </p>
               </div>
 
               <div>
-                <p>Age: 68</p>
-                <p>Weight: 80</p>
-                <p>Location: Mexico</p>
+                <p>
+                  Age: <span className="text-darkblue font-[600]">68</span>
+                </p>
+                <p>
+                  Weight: <span className="text-darkblue font-[600]">80</span>
+                </p>
+                <p>
+                  Location:{" "}
+                  <span className="text-darkblue font-[600]">Mexico</span>
+                </p>
               </div>
             </div>
           </div>
@@ -178,7 +241,7 @@ function CallCenter() {
               onClick={() => handleLinkClick("Health Profile")}
               className={`w-[50%] text-center font-[600] ${
                 activeLink === "Health Profile"
-                  ? "text-[#76BC21] border-b-4 border-[#76BC21]"
+                  ? "text-[#76BC21] border-b-2 border-[#76BC21]"
                   : "text-[#00263E]"
               }`}
             >
@@ -188,66 +251,168 @@ function CallCenter() {
               onClick={() => handleLinkClick("Trackers")}
               className={`w-[50%] text-center font-[600] ${
                 activeLink === "Trackers"
-                  ? "text-[#76BC21] border-b-4 border-[#76BC21]"
+                  ? "text-[#76BC21] border-b-2 border-[#76BC21]"
                   : "text-[#00263E]"
               }`}
             >
               Trackers
             </Link>
           </div>
-          <div className="flex justify-between px-[10px]">
-            <p>Tracker</p>
-            <p>Measurement</p>
-          </div>
           {/* Balchal code lekha ache */}
-          <div className="h-[270px] overflow-auto">
-            <div className="flex justify-between p-[10px]">
-              <div>
-                <p className="text-[12px] text-[#00263E] ">Oxygen saturation</p>
-                <p className="text-[12px] text-[#00263E] ">04:04 PM , 31 Aug</p>
+          {activeLink === "Trackers" && (
+            <div>
+              <div className="flex justify-between bg-[#f5f5f5] p-[8px]">
+                <div className="flex gap-3 items-center">
+                  <p className="text-[13px] text-[#1A3353]">Tracker</p>
+                  <IoMdArrowDropdown />
+                </div>
+                <div className="flex gap-3 items-center">
+                  <p className="text-[13px] text-[#1A3353]">Measurement</p>
+                  <IoMdArrowDropdown />
+                </div>
               </div>
-              <p className="text-[14px] text-[#00263E] ">98spO2H</p>
-            </div>
-            <div className="flex justify-between p-[10px]">
-              <div>
-                <p className="text-[12px] text-[#00263E] ">Oxygen saturation</p>
-                <p className="text-[12px] text-[#00263E] ">04:04 PM , 31 Aug</p>
+              <div className="h-[270px] overflow-auto">
+                <div className="flex justify-between p-[10px]">
+                  <div>
+                    <p className="text-[12px] text-[#00263E] ">
+                      Oxygen saturation
+                    </p>
+                    <p className="text-[12px] text-[#00263E] ">
+                      04:04 PM , 31 Aug
+                    </p>
+                  </div>
+                  <p className="text-[14px] text-[#00263E] ">98spO2H</p>
+                </div>
+                <div className="flex justify-between p-[10px]">
+                  <div>
+                    <p className="text-[12px] text-[#00263E] ">
+                      Oxygen saturation
+                    </p>
+                    <p className="text-[12px] text-[#00263E] ">
+                      04:04 PM , 31 Aug
+                    </p>
+                  </div>
+                  <p className="text-[14px] text-[#00263E] ">98spO2H</p>
+                </div>
+                <div className="flex justify-between p-[10px]">
+                  <div>
+                    <p className="text-[12px] text-[#00263E] ">
+                      Oxygen saturation
+                    </p>
+                    <p className="text-[12px] text-[#00263E] ">
+                      04:04 PM , 31 Aug
+                    </p>
+                  </div>
+                  <p className="text-[14px] text-[#00263E] ">98spO2H</p>
+                </div>
+                <div className="flex justify-between p-[10px]">
+                  <div>
+                    <p className="text-[12px] text-[#00263E] ">
+                      Oxygen saturation
+                    </p>
+                    <p className="text-[12px] text-[#00263E] ">
+                      04:04 PM , 31 Aug
+                    </p>
+                  </div>
+                  <p className="text-[14px] text-[#00263E] ">98spO2H</p>
+                </div>
+                <div className="flex justify-between p-[10px]">
+                  <div>
+                    <p className="text-[12px] text-[#00263E] ">
+                      Oxygen saturation
+                    </p>
+                    <p className="text-[12px] text-[#00263E] ">
+                      04:04 PM , 31 Aug
+                    </p>
+                  </div>
+                  <p className="text-[14px] text-[#00263E] ">98spO2H</p>
+                </div>
+                <div className="flex justify-between p-[10px]">
+                  <div>
+                    <p className="text-[12px] text-[#00263E] ">
+                      Oxygen saturation
+                    </p>
+                    <p className="text-[12px] text-[#00263E] ">
+                      04:04 PM , 31 Aug
+                    </p>
+                  </div>
+                  <p className="text-[14px] text-[#00263E] ">98spO2H</p>
+                </div>
               </div>
-              <p className="text-[14px] text-[#00263E] ">98spO2H</p>
             </div>
-            <div className="flex justify-between p-[10px]">
-              <div>
-                <p className="text-[12px] text-[#00263E] ">Oxygen saturation</p>
-                <p className="text-[12px] text-[#00263E] ">04:04 PM , 31 Aug</p>
+          )}
+          {activeLink === "Health Profile" && (
+            <div>
+              <div className="bg-[#f5f5f5] p-[8px]">
+                <p className="text-[13px] text-[#1A3353]">Social history</p>
               </div>
-              <p className="text-[14px] text-[#00263E] ">98spO2H</p>
-            </div>
-            <div className="flex justify-between p-[10px]">
-              <div>
-                <p className="text-[12px] text-[#00263E] ">Oxygen saturation</p>
-                <p className="text-[12px] text-[#00263E] ">04:04 PM , 31 Aug</p>
+              <div className="flex flex-col gap-1">
+                <div className="flex items-center ">
+                  <p className="text-[13px] ">Occupation:</p>
+                  <p className="text-[13px] text-[#00263E] font-[500]">
+                    Engineer
+                  </p>
+                </div>
+                <div className="flex items-center ">
+                  <p className="text-[13px] ">Education:</p>
+                  <p className="text-[13px] text-[#00263E] font-[500]">
+                    Msc 2008
+                  </p>
+                </div>
+                <div className="flex items-center ">
+                  <p className="text-[13px] ">Birthplace:</p>
+                  <p className="text-[13px] text-[#00263E] font-[500]">
+                    Barquisimeto
+                  </p>
+                </div>
+                <div className="flex items-center ">
+                  <p className="text-[13px] ">Marital status:</p>
+                  <p className="text-[13px] text-[#00263E] font-[500]">
+                    Married
+                  </p>
+                </div>
+                <div className="flex items-center ">
+                  <p className="text-[13px] ">Children: </p>
+                  <p className="text-[13px] text-[#00263E] font-[500]">2</p>
+                </div>
+                <div className="flex items-center ">
+                  <p className="text-[13px] ">Religion:</p>
+                  <p className="text-[13px] text-[#00263E] font-[500]">
+                    Agnostic
+                  </p>
+                </div>
+                <div className="flex items-center ">
+                  <p className="text-[13px] ">Diet:</p>
+                  <p className="text-[13px] text-[#00263E] font-[500]">Vegan</p>
+                </div>
+                <div className="flex items-center ">
+                  <p className="text-[13px] ">Sexual orientation :</p>
+                  <p className="text-[13px] text-[#00263E] font-[500]">
+                    Heterosexual
+                  </p>
+                </div>
+                <div className="flex items-center ">
+                  <p className="text-[13px] ">Smoking: </p>
+                  <p className="text-[13px] text-[#00263E] font-[500]">No</p>
+                </div>
+                <div className="flex items-center ">
+                  <p className="text-[13px] ">Alcohol consumption: </p>
+                  <p className="text-[13px] text-[#00263E] font-[500]">No</p>
+                </div>
+                <div className="flex items-center ">
+                  <p className="text-[13px] ">Substance use: </p>
+                  <p className="text-[13px] text-[#00263E] font-[500]">No</p>
+                </div>
               </div>
-              <p className="text-[14px] text-[#00263E] ">98spO2H</p>
             </div>
-            <div className="flex justify-between p-[10px]">
-              <div>
-                <p className="text-[12px] text-[#00263E] ">Oxygen saturation</p>
-                <p className="text-[12px] text-[#00263E] ">04:04 PM , 31 Aug</p>
-              </div>
-              <p className="text-[14px] text-[#00263E] ">98spO2H</p>
-            </div>
-            <div className="flex justify-between p-[10px]">
-              <div>
-                <p className="text-[12px] text-[#00263E] ">Oxygen saturation</p>
-                <p className="text-[12px] text-[#00263E] ">04:04 PM , 31 Aug</p>
-              </div>
-              <p className="text-[14px] text-[#00263E] ">98spO2H</p>
-            </div>
-            {/* Balchal code lekha ache */}
-          </div>
+          )}
+          {/* Balchal code lekha ache */}
         </div>
         {/* doctor profile */}
-        <div className="p-[16px] bg-[#fff] w-[343px] rounded-[8px] h-[400px]">
+        <div
+          ref={doctor}
+          className="p-[16px] bg-[#fff] w-[343px] rounded-[8px] h-[410px]"
+        >
           <img
             src={patient}
             alt=""
@@ -278,14 +443,20 @@ function CallCenter() {
               <p className="text-[#335165] text-[13px]">Total patient</p>
               <div className="flex gap-[20px]">
                 <p className="font-[600] text-[18px]">120</p>
-                <p className="text-red-600">-2%</p>
+                <div className="flex items-center gap-1">
+                  <IoIosTrendingDown color="red" />
+                  <p className="text-red-600 text-[12px]">2%</p>
+                </div>
               </div>
             </div>
             <div className="m-[10px]">
               <p className="text-[#335165] text-[13px]">Average age</p>
               <div className="flex gap-[20px]">
                 <p className="font-[600] text-[18px]">55</p>
-                <p className="text-red-600">-2%</p>
+                <div className="flex items-center gap-1">
+                  <IoIosTrendingDown color="red" />
+                  <p className="text-red-600 text-[12px]">2%</p>
+                </div>
               </div>
             </div>
             <div className="m-[10px]">
@@ -294,16 +465,37 @@ function CallCenter() {
               </p>
               <div className="flex gap-[20px]">
                 <p className="font-[600] text-[18px]">12</p>
-                <p className="text-red-600">-2%</p>
+                <div className="flex items-center gap-1">
+                  <IoIosTrendingDown color="red" />
+                  <p className="text-red-600 text-[12px]">2%</p>
+                </div>
               </div>
             </div>
             <div className="m-[10px]">
               <p className="text-[#335165] text-[13px]">Average duration</p>
-              <div className="flex gap-[20px]">
+              <div className="flex gap-[10px]">
                 <p className="font-[600] text-[18px]">30 min</p>
-                <p className="text-red-600">-2%</p>
+                <div className="flex items-center gap-1">
+                  <IoIosTrendingDown color="red" />
+                  <p className="text-red-600 text-[12px]">2%</p>
+                </div>
               </div>
             </div>
+          </div>
+          <div className="flex justify-end mb-2">
+            <select
+              name=""
+              id=""
+              className="outline-none border p-1 bg-[#f5f5f5] rounded-[4px]"
+            >
+              <option value="">Today</option>
+              <option value="">Yesterday</option>
+              <option value="" selected>
+                Last 7 Days
+              </option>
+              <option value="">Last 28 Days</option>
+              <option value="">Last 90 Days</option>
+            </select>
           </div>
         </div>
       </div>

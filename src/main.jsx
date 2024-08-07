@@ -38,7 +38,7 @@ const router = createBrowserRouter(
       <Route path="/user/createUser" element={<CreateUser />} />
       <Route path="/ForgotPassword" element={<ForgotPassword />} />
       <Route path="/ResetPasswordLink" element={<ResetPasswordLink />} />
-      <Route path="/userDetail/:userID" element={<UserDetail />} />
+      <Route path="/user/:userID" element={<UserDetail />} />
     </Route>
   )
 );

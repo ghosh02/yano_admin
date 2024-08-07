@@ -3,6 +3,9 @@
 @tailwind components;
 @tailwind utilities;
 
+.custom-option-bg option {
+  @apply bg-gray-100; /* Use Tailwind's bg color class here */
+}
 @layer base {
   :root {
     --background: 0 0% 100%;

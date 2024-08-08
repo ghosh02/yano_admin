@@ -152,7 +152,7 @@ export function DobPicker({ onsubmit }) {
                   </FormControl>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar
+                  {/* <Calendar
                     className="rounded-md border"
                     mode="single"
                     selected={field.value}
@@ -161,7 +161,7 @@ export function DobPicker({ onsubmit }) {
                       date > new Date() || date < new Date("1900-01-01")
                     }
                     initialFocus
-                  />
+                  /> */}
                   <div className="flex justify-between flex-1 space-x-4 p-2">
                     <Button
                       className="w-[136px]"

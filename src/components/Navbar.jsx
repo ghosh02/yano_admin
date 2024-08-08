@@ -14,10 +14,13 @@ import { MdLogout } from "react-icons/md";
 import { IoIosArrowUp } from "react-icons/io";
 import { LogIn } from "lucide-react";
 import { Link } from "react-router-dom";
+import spain from "../assets/icons/spain.png";
+import us from "../assets/icons/united-states.png";
+import brazil from "../assets/icons/brazil.png";
+import downside from "../assets/icons/downside.png";
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState("EN");
 
   const toggle = () => setIsOpen(!isOpen);
 
@@ -28,17 +31,69 @@ function Navbar() {
   const handleClick = () => {
     setIsLogin(false);
   };
+  const [isOption, setIsOption] = useState(false);
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedValue, setSelectedValue] = useState("");
+
+  const options = [
+    { label: "English", img: us, value: "EN" },
+    { label: "Spanish", img: spain, value: "SP" },
+    { label: "License", img: brazil, value: "PO" },
+    // { label: "Sign out",img:us, value: "sign" },
+  ];
+
+  const toggleDropdown = () => {
+    setIsOption(!isOption);
+  };
+
+  const handleOptionClick = (option) => {
+    setSelectedOption(option.label);
+    setSelectedValue(option.value);
+    setIsOption(false);
+  };
   return (
     <div className="h-[80px] bg-[#fff] flex items-center flex-row justify-between px-[32px] sticky z-50 top-0 border-b">
       <div>
-        <img src={Logo} alt="" />
+        <img src={Logo} alt="" className="w-[104px] h-[40px]" />
       </div>
       <div className="flex gap-[20px] items-center">
-        <select className="w-[57px] h-[32px] border-[#EEE] border outline-none p-[4px] rounded-[4px] text-[14px]">
-          <option value="en">EN</option>
-          <option value="fr">French</option>
-          <option value="fs">Spanish</option>
-        </select>
+        <div className="relative inline-block text-left">
+          <div>
+            <button
+              type="button"
+              className="w-[57px] flex gap-1 items-center  justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-[#00263E] hover:bg-gray-50 focus:outline-none"
+              onClick={toggleDropdown}
+            >
+              {selectedValue || "EN"}
+              <img src={downside} alt="" />
+            </button>
+          </div>
+
+          {isOption && (
+            <div
+              className="origin-top-right absolute  -left-12 mt-2 w-[148px] rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5"
+              role="menu"
+              aria-orientation="vertical"
+              aria-labelledby="menu-button"
+            >
+              <div className="p-1" role="none">
+                {options.map((option) => (
+                  <a
+                    key={option.value}
+                    href="#"
+                    className={`flex items-center gap-[10px]  text-[#455560] px-4 py-4 text-sm hover:bg-gray-100 `}
+                    role="menuitem"
+                    onClick={() => handleOptionClick(option)}
+                  >
+                    <img src={option.img} alt="" />
+                    {option.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+        {/* dropdown end  */}
         <div className="flex items-center gap-2 ">
           <div>
             <p className="text-darkblue font-[600]">Dr. Roger Hopkins</p>

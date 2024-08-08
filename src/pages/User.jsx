@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 // import { useSelector } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
 import {
@@ -13,9 +13,19 @@ import Sidebar from "@/components/Sidebar";
 import { Button } from "@/components/ui/button.jsx";
 import { IoMdArrowBack } from "react-icons/io";
 import { FaPlus } from "react-icons/fa6";
+import downgray from "../assets/icons/downgray.png";
+import threedot from "../assets/icons/threedot.jpg";
+import search from "../assets/icons/search.png";
+import filterimg from "../assets/icons/filter.png";
+import FilterDropdown from "@/components/FilterDropdown";
+import close from "../assets/icons/close.png";
+import arrowback from "../assets/icons/arrowback.png";
+import arrowforward from "../assets/icons/arrowforward.png";
+import calendar from "../assets/icons/calendar.png";
+
 const data = [
   {
-    user_id: "001",
+    user_id: "1",
     full_name: "John Doe",
     country: "USA",
     type: "patient",
@@ -23,7 +33,7 @@ const data = [
     status: "active",
   },
   {
-    user_id: "002",
+    user_id: "1",
     full_name: "Jane Smith",
     country: "Canada",
     type: "patient",
@@ -31,7 +41,7 @@ const data = [
     status: "active",
   },
   {
-    user_id: "003",
+    user_id: "1",
     full_name: "Carlos Ramirez",
     country: "Mexico",
     type: "patient",
@@ -39,7 +49,7 @@ const data = [
     status: "active",
   },
   {
-    user_id: "004",
+    user_id: "1",
     full_name: "Anna Müller",
     country: "Germany",
     type: "patient",
@@ -47,7 +57,7 @@ const data = [
     status: "active",
   },
   {
-    user_id: "005",
+    user_id: "1",
     full_name: "Yuki Tanaka",
     country: "Japan",
     type: "patient",
@@ -57,6 +67,34 @@ const data = [
 ];
 
 export default function User() {
+  const [country, setCountry] = useState(null);
+  const [status, setStatus] = useState(null);
+  const [type, setType] = useState(null);
+  const [filter, setFilter] = useState(false);
+
+  const countryList = [
+    { label: "Mexico", value: "Mexico" },
+    { label: "Brazil", value: "Brazil" },
+    { label: "Venezuela", value: "Venezuela" },
+    { label: "Colombia", value: "Colombia" },
+  ];
+  const statusList = [
+    { label: "Active", value: "active" },
+    { label: "Inactive", value: "inactive" },
+  ];
+  const typeList = [
+    { label: "Patient", value: "patient" },
+    { label: "Helthcare provider", value: "helthcareProvider" },
+  ];
+  const handleCountryChange = (option) => {
+    setCountry(option);
+  };
+  const handleStatus = (option) => {
+    setStatus(option);
+  };
+  const handleType = (option) => {
+    setType(option);
+  };
   return (
     <div className="grid min-h-screen max-w-screen ">
       <div className="flex w-full">
@@ -80,43 +118,178 @@ export default function User() {
 
           <div className="flex flex-col flex-1">
             <main className="flex flex-col gap-4">
-              <div className="border shadow-sm rounded-lg">
+              <div className="border shadow-sm rounded-lg bg-white">
+                <form className="p-[16px] flex justify-between items-center">
+                  <div
+                    className={`flex items-center border rounded-[8px]  bg-[#fafafa] h-[40px] px-2 ${
+                      filter ? "w-1/4" : "w-1/3"
+                    }`}
+                  >
+                    <img src={search} alt="" />
+                    <input
+                      className="w-full bg-transparent shadow-none border-none outline-none pl-2 placeholder-[#72849A]"
+                      placeholder="Search for users ..."
+                      type="search"
+                      // value={searchQuery}
+                      // onChange={(e) => setSearchQuery(e.target.value)}
+                    />
+                  </div>
+                  <div>
+                    {filter === false ? (
+                      <Link
+                        onClick={() => {
+                          setFilter(true);
+                        }}
+                        className="flex items-center flex-wrap gap-[8px] border-2 px-[12px] py-[8px] rounded-[8px]"
+                      >
+                        <img src={filterimg} alt="" />
+                        <p className="text-[#455560] font-medium">Add filter</p>
+                      </Link>
+                    ) : (
+                      <div className="flex gap-[24px]">
+                        <FilterDropdown
+                          options={statusList}
+                          onOptionSelect={handleStatus}
+                          name="Status"
+                        />
+                        <FilterDropdown
+                          options={countryList}
+                          onOptionSelect={handleCountryChange}
+                          name="country"
+                        />
+
+                        <FilterDropdown
+                          options={typeList}
+                          onOptionSelect={handleType}
+                          name="Type"
+                          width={200}
+                        />
+                        <Link className="flex items-center gap-2 px-[12px] py-[8px] border-2 rounded-[6px] bg-[#fafafa]">
+                          <p className="text-[#455560]">May 8 - June 8,1992</p>
+                          <img
+                            src={calendar}
+                            alt=""
+                            className="w-[16px] h-[16px]"
+                          />
+                        </Link>
+                        <Link
+                          onClick={() => {
+                            setFilter(false);
+                          }}
+                          className="flex items-center justify-center px-[12px] py-[8px] border-2 rounded-[6px] bg-[#fafafa]"
+                        >
+                          <img src={close} alt="" />
+                        </Link>
+                      </div>
+                    )}
+                  </div>
+                </form>
                 <Table>
                   <TableHeader>
                     <TableRow>
                       <TableHead>
                         <div className="flex items-center gap-2">
-                          <input type="checkbox" />
-                          User ID
+                          <div className="h-[18px] w-[18px] border-[#C3C4C3] border-[3px]" />
+                          <div className="flex items-center gap-3">
+                            <p className="text-[#1A3353] font-medium">
+                              User ID
+                            </p>
+                            <img src={downgray} alt="" />
+                          </div>
                         </div>
                       </TableHead>
-                      <TableHead>Full Name</TableHead>
-                      <TableHead>Country</TableHead>
-                      <TableHead>Type</TableHead>
-                      <TableHead>Date of creation</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead>Actions</TableHead>
+                      <TableHead>
+                        <div className="flex items-center gap-3">
+                          <p className="text-[#1A3353] font-medium">
+                            Full name
+                          </p>
+                          <img src={downgray} alt="" />
+                        </div>
+                      </TableHead>
+                      <TableHead>
+                        <div className="flex items-center gap-3">
+                          <p className="text-[#1A3353] font-medium">Country</p>
+                          <img src={downgray} alt="" />
+                        </div>
+                      </TableHead>
+                      <TableHead>
+                        <div className="flex items-center gap-3">
+                          <p className="text-[#1A3353] font-medium">Type</p>
+                          <img src={downgray} alt="" />
+                        </div>
+                      </TableHead>
+                      <TableHead>
+                        <div className="flex items-center gap-3">
+                          <p className="text-[#1A3353] font-medium">
+                            Date of creation
+                          </p>
+                          <img src={downgray} alt="" />
+                        </div>
+                      </TableHead>
+                      <TableHead>
+                        <div className="flex items-center gap-3">
+                          <p className="text-[#1A3353] font-medium">Status</p>
+                          <img src={downgray} alt="" />
+                        </div>
+                      </TableHead>
+                      <TableHead>
+                        <div className="flex items-center gap-3">
+                          <p className="text-[#1A3353] font-medium">Actions</p>
+                          <img src={downgray} alt="" />
+                        </div>
+                      </TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {data?.map((user) => (
                       <TableRow key={user?.user_id}>
                         <TableCell>
-                          <div className="flex items-center gap-2">
-                            <input type="checkbox" />
+                          <div className="flex items-center gap-[30px] text-[#00263E]">
+                            <div className="h-[18px] w-[18px] border-[#C3C4C3] border-[3px]" />
                             {user?.user_id}
                           </div>
                         </TableCell>
-                        <TableCell>{user?.full_name}</TableCell>
-                        <TableCell>{user?.country}</TableCell>
-                        <TableCell>{user?.type}</TableCell>
-                        <TableCell>{user?.date_of_creation}</TableCell>
-                        <TableCell>{user?.status}</TableCell>
-                        <TableCell></TableCell>
+                        <TableCell className="text-[#3E79F7]">
+                          {user?.full_name}
+                        </TableCell>
+                        <TableCell className="text-[#455560]">
+                          {user?.country}
+                        </TableCell>
+                        <TableCell className="text-[#455560]">
+                          {user?.type}
+                        </TableCell>
+                        <TableCell className="text-[#455560]">
+                          {user?.date_of_creation}
+                        </TableCell>
+                        <TableCell className="">
+                          <div className="w-[55px] h-[23px] bg-[#E8F7F1] rounded-[4px] text-[#138F5B] p-[8px] flex justify-center items-center">
+                            <p>{user?.status}</p>
+                          </div>
+                        </TableCell>
+                        <TableCell className="pl-[35px]">
+                          <img src={threedot} alt="" />
+                        </TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
                 </Table>
+                <div className="flex items-center justify-between p-[16px] border-t">
+                  <div className="flex items-center gap-2">
+                    <p className="text-[#72849A] ">
+                      Rows per page: <span className="text-[#455560]">8</span>
+                    </p>
+                    <img src={downgray} alt="" />
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <p className="text-[#72849A]">1-8 of 1240</p>
+                    <img src={arrowback} alt="" className="w-[24px] h-[24px]" />
+                    <img
+                      src={arrowforward}
+                      alt=""
+                      className="w-[24px] h-[24px]"
+                    />
+                  </div>
+                </div>
               </div>
             </main>
           </div>

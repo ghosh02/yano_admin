@@ -30,6 +30,7 @@ const reports = [
 function CreateAdmin() {
   // const navigate = useNavigate();
   const [show, setShow] = useState(false);
+  const [submit, setSubmit] = useState(false);
   const [adminData, setAdminData] = useState({
     firstName: "",
     lastName: "",
@@ -37,19 +38,19 @@ function CreateAdmin() {
     email: "",
     password: "",
     permission: {
-      createNewUser: false,
-      editUser: false,
-      sendMessage: false,
-      exportMedicalReport: false,
-      exportMedicalInfo: false,
-      useMedicalReport: false,
-      editMedicalReport: false,
-      deleteUser: false,
+      createNewUser: true,
+      editUser: true,
+      sendMessage: true,
+      exportMedicalReport: true,
+      exportMedicalInfo: true,
+      useMedicalReport: true,
+      editMedicalReport: true,
+      deleteUser: true,
     },
     reports: {
-      viewMedicalReports: false,
-      viewCountryReports: false,
-      exportReports: false,
+      viewMedicalReports: true,
+      viewCountryReports: true,
+      exportReports: true,
     },
   });
   let name, value;
@@ -80,7 +81,11 @@ function CreateAdmin() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(adminData);
-    alert("submitted");
+    // alert("submitted");
+  };
+  const handleSubmitform = () => {
+    setSubmit(true);
+    console.log(submit);
   };
   return (
     <div className="flex  flex-1">
@@ -104,7 +109,7 @@ function CreateAdmin() {
             <div className="mt-[20px]">
               <label
                 htmlFor="firstName"
-                className="text-[14px] mb-[4px] font-[500]"
+                className="text-[14px] text-[#00263E] mb-[4px] font-[500]"
               >
                 First Name
               </label>
@@ -121,12 +126,12 @@ function CreateAdmin() {
             <div className="mt-[20px]">
               <label
                 htmlFor="lastName"
-                className="text-[14px] mb-[4px] font-[500]"
+                className="text-[14px] text-[#00263E] mb-[4px] font-[500]"
               >
                 Last Name
               </label>
               <input
-                className="w-full h-[49px]  shadow-none border outline-none pl-2 bg-[#FAFAFA] rounded-[8px] "
+                className="w-full h-[49px]   shadow-none border outline-none pl-2 bg-[#FAFAFA] rounded-[8px] "
                 type="text"
                 id="lastName"
                 name="lastName"
@@ -138,7 +143,7 @@ function CreateAdmin() {
             <div className="mt-[20px]">
               <label
                 htmlFor="roleName"
-                className="text-[14px] mb-[4px] font-[500]"
+                className="text-[14px] text-[#00263E] mb-[4px] font-[500]"
               >
                 Role Name
               </label>
@@ -155,7 +160,7 @@ function CreateAdmin() {
             <div className="mt-[20px]">
               <label
                 htmlFor="email"
-                className="text-[14px] mb-[4px] font-[500]"
+                className="text-[14px] text-[#00263E] mb-[4px] font-[500]"
               >
                 Email ID
               </label>
@@ -172,9 +177,9 @@ function CreateAdmin() {
             <div className="mt-[20px]">
               <label
                 htmlFor="password"
-                className="text-[14px] mb-[4px] font-[500]"
+                className="text-[14px] mb-[4px] text-[#00263E] font-[500]"
               >
-                Password
+                Password(8+ characters)
               </label>
               <div className="flex items-center justify-between h-[49px] border bg-[#FAFAFA] px-[16px] py-[16px] rounded-[8px]">
                 <CiLock />
@@ -196,9 +201,11 @@ function CreateAdmin() {
                 </Link>
               </div>
             </div>
-
+            <p className="text-darkblue font-semibold text-[20px] my-[24px]">
+              Permissions
+            </p>
             <Table>
-              <TableHeader>
+              <TableHeader className="bg-[#fafafa]">
                 <TableRow>
                   <TableHead>User</TableHead>
                   <TableHead>Actions</TableHead>
@@ -219,9 +226,9 @@ function CreateAdmin() {
               </TableBody>
             </Table>
             <Table>
-              <TableHeader>
+              <TableHeader className="bg-[#fafafa]">
                 <TableRow>
-                  <TableHead className="font-[600] text-[#00263E]">
+                  <TableHead className="font-semibold  text-[#00263E]">
                     Reports
                   </TableHead>
                   <TableHead></TableHead>
@@ -230,7 +237,9 @@ function CreateAdmin() {
               <TableBody>
                 {reports?.map((reports) => (
                   <TableRow key={reports?.id}>
-                    <TableCell>{reports?.reports}</TableCell>
+                    <TableCell className="text-[#00263E]">
+                      {reports?.reports}
+                    </TableCell>
                     <TableCell>
                       <ToggleButton
                         on={adminData.reports[reports.name]}
@@ -246,6 +255,7 @@ function CreateAdmin() {
                 Cancel
               </button>
               <button
+                onClick={handleSubmitform}
                 type="submit"
                 className="w-[83px] h-[45px] text-base font-semibold font-sans px-2 text-white py-2 rounded-[8px] border-none  submit_btn transition-all duration-200 bg-gray-900  border-transparent focus:outline-none focus:ring-2 focus:ring-offset-2"
               >
@@ -255,6 +265,13 @@ function CreateAdmin() {
           </form>
         </div>
       </div>
+      {/* {submit && (
+        <div className="absolute  opacity-50 w-[100vw] h-[100vh] bg-red-300 z-50">
+          <div className="w-full h-full bg-[#eee] flex items-center justify-center ">
+            <div className="w-[575px] h-[350px] bg-red-300"></div>
+          </div>
+        </div>
+      )} */}
     </div>
   );
 }

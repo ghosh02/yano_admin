@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Cell, Legend, Pie, PieChart } from "recharts";
 import initialData from "../constant/InitialData";
+import Dropdown from "@/components/Dropdown";
 
 const COLORS = ["#FF0000", "#0000FF"];
 const CustomLegend = ({ payload }) => {
@@ -52,6 +53,7 @@ function SexRatio() {
       { Male: 0, Female: 0 }
     );
     const total = counts.Male + counts.Female;
+
     return [
       {
         name: "Female",
@@ -95,8 +97,18 @@ function SexRatio() {
 
   const chartData = aggregateData(pieData);
 
-  const handleDaysChange = (event) => {
-    setPieChartDays(parseInt(event.target.value));
+  // const handleDaysChange = (event) => {
+  //   setPieChartDays(parseInt(event.target.value));
+  // };
+  const options1 = [
+    { label: "Today", value: "0" },
+    { label: "Yesterday", value: "1" },
+    { label: "Last 7 days", value: "7" },
+    { label: "Last 28 days", value: "28" },
+    { label: "Last 90 days", value: "90" },
+  ];
+  const handleDayChange = (option) => {
+    setPieChartDays(option);
   };
   return (
     <div className="bg-[#fff] rounded-[8px] p-[16px] relative">
@@ -120,7 +132,7 @@ function SexRatio() {
         <Legend content={<CustomLegend />} />
       </PieChart>
       <div className="flex items-center justify-center w-full absolute bottom-[20px]">
-        <select
+        {/* <select
           id="days"
           value={pieChartDays}
           onChange={handleDaysChange}
@@ -129,7 +141,12 @@ function SexRatio() {
           <option value={3}>Last 3 days</option>
           <option value={7}>Last 7 days</option>
           <option value={30}>Last Month</option>
-        </select>
+        </select> */}
+        <Dropdown
+          options={options1}
+          onOptionSelect={handleDayChange}
+          defaultValue="7"
+        />
       </div>
     </div>
   );

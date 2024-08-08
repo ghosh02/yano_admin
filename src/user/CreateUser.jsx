@@ -10,6 +10,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import { DobPicker } from "@/components/ui/DobPicker";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
+import PhoneForm from "@/components/PhoneForm";
+// import PhoneForm from "@/components/PhoneForm";
 
 function CreateUser() {
   const containerStyle = {
@@ -19,6 +21,7 @@ function CreateUser() {
     borderRadius: "8px",
   };
   const [show, setShow] = useState(false);
+  const [phone, setPhone] = useState("");
   const [startDate, setStartDate] = useState(new Date());
   const [userData, setUserData] = useState({
     firstName: "",
@@ -46,6 +49,9 @@ function CreateUser() {
 
   const handleChange = (event) => {
     setSelectedRole(event.target.value);
+  };
+  const handlePhone = () => {
+    setPhone(phone);
   };
   return (
     <div className="flex">
@@ -130,9 +136,12 @@ function CreateUser() {
               />
             </div>
             <div className="w-full">
-              <DobPicker className="w-full" onsubmit={handleSubmit} />
+              <DobPicker
+                className="w-full rounded-md border bg-black text-white"
+                onsubmit={handleSubmit}
+              />
             </div>
-            <div className="w-full mt-[20px]">
+            {/* <div className="w-full mt-[20px]">
               <label className="text-[14px] mb-[4px] font-[500]">
                 Phone Number
               </label>
@@ -146,11 +155,10 @@ function CreateUser() {
                 className="w-full"
                 country={"us"}
                 placeholder=""
-                //   value={this.state.phone}
-                //   onChange={(phone) => setState({ phone })}
+                
               />
-            </div>
-            <div className="w-full mt-[20px]">
+            </div> */}
+            {/* <div className="w-full mt-[20px]">
               <label
                 // htmlFor="email"
                 className="text-[14px] mb-[4px] font-[500]"
@@ -167,12 +175,11 @@ function CreateUser() {
                 className="w-full"
                 country={"us"}
                 placeholder=""
-                //   value={this.state.phone}
-                //   onChange={(phone) => setState({ phone })}
+                
               />
-            </div>
+            </div> */}
 
-            <div className="flex  items-center gap-3">
+            {/* <div className="flex  items-center gap-3">
               <label
                 className={`inline-flex items-center mt-3 border-2  w-[228px] h-[50px] justify-center rounded-[8px] ${
                   selectedRole === "patient"
@@ -207,7 +214,66 @@ function CreateUser() {
                 />
                 <span className="ml-2 text-gray-700">Healthcare Provider</span>
               </label>
+            </div> */}
+            <PhoneForm label="Phone number" />
+            <PhoneForm label="Emergency contact" />
+
+            <div className="flex items-center gap-3">
+              <label
+                className={`inline-flex items-center mt-3 border-2 w-[228px] h-[50px] justify-center rounded-[8px] ${
+                  selectedRole === "patient"
+                    ? "border-[#76BC21]"
+                    : "border-gray-300"
+                }`}
+              >
+                <div
+                  className={`w-5 h-5 flex items-center justify-center rounded-full border-2 ${
+                    selectedRole === "patient"
+                      ? "border-[#76BC21] "
+                      : "border-gray-300"
+                  }`}
+                >
+                  {selectedRole === "patient" && (
+                    <div className="w-3 h-3 rounded-full bg-[#76BC21]"></div>
+                  )}
+                </div>
+                <input
+                  type="radio"
+                  className="hidden"
+                  name="role"
+                  value="patient"
+                  checked={selectedRole === "patient"}
+                  onChange={handleChange}
+                />
+                <span className="ml-2 text-gray-700">Patient</span>
+              </label>
+
+              <label
+                className={`inline-flex items-center mt-3 border-2 w-[228px] h-[50px] justify-center rounded-[8px] ${
+                  selectedRole === "provider" ? "border-[#76BC21]" : ""
+                }`}
+              >
+                <div
+                  className={`w-5 h-5 flex items-center justify-center rounded-full border-2 ${
+                    selectedRole === "provider" ? " border-[#76BC21]" : ""
+                  }`}
+                >
+                  {selectedRole === "provider" && (
+                    <div className="w-3 h-3 rounded-full bg-[#76BC21]"></div>
+                  )}
+                </div>
+                <input
+                  type="radio"
+                  className="hidden"
+                  name="role"
+                  value="provider"
+                  checked={selectedRole === "provider"}
+                  onChange={handleChange}
+                />
+                <span className="ml-2 text-gray-700">Healthcare Provider</span>
+              </label>
             </div>
+            {/* <PhoneForm /> */}
 
             <div className="mt-[20px]">
               <label
@@ -237,7 +303,7 @@ function CreateUser() {
               </div>
             </div>
             <div className="flex gap-[20px] mt-[20px]">
-              <button className="w-[83px] h-[45px] text-base font-semibold font-sans px-2 text-black py-2 rounded-[8px] border-2 border-[#000] transition-all duration-200 bg-[#fff]  border-transparent focus:outline-none focus:ring-2 focus:ring-offset-2">
+              <button className="w-[83px] h-[45px] border-gray-900 text-base font-semibold font-sans px-2 text-black py-2 rounded-[8px] border-2   duration-200 bg-[#fff]  ">
                 Cancel
               </button>
               <button

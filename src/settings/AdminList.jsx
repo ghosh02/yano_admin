@@ -13,6 +13,14 @@ import {
 import { SearchIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FaPlus } from "react-icons/fa6";
+import downgray from "../assets/icons/downgray.png";
+import threedot from "../assets/icons/threedot.jpg";
+import search from "../assets/icons/search.png";
+import filterimg from "../assets/icons/filter.png";
+import FilterDropdown from "@/components/FilterDropdown";
+import close from "../assets/icons/close.png";
+import arrowback from "../assets/icons/arrowback.png";
+import arrowforward from "../assets/icons/arrowforward.png";
 
 const admin = [
   {
@@ -84,97 +92,148 @@ function AdminList() {
     setSortConfig({ key, direction });
   };
   return (
-    <div className="flex-1 h-screen mx-[32px] mt-[32px]">
-      <div className="flex justify-between items-center">
-        <Link to="/settings">
-          <div className="w-[92px] h-[40px] flex justify-center items-center bg-[#fff] my-3 gap-2 rounded-[8px]">
-            <IoMdArrowBack />
-            <p>Back</p>
-          </div>
-        </Link>
-        <Link to="createAdmin">
-          <Button className=" flex gap-3 items-center justify-center ">
-            <span>
-              <FaPlus size={12} />
-            </span>
-            Create a new admin
-          </Button>
-        </Link>
-      </div>
-      <div className=" mb-[24px] ">
-        <h1 className="text-[24px] font-[700]">Admin List</h1>
-        <p className="text-[14px] font-[400] text-[#72849A]">
-          Yano's admin user list
-        </p>
-      </div>
-      <div className="bg-[#fff] rounded-[8px] ">
-        <form className="p-[16px]">
-          <div className="flex items-center border rounded-[8px] md:w-2/3 lg:w-1/3 bg-[#EEEEEE] h-[40px] px-2 ">
-            <SearchIcon className="  h-4 w-4 text-gray-500" />
-            <input
-              className="w-full bg-transparent shadow-none border-none outline-none pl-2 "
-              placeholder="Search..."
-              type="search"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-          </div>
-        </form>
+    <div className="h-[calc(100vh-80px)] flex">
+      <Sidebar />
+      <div className="flex-1 h-screen mx-[32px] mt-[32px]">
+        <div className="flex justify-between items-center">
+          <Link to="/settings">
+            <div className="w-[92px] h-[40px] flex justify-center items-center bg-[#fff] my-3 gap-2 rounded-[8px]">
+              <IoMdArrowBack />
+              <p>Back</p>
+            </div>
+          </Link>
+          <Link to="createAdmin">
+            <Button className=" flex gap-3 items-center justify-center ">
+              <span>
+                <FaPlus size={12} />
+              </span>
+              Create a new admin
+            </Button>
+          </Link>
+        </div>
+        <div className=" mb-[24px] ">
+          <h1 className="text-[24px] font-[700]">Admin List</h1>
+          <p className="text-[14px] font-[400] text-[#72849A]">
+            Yano's admin user list
+          </p>
+        </div>
+        <div className="bg-[#fff] rounded-[8px] ">
+          <form className="p-[16px]">
+            <div className="flex items-center border rounded-[8px] md:w-2/3 lg:w-1/3 bg-[#fafafa] h-[40px] px-2 ">
+              <img src={search} alt="" />
+              <input
+                className="w-full bg-transparent shadow-none border-none outline-none pl-2 placeholder-[#72849A] "
+                placeholder="Search for users..."
+                type="search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
+          </form>
 
-        <Table className="">
-          <TableHeader>
-            <TableRow>
-              <TableHead onClick={() => requestSort("id")}>
-                <div className="flex items-center gap-2 cursor-pointer">
-                  <input type="checkbox" />
-                  User ID
-                </div>
-              </TableHead>
-              <TableHead
-                onClick={() => requestSort("full_name")}
-                className="cursor-pointer"
-              >
-                Full Name
-              </TableHead>
-              <TableHead
-                onClick={() => requestSort("permission")}
-                className="cursor-pointer"
-              >
-                Permissions
-              </TableHead>
-              <TableHead
-                onClick={() => requestSort("date_of_creation")}
-                className="cursor-pointer"
-              >
-                Date of creation
-              </TableHead>
-              <TableHead
-                onClick={() => requestSort("status")}
-                className="cursor-pointer"
-              >
-                Status
-              </TableHead>
-              <TableHead>Actions</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {sortedAdmins?.map((admin) => (
-              <TableRow key={admin?.id}>
-                <TableCell>
+          <Table className="">
+            <TableHeader>
+              <TableRow>
+                <TableHead onClick={() => requestSort("id")}>
                   <div className="flex items-center gap-2">
-                    <input type="checkbox" />
-                    {admin?.id}
+                    <div className="h-[18px] w-[18px] border-[#C3C4C3] border-[3px]" />
+                    <div className="flex items-center gap-3">
+                      <p className="text-[#1A3353] font-medium">User ID</p>
+                      <img src={downgray} alt="" />
+                    </div>
                   </div>
-                </TableCell>
-                <TableCell>{admin?.full_name}</TableCell>
-                <TableCell>{admin?.permission}</TableCell>
-                <TableCell>{admin?.date_of_creation}</TableCell>
-                <TableCell>{admin?.status}</TableCell>
-                <TableCell></TableCell>
+                </TableHead>
+                <TableHead
+                  onClick={() => requestSort("full_name")}
+                  className="cursor-pointer"
+                >
+                  <div className="flex items-center gap-3">
+                    <p className="text-[#1A3353] font-medium">Full name</p>
+                    <img src={downgray} alt="" />
+                  </div>
+                </TableHead>
+                <TableHead
+                  onClick={() => requestSort("permission")}
+                  className="cursor-pointer"
+                >
+                  <div className="flex items-center gap-3">
+                    <p className="text-[#1A3353] font-medium">Permissions</p>
+                    <img src={downgray} alt="" />
+                  </div>
+                </TableHead>
+                <TableHead
+                  onClick={() => requestSort("date_of_creation")}
+                  className="cursor-pointer"
+                >
+                  <div className="flex items-center gap-3">
+                    <p className="text-[#1A3353] font-medium">
+                      Date of creation
+                    </p>
+                    <img src={downgray} alt="" />
+                  </div>
+                </TableHead>
+                <TableHead
+                  onClick={() => requestSort("status")}
+                  className="cursor-pointer"
+                >
+                  <div className="flex items-center gap-3">
+                    <p className="text-[#1A3353] font-medium">Status</p>
+                    <img src={downgray} alt="" />
+                  </div>
+                </TableHead>
+                <TableHead>
+                  <div className="flex items-center gap-3">
+                    <p className="text-[#1A3353] font-medium">Actions</p>
+                    <img src={downgray} alt="" />
+                  </div>
+                </TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {sortedAdmins?.map((admin) => (
+                <TableRow key={admin?.id}>
+                  <TableCell>
+                    <div className="flex items-center gap-[30px] text-[#00263E]">
+                      <div className="h-[18px] w-[18px] border-[#C3C4C3] border-[3px]" />
+                      {admin?.id}
+                    </div>
+                  </TableCell>
+                  <TableCell className="text-[#3E79F7]">
+                    {admin?.full_name}
+                  </TableCell>
+                  <TableCell className="text-[#455560]">
+                    {admin?.permission}
+                  </TableCell>
+                  <TableCell className="text-[#455560]">
+                    {admin?.date_of_creation}
+                  </TableCell>
+                  <TableCell>
+                    {" "}
+                    <div className="w-[55px] h-[23px] bg-[#E8F7F1] rounded-[4px] text-[#138F5B] p-[8px] flex justify-center items-center">
+                      <p>{admin?.status}</p>
+                    </div>
+                  </TableCell>
+                  <TableCell className="pl-[35px]">
+                    <img src={threedot} alt="" />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+          <div className="flex items-center justify-between p-[16px] border-t">
+            <div className="flex items-center gap-2">
+              <p className="text-[#72849A] ">
+                Rows per page: <span className="text-[#455560]">8</span>
+              </p>
+              <img src={downgray} alt="" />
+            </div>
+            <div className="flex items-center gap-3">
+              <p className="text-[#72849A]">1-8 of 1240</p>
+              <img src={arrowback} alt="" className="w-[24px] h-[24px]" />
+              <img src={arrowforward} alt="" className="w-[24px] h-[24px]" />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

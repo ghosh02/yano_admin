@@ -11,6 +11,7 @@ import { IoClose } from "react-icons/io5";
 import { gsap } from "gsap";
 import { IoIosTrendingDown } from "react-icons/io";
 import { IoMdArrowDropdown } from "react-icons/io";
+import gender from "../assets/icons/gender.png";
 const callData = [
   {
     name: "Ester Howard",
@@ -133,7 +134,17 @@ function CallCenter() {
                   Wade Warren
                 </p>
                 <div className="flex gap-[4px] items-center text-[#455560] text-[12px]">
-                  <span className="">Male </span>,<span> 68 years</span>
+                  <span className="flex items-center gap-1">
+                    <span>
+                      <img
+                        src={gender}
+                        alt=""
+                        className="w-[12px] h-[12px] object-contain"
+                      />
+                    </span>
+                    Male{" "}
+                  </span>
+                  ,<span> 68 years</span>
                 </div>
                 <div className="flex gap-[4px] items-center text-[#455560]">
                   <MdVideoCall />
@@ -159,7 +170,11 @@ function CallCenter() {
               </Link>
             </div>
           </div>
-          <p className="mx-[16px] my-[10px]">Queue(4)</p>
+          <div className="flex items-center gap-[10px] p-[16px] ">
+            <div className="bg-[#F98E02] h-[8px] w-[8px] rounded-[50%]" />
+            <p className="text-[#3D5A6C] texxt-[12px] font-[600]">Queue(4)</p>
+          </div>
+          <div>{/* <p className="mx-[16px] my-[10px]"></p> */}</div>
           <div className=" flex flex-col gap-3">
             {callData.map((item) => (
               <div className="flex items-center justify-between mt-2 border-b-[1px]">
@@ -174,8 +189,17 @@ function CallCenter() {
                       {item.name}
                     </p>
                     <div className="flex gap-[4px] items-center text-[#455560] text-[12px]">
-                      <span className="">{item.gender} </span>,
-                      <span> {item.age} years</span>
+                      <span className="flex items-center gap-1">
+                        <span>
+                          <img
+                            src={gender}
+                            alt=""
+                            className="w-[12px] h-[12px] object-contain"
+                          />
+                        </span>
+                        {item.gender}{" "}
+                      </span>
+                      ,<span> {item.age} years</span>
                     </div>
                     <div className="flex gap-[4px] items-center text-[#455560]">
                       <MdVideoCall />
@@ -239,10 +263,10 @@ function CallCenter() {
           <div className="flex justify-between p-[10px]">
             <Link
               onClick={() => handleLinkClick("Health Profile")}
-              className={`w-[50%] text-center font-[600] ${
+              className={`w-[50%] text-center font-[600]  ${
                 activeLink === "Health Profile"
-                  ? "text-[#76BC21] border-b-2 border-[#76BC21]"
-                  : "text-[#00263E]"
+                  ? "text-[#76BC21] border-b-2 border-[#76BC21]  "
+                  : "text-[#00263E] hover:bg-lightgreen"
               }`}
             >
               Health Profile
@@ -252,7 +276,7 @@ function CallCenter() {
               className={`w-[50%] text-center font-[600] ${
                 activeLink === "Trackers"
                   ? "text-[#76BC21] border-b-2 border-[#76BC21]"
-                  : "text-[#00263E]"
+                  : "text-[#00263E] hover:bg-lightgreen"
               }`}
             >
               Trackers
@@ -441,7 +465,7 @@ function CallCenter() {
           <div className="grid grid-cols-2 mt-[15px]">
             <div className="m-[10px]">
               <p className="text-[#335165] text-[13px]">Total patient</p>
-              <div className="flex gap-[20px]">
+              <div className="flex items-end   gap-[10px]">
                 <p className="font-[600] text-[18px]">120</p>
                 <div className="flex items-center gap-1">
                   <IoIosTrendingDown color="red" />
@@ -451,7 +475,7 @@ function CallCenter() {
             </div>
             <div className="m-[10px]">
               <p className="text-[#335165] text-[13px]">Average age</p>
-              <div className="flex gap-[20px]">
+              <div className="flex gap-[10px] items-end ">
                 <p className="font-[600] text-[18px]">55</p>
                 <div className="flex items-center gap-1">
                   <IoIosTrendingDown color="red" />
@@ -463,9 +487,9 @@ function CallCenter() {
               <p className="text-[#335165] text-[13px]">
                 Consultations canceled
               </p>
-              <div className="flex gap-[20px]">
-                <p className="font-[600] text-[18px]">12</p>
-                <div className="flex items-center gap-1">
+              <div className="flex gap-[10px] items-end ">
+                <p className="font-[600] text-[18px]">120</p>
+                <div className="flex items-center gap-1 ">
                   <IoIosTrendingDown color="red" />
                   <p className="text-red-600 text-[12px]">2%</p>
                 </div>
@@ -473,7 +497,7 @@ function CallCenter() {
             </div>
             <div className="m-[10px]">
               <p className="text-[#335165] text-[13px]">Average duration</p>
-              <div className="flex gap-[10px]">
+              <div className="flex gap-[10px] items-end ">
                 <p className="font-[600] text-[18px]">30 min</p>
                 <div className="flex items-center gap-1">
                   <IoIosTrendingDown color="red" />

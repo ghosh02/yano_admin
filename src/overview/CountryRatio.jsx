@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 import initialData from "../constant/InitialData";
+import Dropdown from "@/components/Dropdown";
 
 const COLORS = ["#FFBB28", "#FF8042", "#00C49F", "#0088FE", "#CCCCCC"]; // Custom colors for countries and others
 
@@ -66,7 +67,16 @@ function CountryRatio() {
   const handleDaysChange = (event) => {
     setDays(parseInt(event.target.value));
   };
-
+  const options1 = [
+    { label: "Today", value: "0" },
+    { label: "Yesterday", value: "1" },
+    { label: "Last 7 days", value: "7" },
+    { label: "Last 28 days", value: "28" },
+    { label: "Last 90 days", value: "90" },
+  ];
+  const handleDayChange = (option) => {
+    setDays(option);
+  };
   return (
     <div className="w-[250px] h-[405px] p-[16px] bg-[#fff] rounded-[8px] relative">
       <h2 className="text-[#00263E] font-[600] text-[16px]">
@@ -123,8 +133,8 @@ function CountryRatio() {
           </li>
         ))}
       </ul>
-      <div className="w-full flex items-center justify-center absolute bottom-[20px]">
-        <select
+      <div className="w-full flex items-center justify-center absolute bottom-[20px] right-0">
+        {/* <select
           id="days"
           value={days}
           onChange={handleDaysChange}
@@ -133,7 +143,12 @@ function CountryRatio() {
           <option value={3}>Last 3 days</option>
           <option value={7}>Last 7 days</option>
           <option value={14}>Last 14 days</option>
-        </select>
+        </select> */}
+        <Dropdown
+          options={options1}
+          onOptionSelect={handleDayChange}
+          defaultValue="7"
+        />
       </div>
     </div>
   );

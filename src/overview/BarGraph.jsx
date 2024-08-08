@@ -9,18 +9,20 @@ import {
   YAxis,
 } from "recharts";
 import initialData from "../constant/InitialData";
+import Dropdown from "@/components/Dropdown";
 
 function BarGraph() {
   const [selectedCountry, setSelectedCountry] = useState("All");
   const [selectedMetric, setSelectedMetric] = useState("bloodGlucose");
 
-  const handleCountryChange = (e) => {
-    setSelectedCountry(e.target.value);
+  const handleCountryChange = (option) => {
+    setSelectedCountry(option);
+    // console.log(selectedCountry);
   };
 
-  const handleMetricChange = (e) => {
-    setSelectedMetric(e.target.value);
-  };
+  // const handleMetricChange = (e) => {
+  //   setSelectedMetric(e.target.value);
+  // };
 
   const filteredBarData =
     selectedCountry === "All"
@@ -49,6 +51,31 @@ function BarGraph() {
     return { ageRange: range, avgMetric };
   });
   const maxAvgMetric = Math.max(...ageRangeData.map((item) => item.avgMetric));
+  // const [selectedOption, setSelectedOption] = useState(null);
+
+  const options1 = [
+    { label: "Today", value: "All" },
+    { label: "Yesterday", value: "USA" },
+    { label: "Last 7 days", value: "Canada" },
+    { label: "Last 28 days", value: "India" },
+    { label: "Last 90 days", value: "Japan" },
+  ];
+  const options2 = [
+    { label: "Blood Glucose", value: "bloodGlucose" },
+    { label: "Oxygen Saturation", value: "oxygenSat" },
+    { label: "Body Temperature", value: "bodytemp" },
+    { label: "Heart Rate", value: "heartrate" },
+    { label: "Blood Pressure", value: "bp" },
+    { label: "Mood", value: "mood" },
+  ];
+  // const handleOptionSelect = (option) => {
+  //   selectedCountry(option);
+  //   console.log(selectedCountry);
+  // };
+  const handleOption = (option) => {
+    setSelectedMetric(option);
+    // console.log(selectedMetric);
+  };
   return (
     <div className="bg-[#fff] rounded-[8px] p-[16px] relative">
       <h1 className="text-[#00263E] font-[600] text-[16px]">Age</h1>
@@ -68,7 +95,7 @@ function BarGraph() {
       </BarChart>
       <div className="flex gap-4  absolute bottom-[20px]">
         <label>
-          <select
+          {/* <select
             value={selectedCountry}
             onChange={handleCountryChange}
             className="p-2 border rounded bg-[#FAFAFA] outline-none"
@@ -76,10 +103,15 @@ function BarGraph() {
             <option value="All">All Country</option>
             <option value="USA">USA</option>
             <option value="Canada">Canada</option>
-          </select>
+          </select> */}
+          <Dropdown
+            options={options1}
+            onOptionSelect={handleCountryChange}
+            defaultValue="Canada"
+          />
         </label>
         <label>
-          <select
+          {/* <select
             value={selectedMetric}
             onChange={handleMetricChange}
             className="p-2 border rounded bg-[#FAFAFA] outline-none"
@@ -90,7 +122,12 @@ function BarGraph() {
             <option value="heartrate">Heart Rate</option>
             <option value="bp">Blood Pressure</option>
             <option value="mood">Mood</option>
-          </select>
+          </select> */}
+          <Dropdown
+            options={options2}
+            onOptionSelect={handleOption}
+            defaultValue="bloodGlucose"
+          />
         </label>
       </div>
     </div>

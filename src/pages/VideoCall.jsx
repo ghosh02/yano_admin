@@ -31,6 +31,16 @@ import { FaTemperatureHalf } from "react-icons/fa6";
 import { MdBloodtype } from "react-icons/md";
 import { RxDash } from "react-icons/rx";
 import gsap from "gsap";
+import note2 from "../assets/icons/note2.png";
+import tool from "../assets/icons/tool.png";
+import toolopen from "../assets/icons/toolopen.png";
+import prescription from "../assets/icons/prescription.png";
+import mic from "../assets/icons/mic.png";
+import chat from "../assets/icons/chat.png";
+import chaton from "../assets/icons/chaton.png";
+import videocall3 from "../assets/icons/videocall3.png";
+import queue from "../assets/icons/queue.png";
+import queueon from "../assets/icons/queueon.png";
 
 function VideoCall() {
   // const [mode, setMode] = useState(false);
@@ -177,9 +187,22 @@ function VideoCall() {
             className="flex flex-col items-center"
           >
             <div className="w-[40px] h-[40px] rounded-[50%] border-2 border-[#EEE] flex justify-center items-center">
-              <BiSolidUserDetail
+              {/* <BiSolidUserDetail
                 color={activeLink === "queue" ? "#0F8D47" : ""}
-              />
+              /> */}
+              {activeLink === "queue" ? (
+                <img
+                  src={queueon}
+                  alt=""
+                  className="w-[16px] h-[16px] object-contain"
+                />
+              ) : (
+                <img
+                  src={queue}
+                  alt=""
+                  className="w-[16px] h-[16px] object-contain"
+                />
+              )}
             </div>
 
             <p className="text-[12px] text-[#00263E]">Queue</p>
@@ -190,14 +213,23 @@ function VideoCall() {
               className=" flex flex-col items-center"
             >
               <div className="w-[40px] h-[40px] rounded-[50%] border-2 border-[#EEE] flex justify-center items-center">
-                <MdOutlineVideocam />
+                <img
+                  src={videocall3}
+                  alt=""
+                  className="w-[16px] h-[16px] object-contain"
+                />
               </div>
 
               <p className="text-[12px] text-[#00263E]">video</p>
             </Link>
             <Link className="flex flex-col items-center">
               <div className="w-[40px] h-[40px] rounded-[50%] border-2 border-[#EEE] flex justify-center items-center">
-                <FaMicrophone />
+                {/* <FaMicrophone /> */}
+                <img
+                  src={mic}
+                  alt=""
+                  className="w-[16px] h-[16px] object-contain"
+                />
               </div>
 
               <p className="text-[12px] text-[#00263E]">Mute</p>
@@ -208,9 +240,17 @@ function VideoCall() {
             >
               <div className="w-[40px] h-[40px] rounded-[50%] border-2 border-[#EEE] flex justify-center items-center">
                 {activeLink === "chat" ? (
-                  <MdChatBubble color="#0F8D47" />
+                  <img
+                    src={chaton}
+                    alt=""
+                    className="w-[16px] h-[16px] object-contain"
+                  />
                 ) : (
-                  <CiChat1 />
+                  <img
+                    src={chat}
+                    alt=""
+                    className="w-[16px] h-[16px] object-contain"
+                  />
                 )}
               </div>
 
@@ -221,23 +261,46 @@ function VideoCall() {
               className="flex flex-col items-center"
             >
               <div className="w-[40px] h-[40px] rounded-[50%] border-2 border-[#EEE] flex justify-center items-center">
-                <MdOutlineMonitorHeart
+                {/* <MdOutlineMonitorHeart
                   color={activeLink === "tools" ? "#0F8D47" : ""}
-                />
+                /> */}
+                {activeLink === "tools" ? (
+                  <img
+                    src={toolopen}
+                    alt=""
+                    className="w-[16px] h-[16px] object-contain"
+                  />
+                ) : (
+                  <img
+                    src={tool}
+                    alt=""
+                    className="w-[16px] h-[16px] object-contain"
+                  />
+                )}
               </div>
 
               <p className="text-[12px] text-[#00263E]">Tools</p>
             </Link>
             <Link className="flex flex-col items-center">
               <div className="w-[40px] h-[40px] rounded-[50%] border-2 border-[#EEE] flex justify-center items-center">
-                <GrNotes />
+                {/* <GrNotes /> */}
+                <img
+                  src={note2}
+                  alt=""
+                  className="w-[16px] h-[16px] object-contain"
+                />
               </div>
 
               <p className="text-[12px] text-[#00263E]">Notes</p>
             </Link>
             <Link className="flex flex-col items-center">
               <div className="w-[40px] h-[40px] rounded-[50%] border-2 border-[#EEE] flex justify-center items-center">
-                <TbReportMedical />
+                {/* <TbReportMedical /> */}
+                <img
+                  src={prescription}
+                  alt=""
+                  className="w-[16px] h-[16px] object-contain"
+                />
               </div>
 
               <p className="text-[12px] text-[#00263E]">prescription</p>
@@ -482,6 +545,7 @@ function VideoCall() {
               <h1 className="text-[00263E] font-[700]">Chat</h1>
               <IoClose
                 size={20}
+                color="#335165"
                 className="cursor-pointer"
                 onClick={handleClose}
               />
@@ -497,7 +561,7 @@ function VideoCall() {
                   <div>
                     {message.text && (
                       <div
-                        className={`inline-block p-1 rounded-t-[8px] rounded-bl-[8px] ${
+                        className={`inline-block p-1 px-4 rounded-t-[8px] rounded-bl-[8px] ${
                           message.sender === "User"
                             ? "bg-[#00263E] text-white"
                             : "bg-gray-300"
@@ -561,10 +625,10 @@ function VideoCall() {
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   placeholder="Message"
-                  className="flex-1 h-[48px] p-2 bg-transparent outline-none"
+                  className="flex-1 h-[48px] p-2 bg-transparent outline-none placeholder-[#546E7E]"
                 />
                 <button type="button" onClick={handleIconClick} className="p-2">
-                  <IoAttachOutline size={25} className="text-gray-500" />
+                  <IoAttachOutline size={25} color="#546E7E" />
                 </button>
                 <input
                   type="file"
@@ -572,9 +636,9 @@ function VideoCall() {
                   ref={fileInputRef}
                   className="hidden"
                 />
-                <button type="submit">
+                {/* <button type="submit">
                   <IoIosSend size={25} color="#00263E" />
-                </button>
+                </button> */}
               </div>
             </form>
           </div>
@@ -712,24 +776,43 @@ function VideoCall() {
                     </div>
                     <div className="h-[120px] border rounded-[8px]">
                       <div className="flex h-full">
-                        <div className="w-[60%] h-full border-r flex flex-col items-center justify-center">
+                        <div className="w-[60%] relative h-full border-r flex flex-col items-center justify-center">
                           <div className="flex">
                             <RxDash size={25} />
                             <RxDash size={25} />
                           </div>
-                          <p className="">beats/min</p>
+                          <p className="text-[12px]  text-lightgray absolute bottom-2">
+                            beats/min
+                          </p>
                         </div>
                         <div className="h-full flex-1 flex flex-col items-center justify-center ">
-                          <p>Blood oxygen</p>
-                          <div className="flex">
-                            <RxDash size={25} />
-                            <RxDash size={25} />
+                          <p className="text-[12px] text-darkblue">
+                            Blood oxygen
+                          </p>
+                          <div className="flex h-[60%]">
+                            <div className="flex items-center">
+                              <RxDash
+                                size={25}
+                                color="lightgray"
+                                fontWeight={700}
+                              />
+                              <RxDash
+                                size={25}
+                                fontWeight={700}
+                                color="lightgray"
+                              />
+                            </div>
+                            <p className="text-[32px] text-lightgray font-[700]">
+                              %
+                            </p>
                           </div>
-                          <p>SpO2H</p>
+                          <p className="text-[12px] font-[700] text-lightgray">
+                            SpO2H
+                          </p>
                         </div>
                       </div>
                     </div>
-                    <button className="w-full bg-darkblue py-3 rounded-[8px] text-white">
+                    <button className="w-full bg-darkblue py-3 rounded-[8px] text-white my-[16px]">
                       start measuring
                     </button>
                   </div>

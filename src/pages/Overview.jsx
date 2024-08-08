@@ -32,6 +32,10 @@ import SexRatio from "@/overview/SexRatio";
 import BarGraph from "@/overview/BarGraph";
 import CountryRatio from "@/overview/CountryRatio";
 import initialData from "../constant/InitialData";
+import Dropdown from "@/components/Dropdown";
+import downarr from "../assets/icons/downarr.png";
+import uparr from "../assets/icons/uparr.png";
+import downgray from "../assets/icons/downgray.png";
 
 const userData = [
   {
@@ -129,7 +133,7 @@ const CustomTooltip = ({ active, payload, label }) => {
     const unit = unitMapping[payload[0].dataKey] || "";
 
     return (
-      <div className="bg-white p-2 shadow-lg rounded">
+      <div className="bg-white p-2 shadow rounded">
         <p className="label">{`Date: ${label}`}</p>
         <p className="intro">{`Avg: ${formattedValue} ${unit}`}</p>
       </div>
@@ -155,7 +159,7 @@ const LineGraph = ({ data, valueKey }) => {
         <LineChart data={data}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="date" tickFormatter={tickFormatter} />
-          <YAxis domain={domainMapping[valueKey]} orientation="right" />
+          {/* <YAxis domain={domainMapping[valueKey]} orientation="right" /> */}
           <Tooltip content={<CustomTooltip />} />
           <Line
             type="monotone"
@@ -242,11 +246,30 @@ const Overview = () => {
     navigate(`/user/${user?.userID}`, { state: { user } });
     // console.log(user);
   };
+  const options1 = [
+    { label: "Today", value: "0" },
+    { label: "Yesterday", value: "1" },
+    { label: "Last 7 days", value: "7" },
+    { label: "Last 28 days", value: "28" },
+    { label: "Last 90 days", value: "90" },
+  ];
+  const options2 = [
+    { label: "All countries", value: "All country" },
+    { label: "Mexico", value: "Mexico" },
+    { label: "Brazil", value: "Brazil" },
+    { label: "Venezuela", value: "Venezuela" },
+  ];
+  const handleCountryChange = (option) => {
+    setCountry(option);
+  };
+  const handleDayChange = (option) => {
+    setDays(option);
+  };
   return (
     <div className="flex">
       <Sidebar />
       <div className="flex-1 p-[32px]   ">
-        <h1 className="text-[24px] text-[#00263E] font-[700] pl-[10px] pb-[24px]">
+        <h1 className="text-[24px] text-[#00263E] font-[700] m-0 py-[10px]  pb-[24px]">
           Overview
         </h1>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -260,11 +283,13 @@ const Overview = () => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold pb-3">124</div>
+              <div className="text-2xl font-bold pb-3">70</div>
               <div className="flex gap-1 items-center">
-                <FaLongArrowAltUp size={12} color="#76BC21" />
+                {/* <FaLongArrowAltUp size={12} color="#76BC21" /> */}
+                <img src={uparr} alt="" />
                 <p className="text-xs text-lightgray dark:text-gray-400">
-                  <span className="text-darkgreen">5.3% </span> since last month
+                  <span className="text-darkgreen mr-[3px]">5.3% </span> since
+                  last month
                 </p>
               </div>
             </CardContent>
@@ -281,9 +306,10 @@ const Overview = () => {
             <CardContent>
               <div className="text-2xl font-bold pb-3">124</div>
               <div className="flex gap-1 items-center">
-                <FaLongArrowAltDown size={12} color="red" />
+                <img src={downarr} alt="" />
                 <p className="text-xs text-lightgray dark:text-gray-400">
-                  <span className="text-red-600">5.3% </span> since last month
+                  <span className="text-red-600 mr-[3px]">5.3% </span> since
+                  last month
                 </p>
               </div>
             </CardContent>
@@ -301,9 +327,10 @@ const Overview = () => {
             <CardContent>
               <div className="text-2xl font-bold pb-3">Blood Glucose</div>
               <div className="flex gap-1 items-center">
-                <FaLongArrowAltDown size={12} color="red" />
+                <img src={downarr} alt="" />
                 <p className="text-xs text-lightgray dark:text-gray-400">
-                  <span className="text-red-600">5.3% </span> since last month
+                  <span className="text-red-600 mr-[3px]">5.3% </span> since
+                  last month
                 </p>
               </div>
             </CardContent>
@@ -320,9 +347,10 @@ const Overview = () => {
             <CardContent>
               <div className="text-2xl font-bold pb-3">124</div>
               <div className="flex gap-1 items-center">
-                <FaLongArrowAltDown size={12} color="red" />
+                <img src={downarr} alt="" />
                 <p className="text-xs text-lightgray dark:text-gray-400">
-                  <span className="text-red-600">5.3% </span> since last month
+                  <span className="text-red-600 mr-[3px]">5.3% </span> since
+                  last month
                 </p>
               </div>
             </CardContent>
@@ -356,7 +384,7 @@ const Overview = () => {
                   {item.value}
                 </p>
                 <div className="flex gap-1 items-center">
-                  <FaLongArrowAltUp size={12} color="#76BC21" />
+                  <img src={uparr} alt="" />
                   <p className="text-[#76BC21] text-[13px]"> {item.rate}%</p>
                 </div>
               </Link>
@@ -367,7 +395,7 @@ const Overview = () => {
           </div>
           <div className="mb-4 flex gap-4 p-[16px] border-t-[1px] ">
             <div>
-              <select
+              {/* <select
                 className=" py-2 px-3 border rounded bg-[#FAFAFA] outline-none"
                 value={country}
                 onChange={(e) => setCountry(e.target.value)}
@@ -375,11 +403,16 @@ const Overview = () => {
                 <option value="All Countries">All Countries</option>
                 <option value="USA">USA</option>
                 <option value="Canada">Canada</option>
-                {/* Add more countries as needed */}
-              </select>
+                
+              </select> */}
+              <Dropdown
+                options={options2}
+                onOptionSelect={handleCountryChange}
+                defaultValue="All country"
+              />
             </div>
             <div>
-              <select
+              {/* <select
                 className="p-2 border rounded bg-[#FAFAFA] outline-none"
                 value={days}
                 onChange={(e) => setDays(Number(e.target.value))}
@@ -388,8 +421,13 @@ const Overview = () => {
                 <option value={5}>Last 5 days</option>
                 <option value={3}>Last 3 days</option>
                 <option value={30}>Last Month</option>
-                {/* Add more options as needed */}
-              </select>
+                
+              </select> */}
+              <Dropdown
+                options={options1}
+                onOptionSelect={handleDayChange}
+                defaultValue="7"
+              />
             </div>
           </div>
         </div>
@@ -413,26 +451,44 @@ const Overview = () => {
               <FaArrowRightLong color="#3E79F7" size={12} />
             </Link>
           </div>
-          <Table className="">
+          <Table className="border-t">
             <TableHeader>
               <TableRow>
-                <TableHead className="text-[#00263E] font-[500]">
-                  User ID
-                </TableHead>
-                <TableHead className="text-[#00263E] font-[500]">
-                  Full Name
-                </TableHead>
-                <TableHead className="text-[#00263E] font-[500]">
-                  Country
-                </TableHead>
-                <TableHead className="text-[#00263E] font-[500]">
-                  Type
-                </TableHead>
-                <TableHead className="text-[#00263E] font-[500]">
-                  Last Time Active
+                <TableHead className="text-[#00263E] font-[500] ">
+                  <div className="flex items-center gap-3">
+                    <p>User ID</p>
+                    <img src={downgray} alt="" />
+                  </div>
                 </TableHead>
                 <TableHead className="text-[#00263E] font-[500] ">
-                  #Session
+                  <div className="flex items-center gap-3">
+                    <p>Full name</p>
+                    <img src={downgray} alt="" />
+                  </div>
+                </TableHead>
+                <TableHead className="text-[#00263E] font-[500]">
+                  <div className="flex items-center gap-3">
+                    <p>Country</p>
+                    <img src={downgray} alt="" />
+                  </div>
+                </TableHead>
+                <TableHead className="text-[#00263E] font-[500]">
+                  <div className="flex items-center gap-3">
+                    <p>Type</p>
+                    <img src={downgray} alt="" />
+                  </div>
+                </TableHead>
+                <TableHead className="text-[#00263E] font-[500]">
+                  <div className="flex items-center gap-3">
+                    <p>Last time active</p>
+                    <img src={downgray} alt="" />
+                  </div>
+                </TableHead>
+                <TableHead className="text-[#00263E] font-[500] ">
+                  <div className="flex items-center gap-3">
+                    <p>#Session</p>
+                    <img src={downgray} alt="" />
+                  </div>
                 </TableHead>
               </TableRow>
             </TableHeader>
@@ -443,14 +499,14 @@ const Overview = () => {
                   className="cursor-pointer"
                   onClick={() => handleRowClick(user)}
                 >
-                  <TableCell>{user?.userID}</TableCell>
+                  <TableCell className=" pl-[40px]">{user?.userID}</TableCell>
                   <TableCell className="text-[#3E79F7]">
                     {user?.fullName}
                   </TableCell>
                   <TableCell>{user?.country}</TableCell>
                   <TableCell>{user?.type}</TableCell>
                   <TableCell>{user?.lastTimeActive}</TableCell>
-                  <TableCell>{user?.sessions}</TableCell>
+                  <TableCell className=" pl-[40px]">{user?.sessions}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

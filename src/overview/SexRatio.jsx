@@ -296,6 +296,7 @@ function SexRatio() {
       <div className="flex items-center justify-center w-full absolute  bottom-[15px]">
         <div className="w-full flex-1 flex items-center">
           <Dropdown
+            width={190}
             options={options1}
             onOptionSelect={handleDayChange}
             defaultValue="7"

@@ -118,12 +118,12 @@ function CallCenter() {
     setDay(option);
   };
   return (
-    <div className="h-[calc(100vh-80px)] flex ">
-      <Sidebar className="flex-1" />
+    <div className="h-[calc(100vh-80px)] flex  ">
+      <Sidebar className="flex-1 bg-[#fff]" />
       <div className="p-[32px] flex gap-[30px]  h-[calc(100vh-80px)]">
         <div
           ref={liveConsultationRef}
-          className={`h-[550px] p-[16px] bg-[#fff] w-[343px] rounded-[8px] transition-all  ${
+          className={`h-[550px] p-[16px] shadow bg-[#fff] w-[343px] rounded-[8px] transition-all  ${
             mode ? "block" : "hidden"
           }`}
         >
@@ -228,7 +228,7 @@ function CallCenter() {
           </div>
         </div>
         <div
-          className={`h-[550px] p-[16px] bg-[#fff] w-[343px] rounded-[8px] ${
+          className={`h-[550px] p-[16px] bg-[#fff] shadow w-[343px] rounded-[8px] ${
             showProfile ? "block" : "hidden"
           }`}
         >
@@ -448,7 +448,7 @@ function CallCenter() {
         {/* doctor profile */}
         <div
           ref={doctor}
-          className="p-[16px] bg-[#fff] w-[343px] rounded-[8px] h-[412px]"
+          className="p-[16px] bg-[#fff] w-[343px] shadow rounded-[8px] h-[412px]"
         >
           <img
             src={patient}

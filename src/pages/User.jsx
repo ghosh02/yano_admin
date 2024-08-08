@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 // import { useSelector } from "react-redux";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import {
   TableHead,
   TableRow,
@@ -29,7 +29,7 @@ import { Calendar } from "@/components/ui/calendar";
 const data = [
   {
     user_id: "1",
-    full_name: "John Doe",
+    fullName: "John Doe",
     country: "USA",
     type: "patient",
     date_of_creation: "2024-07-25",
@@ -37,7 +37,7 @@ const data = [
   },
   {
     user_id: "1",
-    full_name: "Jane Smith",
+    fullName: "Jane Smith",
     country: "Canada",
     type: "patient",
     date_of_creation: "2024-07-24",
@@ -45,7 +45,7 @@ const data = [
   },
   {
     user_id: "1",
-    full_name: "Carlos Ramirez",
+    fullName: "Carlos Ramirez",
     country: "Mexico",
     type: "patient",
     date_of_creation: "2024-07-23",
@@ -53,7 +53,7 @@ const data = [
   },
   {
     user_id: "1",
-    full_name: "Anna Müller",
+    fullName: "Anna Müller",
     country: "Germany",
     type: "patient",
     date_of_creation: "2024-07-22",
@@ -61,7 +61,7 @@ const data = [
   },
   {
     user_id: "1",
-    full_name: "Yuki Tanaka",
+    fullName: "Yuki Tanaka",
     country: "Japan",
     type: "patient",
     date_of_creation: "2024-07-21",
@@ -103,6 +103,11 @@ export default function User() {
   };
   const handleType = (option) => {
     setType(option);
+  };
+  const navigate = useNavigate();
+
+  const handleRowClick = (user) => {
+    navigate(`/user/${user?.user_id}`, { state: { user } });
   };
   return (
     <div className="grid min-h-screen max-w-screen ">
@@ -179,7 +184,7 @@ export default function User() {
                           }}
                           className="flex items-center gap-2 px-[12px] py-[8px] border-2 rounded-[6px] bg-[#fafafa]"
                         >
-                          <p className="text-[#455560]">May 8 - June 8,1992</p>
+                          <p className="text-[#455560]">May 8 - June 8, 1992</p>
                           <img
                             src={calendar}
                             alt=""
@@ -243,10 +248,10 @@ export default function User() {
                   </div>
                 </form>
                 <Table>
-                  <TableHeader>
+                  <TableHeader className="border-t">
                     <TableRow>
                       <TableHead>
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 ">
                           <div className="h-[18px] w-[18px] border-[#C3C4C3] border-[3px]" />
                           <div className="flex items-center gap-3">
                             <p className="text-[#1A3353] font-medium">
@@ -300,7 +305,11 @@ export default function User() {
                   </TableHeader>
                   <TableBody>
                     {data?.map((user) => (
-                      <TableRow key={user?.user_id}>
+                      <TableRow
+                        className="cursor-pointer"
+                        key={user?.user_id}
+                        onClick={() => handleRowClick(user)}
+                      >
                         <TableCell>
                           <div className="flex items-center gap-[30px] text-[#00263E]">
                             <div className="h-[18px] w-[18px] border-[#C3C4C3] border-[3px]" />
@@ -308,7 +317,7 @@ export default function User() {
                           </div>
                         </TableCell>
                         <TableCell className="text-[#3E79F7]">
-                          {user?.full_name}
+                          {user?.fullName}
                         </TableCell>
                         <TableCell className="text-[#455560]">
                           {user?.country}
@@ -331,7 +340,7 @@ export default function User() {
                     ))}
                   </TableBody>
                 </Table>
-                <div
+                {/* <div
                   className="origin-top-right absolute   right-5 mt-2 w-[148px] rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5"
                   role="menu"
                   aria-orientation="vertical"
@@ -344,18 +353,14 @@ export default function User() {
                         href="#"
                         className={`flex items-center gap-[10px]  text-[#455560] px-4 py-4 text-sm hover:bg-gray-100 `}
                         role="menuitem"
-                        // onClick={() => handleOptionClick(option)}
+                      
                       >
-                        {/* <img
-                          src={option.img}
-                          alt=""
-                          className="w-[16px] h-[16px] object-cover"
-                        /> */}
+                        
                         {option.label}
                       </a>
                     ))}
                   </div>
-                </div>
+                </div> */}
                 <div className="flex items-center justify-between p-[16px] border-t">
                   <div className="flex items-center gap-2">
                     <p className="text-[#72849A] ">

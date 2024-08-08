@@ -998,6 +998,7 @@ const Overview = () => {
             </div>
             <div>
               <Dropdown
+                width={190}
                 options={options1}
                 onOptionSelect={handleDayChange}
                 defaultValue="7"

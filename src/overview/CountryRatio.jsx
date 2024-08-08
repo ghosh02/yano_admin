@@ -293,6 +293,7 @@ function CountryRatio() {
       <div className="border-[#eee] border-t-2 mt-[90px]" />
       <div className="w-full flex items-center  pt-[20px] justify-center absolute bottom-[20px] right-6">
         <Dropdown
+          width={190}
           options={options1}
           onOptionSelect={handleDayChange}
           defaultValue="7"

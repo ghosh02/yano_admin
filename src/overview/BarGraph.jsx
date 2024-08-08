@@ -153,7 +153,7 @@ function BarGraph() {
   const [selectedCountry, setSelectedCountry] = useState("All");
   const [selectedMetric, setSelectedMetric] = useState("bloodGlucose");
 
-  const handleCountryChange = (option) => {
+  const handleDayChange = (option) => {
     setSelectedCountry(option.value);
   };
 
@@ -190,12 +190,12 @@ function BarGraph() {
 
   const maxAvgMetric = Math.max(...ageRangeData.map((item) => item.avgMetric));
 
-  const options1 = [
-    { label: "All Country", value: "All" },
-    { label: "USA", value: "USA" },
-    { label: "Canada", value: "Canada" },
-    { label: "India", value: "India" },
-    { label: "Japan", value: "Japan" },
+  const daysFilter = [
+    { label: "Today", value: "All" },
+    { label: "Yesterday", value: "USA" },
+    { label: "Last 7 days", value: "Canada" },
+    { label: "Last 28 days", value: "India" },
+    { label: "Last 90 days", value: "Japan" },
   ];
   const options2 = [
     { label: "Blood Glucose", value: "bloodGlucose" },
@@ -206,6 +206,13 @@ function BarGraph() {
     { label: "Mood", value: "mood" },
   ];
 
+  // const daysFilter = [
+  //   { label: "Today", value: "0" },
+  //   { label: "Yesterday", value: "1" },
+  //   { label: "Last 7 days", value: "7" },
+  //   { label: "Last 28 days", value: "28" },
+  //   { label: "Last 90 days", value: "90" },
+  // ];
   const domainMapping = {};
   return (
     <div className=" h-[404px] w-[45%] bg-[#fff] rounded-[8px]  relative shadow-lg">
@@ -242,9 +249,10 @@ function BarGraph() {
       <div className="flex gap-4  absolute bottom-[15px] pl-[30px] ">
         <label>
           <Dropdown
-            options={options1}
-            onOptionSelect={handleCountryChange}
-            defaultValue="All"
+            options={daysFilter}
+            onOptionSelect={handleDayChange}
+            defaultValue="Canada"
+            width={190}
           />
         </label>
         <label>

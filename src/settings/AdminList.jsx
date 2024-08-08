@@ -10,15 +10,11 @@ import {
   TableBody,
   Table,
 } from "@/components/ui/table";
-import { SearchIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FaPlus } from "react-icons/fa6";
 import downgray from "../assets/icons/downgray.png";
 import threedot from "../assets/icons/threedot.jpg";
 import search from "../assets/icons/search.png";
-import filterimg from "../assets/icons/filter.png";
-import FilterDropdown from "@/components/FilterDropdown";
-import close from "../assets/icons/close.png";
 import arrowback from "../assets/icons/arrowback.png";
 import arrowforward from "../assets/icons/arrowforward.png";
 
@@ -90,6 +86,11 @@ function AdminList() {
       direction = "descending";
     }
     setSortConfig({ key, direction });
+  };
+  const navigate = useNavigate();
+
+  const handleRowClick = (user) => {
+    navigate("/settings/adminList/createAdmin");
   };
   return (
     <div className="h-[calc(100vh-80px)] flex">
@@ -198,7 +199,10 @@ function AdminList() {
                       {admin?.id}
                     </div>
                   </TableCell>
-                  <TableCell className="text-[#3E79F7]">
+                  <TableCell
+                    onClick={handleRowClick}
+                    className="text-[#3E79F7]"
+                  >
                     {admin?.full_name}
                   </TableCell>
                   <TableCell className="text-[#455560]">

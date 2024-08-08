@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { CiLock } from "react-icons/ci";
 import { IoMdArrowBack } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
+import check from "../assets/icons/check.png";
 import {
   TableHead,
   TableRow,
@@ -31,6 +32,7 @@ function CreateAdmin() {
   // const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const [submit, setSubmit] = useState(false);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [adminData, setAdminData] = useState({
     firstName: "",
     lastName: "",
@@ -80,12 +82,16 @@ function CreateAdmin() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(adminData);
-    // alert("submitted");
+    setShowSuccessMessage(true);
+    document.body.style.overflow = "hidden";
   };
   const handleSubmitform = () => {
     setSubmit(true);
     console.log(submit);
+  };
+  const closeSuccessMessage = () => {
+    setShowSuccessMessage(false);
+    document.body.style.overflow = "auto"; // Enable scrolling again
   };
   return (
     <div className="flex  flex-1">
@@ -251,13 +257,16 @@ function CreateAdmin() {
               </TableBody>
             </Table>
             <div className="flex gap-[20px] mt-[20px]">
-              <button className="w-[83px] h-[45px] text-base font-semibold font-sans px-2 text-black py-2 rounded-[8px] border-2 border-[#000] transition-all duration-200 bg-[#fff]   focus:outline-none focus:ring-2 focus:ring-offset-2">
+              <Link
+                to="overview"
+                className=" font-medium  px-[24px] text-[#00263E] py-[12px] rounded-[8px] border-2 border-[#000] bg-[#fff]"
+              >
                 Cancel
-              </button>
+              </Link>
               <button
                 onClick={handleSubmitform}
                 type="submit"
-                className="w-[83px] h-[45px] text-base font-semibold font-sans px-2 text-white py-2 rounded-[8px] border-none  submit_btn transition-all duration-200 bg-gray-900  border-transparent focus:outline-none focus:ring-2 focus:ring-offset-2"
+                className="  font-medium  px-[24px] py-[12px] text-white rounded-[8px] border-none bg-[#00263E] "
               >
                 Save
               </button>
@@ -265,13 +274,35 @@ function CreateAdmin() {
           </form>
         </div>
       </div>
-      {/* {submit && (
-        <div className="absolute  opacity-50 w-[100vw] h-[100vh] bg-red-300 z-50">
-          <div className="w-full h-full bg-[#eee] flex items-center justify-center ">
-            <div className="w-[575px] h-[350px] bg-red-300"></div>
+      {showSuccessMessage && (
+        <div className="fixed  inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white p-[48px] rounded-lg text-center flex flex-col items-center">
+            <div className="w-[88px] h-[88px] flex items-center justify-center rounded-full bg-lightgreen">
+              <img src={check} alt="" className="w-[29px] h-[22px]" />
+            </div>
+            <h2 className="text-[24px] text-[#00263E] pt-[16px] font-bold mb-2">
+              Role successfully created
+            </h2>
+            <p className="text-[#455560]">
+              We send an email to the user to notify him of his registration in
+              Yano.
+            </p>
+            <div className="mt-[40px] flex gap-[8px] items-center">
+              <Link to="/overview">
+                <button className="ml-2 bg-[#fff] text-[#00263E] font-medium border-[#00263E] border-2 px-[24px] py-[9px] rounded-[8px]">
+                  Go to overview
+                </button>
+              </Link>
+              <button
+                className="bg-[#00263E] h-[45px] text-white font-medium px-[24px] py-[12px] rounded-[8px]"
+                onClick={closeSuccessMessage}
+              >
+                Create another role
+              </button>
+            </div>
           </div>
         </div>
-      )} */}
+      )}
     </div>
   );
 }

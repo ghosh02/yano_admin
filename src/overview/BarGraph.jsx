@@ -208,11 +208,14 @@ function BarGraph() {
 
   const domainMapping = {};
   return (
-    <div className=" h-[404px] w-[526px] bg-[#fff] rounded-[8px]  relative shadow-lg">
+    <div className=" h-[404px] w-[45%] bg-[#fff] rounded-[8px]  relative shadow-lg">
       <h1 className="text-[#00263E] font-[600] text-[16px] p-[16px]">Age</h1>
-      <BarChart width={500} height={280} data={ageRangeData}>
-        {/* <CartesianGrid strokeDasharray="" />
-         */}
+      <BarChart
+        width={520}
+        height={280}
+        data={ageRangeData}
+        // className="w-[90%]"
+      >
         <CartesianGrid vertical={false} />
         <XAxis dataKey="ageRange" tick={{ fill: "#455560", fontSize: 14 }} />
         <YAxis

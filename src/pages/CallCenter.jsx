@@ -12,6 +12,7 @@ import { gsap } from "gsap";
 import { IoIosTrendingDown } from "react-icons/io";
 import { IoMdArrowDropdown } from "react-icons/io";
 import gender from "../assets/icons/gender.png";
+import Dropdown from "@/components/Dropdown";
 const callData = [
   {
     name: "Ester Howard",
@@ -104,6 +105,18 @@ function CallCenter() {
       }
     }
   }, [mode]);
+  const [day, setDay] = useState(null);
+  const daysfilter = [
+    { label: "Today", value: "0" },
+    { label: "Yesterday", value: "1" },
+    { label: "Last 7 days", value: "7" },
+    { label: "Last 28 days", value: "28" },
+    { label: "Last 90 days", value: "90" },
+  ];
+
+  const handleDays = (option) => {
+    setDay(option);
+  };
   return (
     <div className="h-[calc(100vh-80px)] flex ">
       <Sidebar className="flex-1" />
@@ -435,7 +448,7 @@ function CallCenter() {
         {/* doctor profile */}
         <div
           ref={doctor}
-          className="p-[16px] bg-[#fff] w-[343px] rounded-[8px] h-[410px]"
+          className="p-[16px] bg-[#fff] w-[343px] rounded-[8px] h-[412px]"
         >
           <img
             src={patient}
@@ -506,8 +519,15 @@ function CallCenter() {
               </div>
             </div>
           </div>
-          <div className="flex justify-end mb-2">
-            <select
+          <div className="flex justify-end mb-4">
+            <Dropdown
+              width={190}
+              options={daysfilter}
+              onOptionSelect={handleDays}
+              defaultValue="7"
+            />
+
+            {/* <select
               name=""
               id=""
               className="outline-none border p-1 bg-[#f5f5f5] rounded-[4px]"
@@ -519,7 +539,7 @@ function CallCenter() {
               </option>
               <option value="">Last 28 Days</option>
               <option value="">Last 90 Days</option>
-            </select>
+            </select> */}
           </div>
         </div>
       </div>

@@ -21,11 +21,12 @@ import downside from "../assets/icons/downside.png";
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
+  const [language, setLanguage] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
 
   const handleMenuItemClick = (language) => {
-    setSelectedLanguage(language);
+    setLanguage(language);
     setIsOpen(false);
   };
   const handleClick = () => {

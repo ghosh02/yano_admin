@@ -161,7 +161,7 @@ import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 import initialData from "../constant/InitialData";
 import Dropdown from "@/components/Dropdown";
 
-const COLORS = ["#FFBB28", "#FF8042", "#00C49F", "#0088FE", "#CCCCCC"]; // Custom colors for countries and others
+const COLORS = ["#9B51E0", "#2F80ED", "#219653", "#F2994A", "#CCCCCC"]; // Custom colors for countries and others
 
 const aggregateDataByCountry = (data) => {
   const counts = data.reduce((acc, item) => {
@@ -235,7 +235,7 @@ function CountryRatio() {
   };
 
   return (
-    <div className="w-[250px] h-[405px] p-[16px] bg-[#fff] rounded-[8px] relative shadow-lg">
+    <div className="w-[22%] h-[405px] p-[16px] bg-[#fff] rounded-[8px] relative shadow-lg">
       <h2 className="text-[#00263E] font-[600] text-[16px]">
         Usage by Country
       </h2>

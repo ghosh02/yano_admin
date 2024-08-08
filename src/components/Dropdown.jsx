@@ -112,7 +112,7 @@ const Dropdown = ({ options, onOptionSelect, defaultValue, width = 160 }) => {
         <button
           style={{ width: width }}
           type="button"
-          className="flex items-center gap-[30px] bg-[#fafafa] justify-between w-[200px] h-[40px] rounded-md border border-gray-300 shadow-sm px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none"
+          className="flex items-center gap-[30px] bg-[#fafafa] justify-between w-[200px] h-[40px] rounded-md border border-gray-300 text-[#455560] shadow-sm px-4 py-2 "
           onClick={toggleDropdown}
         >
           {selectedOption ? `${selectedOption.label} ` : "Options"}

@@ -842,7 +842,7 @@ const Overview = () => {
   return (
     <div className="flex">
       <Sidebar />
-      <div className="flex-1 p-[32px]">
+      <div className="flex-1 px-[50px] py-[30px]">
         <h1 className="text-[24px] text-[#00263E] font-[700] m-0 py-[16px] pb-[24px]">
           Overview
         </h1>
@@ -1005,7 +1005,7 @@ const Overview = () => {
             </div>
           </div>
         </div>
-        <div className="flex items-center justify-between flex-wrap gap-[30px]">
+        <div className="flex items-center justify-between  flex-wrap ">
           <BarGraph />
           <SexRatio />
           <CountryRatio />

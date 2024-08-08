@@ -10,7 +10,7 @@ import {
   Table,
 } from "@/components/ui/table";
 import Sidebar from "@/components/Sidebar";
-import { Button } from "@/components/ui/button.jsx";
+// import { Button } from "@/components/ui/button.jsx";
 import { IoMdArrowBack } from "react-icons/io";
 import { FaPlus } from "react-icons/fa6";
 import downgray from "../assets/icons/downgray.png";
@@ -23,6 +23,8 @@ import arrowback from "../assets/icons/arrowback.png";
 import arrowforward from "../assets/icons/arrowforward.png";
 import calendar from "../assets/icons/calendar.png";
 import { DobPicker } from "@/components/ui/DobPicker";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 
 const data = [
   {
@@ -73,7 +75,12 @@ export default function User() {
   const [type, setType] = useState(null);
   const [filter, setFilter] = useState(false);
   const [showCalender, setShowCalender] = useState(false);
-
+  const options = [
+    { label: "English", value: "EN" },
+    { label: "Spanish", value: "SP" },
+    { label: "Portuguese", value: "PO" },
+    // { label: "Sign out",img:us, value: "sign" },
+  ];
   const countryList = [
     { label: "Mexico", value: "Mexico" },
     { label: "Brazil", value: "Brazil" },
@@ -179,12 +186,50 @@ export default function User() {
                             className="w-[16px] h-[16px]"
                           />
                         </Link>
-                        <div className="w-full">
-                          <DobPicker
-                            className="w-full rounded-md border bg-black text-white"
-                            // onsubmit={handleSubmit}
-                          />
-                        </div>
+                        {showCalender ? (
+                          <div className="bg-[#fafafa]  absolute right-[80px] bottom-[80px] z-50">
+                            <div className="flex">
+                              <Calendar
+                                className="rounded-md border  bg-[#fafafa] z-50"
+                                mode="single"
+                                // selected={field.value}
+                                // onSelect={field.onChange}
+                                disabled={(date) =>
+                                  date > new Date() ||
+                                  date < new Date("1900-01-01")
+                                }
+                                initialFocus
+                              />
+                              <Calendar
+                                className="rounded-md border  bg-[#fafafa] z-50"
+                                mode="single"
+                                // selected={field.value}
+                                // onSelect={field.onChange}
+                                disabled={(date) =>
+                                  date > new Date() ||
+                                  date < new Date("1900-01-01")
+                                }
+                                initialFocus
+                              />
+                            </div>
+                            <div className="flex items-center justify-end z-50 space-x-4 p-2">
+                              <Button
+                                className="w-[136px]"
+                                type="button"
+                                variant="outline"
+                                onClick={() => form.reset()}
+                              >
+                                Cancel
+                              </Button>
+                              <Button className="w-[136px] z-50" type="submit">
+                                Set date
+                              </Button>
+                            </div>
+                          </div>
+                        ) : (
+                          ""
+                        )}
+
                         <Link
                           onClick={() => {
                             setFilter(false);
@@ -286,6 +331,31 @@ export default function User() {
                     ))}
                   </TableBody>
                 </Table>
+                <div
+                  className="origin-top-right absolute   right-5 mt-2 w-[148px] rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5"
+                  role="menu"
+                  aria-orientation="vertical"
+                  aria-labelledby="menu-button"
+                >
+                  <div className="p-1" role="none">
+                    {options.map((option) => (
+                      <a
+                        key={option.value}
+                        href="#"
+                        className={`flex items-center gap-[10px]  text-[#455560] px-4 py-4 text-sm hover:bg-gray-100 `}
+                        role="menuitem"
+                        // onClick={() => handleOptionClick(option)}
+                      >
+                        {/* <img
+                          src={option.img}
+                          alt=""
+                          className="w-[16px] h-[16px] object-cover"
+                        /> */}
+                        {option.label}
+                      </a>
+                    ))}
+                  </div>
+                </div>
                 <div className="flex items-center justify-between p-[16px] border-t">
                   <div className="flex items-center gap-2">
                     <p className="text-[#72849A] ">

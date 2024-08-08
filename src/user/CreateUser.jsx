@@ -135,12 +135,7 @@ function CreateUser() {
                 onChange={handleInputs}
               />
             </div>
-            <div className="w-full">
-              <DobPicker
-                className="w-full rounded-md border bg-black text-white"
-                onsubmit={handleSubmit}
-              />
-            </div>
+
             {/* <div className="w-full mt-[20px]">
               <label className="text-[14px] mb-[4px] font-[500]">
                 Phone Number

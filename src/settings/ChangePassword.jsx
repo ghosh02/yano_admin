@@ -3,6 +3,7 @@ import { MdOutlineMail } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { IoMdArrowBack } from "react-icons/io";
 import Sidebar from "@/components/Sidebar";
+import { CiLock } from "react-icons/ci";
 function ChangePassword() {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -34,7 +35,7 @@ function ChangePassword() {
               Current Password
             </p>
             <div className="flex items-center h-[49px] border border-[#DADCE0] bg-[#fafafa] px-[16px] py-[16px] rounded-[8px] focus-within:border-green-500">
-              <MdOutlineMail />
+              <CiLock />
               <input
                 type={showold ? "text" : "password"}
                 value={oldPassword}
@@ -52,7 +53,7 @@ function ChangePassword() {
             </div>
             <p className="text-[#00263E] text-[14px] mt-[20px]">New Password</p>
             <div className="flex items-center h-[49px] border border-[#DADCE0] bg-[#fafafa] px-[16px] py-[16px] rounded-[8px] focus-within:border-green-500">
-              <MdOutlineMail />
+              <CiLock />
               <input
                 type={shownew ? "text" : "password"}
                 value={newPassword}

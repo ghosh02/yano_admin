@@ -22,6 +22,7 @@ import close from "../assets/icons/close.png";
 import arrowback from "../assets/icons/arrowback.png";
 import arrowforward from "../assets/icons/arrowforward.png";
 import calendar from "../assets/icons/calendar.png";
+import { DobPicker } from "@/components/ui/DobPicker";
 
 const data = [
   {
@@ -71,6 +72,7 @@ export default function User() {
   const [status, setStatus] = useState(null);
   const [type, setType] = useState(null);
   const [filter, setFilter] = useState(false);
+  const [showCalender, setShowCalender] = useState(false);
 
   const countryList = [
     { label: "Mexico", value: "Mexico" },
@@ -164,7 +166,12 @@ export default function User() {
                           name="Type"
                           width={200}
                         />
-                        <Link className="flex items-center gap-2 px-[12px] py-[8px] border-2 rounded-[6px] bg-[#fafafa]">
+                        <Link
+                          onClick={() => {
+                            setShowCalender(!showCalender);
+                          }}
+                          className="flex items-center gap-2 px-[12px] py-[8px] border-2 rounded-[6px] bg-[#fafafa]"
+                        >
                           <p className="text-[#455560]">May 8 - June 8,1992</p>
                           <img
                             src={calendar}
@@ -172,6 +179,12 @@ export default function User() {
                             className="w-[16px] h-[16px]"
                           />
                         </Link>
+                        <div className="w-full">
+                          <DobPicker
+                            className="w-full rounded-md border bg-black text-white"
+                            // onsubmit={handleSubmit}
+                          />
+                        </div>
                         <Link
                           onClick={() => {
                             setFilter(false);

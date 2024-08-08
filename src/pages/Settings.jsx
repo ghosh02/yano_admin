@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { LuUsers } from "react-icons/lu";
 import { MdOutlinePeopleOutline } from "react-icons/md";
 import Sidebar from "@/components/Sidebar";
+import admin from "../assets/icons/Group.png";
+import lock from "../assets/icons/lock.png";
 
 function Settings() {
   return (
@@ -27,7 +29,11 @@ function Settings() {
                 </p>
               </div>
               <div className="w-[48px] h-[48px] rounded-[50%] bg-[#76BC21] flex items-center justify-center">
-                <CiLock size={30} color="#fff" />
+                <img
+                  src={lock}
+                  alt=""
+                  className="w-[24px] h-[16px] object-contain"
+                />
               </div>
             </div>
           </Link>
@@ -40,7 +46,11 @@ function Settings() {
                 </p>
               </div>
               <div className="w-[48px] h-[48px] rounded-[50%] bg-[#76BC21] flex items-center justify-center">
-                <MdOutlinePeopleOutline size={30} color="#fff" />
+                <img
+                  src={admin}
+                  alt=""
+                  className="w-[24px] h-[24px] object-contain"
+                />
               </div>
             </div>
           </Link>

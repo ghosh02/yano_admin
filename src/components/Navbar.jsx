@@ -14,9 +14,9 @@ import { MdLogout } from "react-icons/md";
 import { IoIosArrowUp } from "react-icons/io";
 import { LogIn } from "lucide-react";
 import { Link } from "react-router-dom";
-import spain from "../assets/icons/spain.png";
-import us from "../assets/icons/united-states.png";
-import brazil from "../assets/icons/brazil.png";
+import spain from "../assets/icons/spa.png";
+import us from "../assets/icons/usa.png";
+import brazil from "../assets/icons/brasil.png";
 import downside from "../assets/icons/downside.png";
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -38,7 +38,7 @@ function Navbar() {
   const options = [
     { label: "English", img: us, value: "EN" },
     { label: "Spanish", img: spain, value: "SP" },
-    { label: "License", img: brazil, value: "PO" },
+    { label: "Portuguese", img: brazil, value: "PO" },
     // { label: "Sign out",img:us, value: "sign" },
   ];
 
@@ -71,7 +71,7 @@ function Navbar() {
 
           {isOption && (
             <div
-              className="origin-top-right absolute  -left-12 mt-2 w-[148px] rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5"
+              className="origin-top-right absolute  -right-4 mt-2 w-[148px] rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5"
               role="menu"
               aria-orientation="vertical"
               aria-labelledby="menu-button"
@@ -85,7 +85,11 @@ function Navbar() {
                     role="menuitem"
                     onClick={() => handleOptionClick(option)}
                   >
-                    <img src={option.img} alt="" />
+                    <img
+                      src={option.img}
+                      alt=""
+                      className="w-[16px] h-[16px] object-cover"
+                    />
                     {option.label}
                   </a>
                 ))}

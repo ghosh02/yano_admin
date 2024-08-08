@@ -47,7 +47,7 @@ function Sidebar() {
             <div className="border-t-2 w-full" />
             <NavLink
               className={({ isActive }) =>
-                ` ml-[16px] flex items-center gap-3 rounded-l-[10px] px-3 py-2 mt-[8px]   transition-all hover:text-[#00263E] dark:text-gray-400 dark:hover:text-gray-50 ${
+                ` ml-[16px]  flex items-center gap-3 rounded-l-[10px] px-3 py-4 transition-all hover:text-[#00263E] dark:text-gray-400 dark:hover:text-gray-50 ${
                   isActive
                     ? "bg-[#F5F5F5] border-r-4 border-darkgreen text-[#00263E] font-[600]"
                     : "text-[#455560]"

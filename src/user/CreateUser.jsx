@@ -45,7 +45,7 @@ function CreateUser() {
     console.log(userData);
     alert("submitted");
   };
-  const [selectedRole, setSelectedRole] = useState("");
+  const [selectedRole, setSelectedRole] = useState("patient");
 
   const handleChange = (event) => {
     setSelectedRole(event.target.value);
@@ -303,7 +303,7 @@ function CreateUser() {
               </div>
             </div>
             <div className="flex gap-[20px] mt-[20px]">
-              <button className="w-[83px] h-[45px] border-gray-900 text-base font-semibold font-sans px-2 text-black py-2 rounded-[8px] border-2   duration-200 bg-[#fff]  ">
+              <button className="w-[99px] h-[45px] border-gray-900 text-base font-semibold font-sans px-2 text-black py-2 rounded-[8px] border-2   duration-200 bg-[#fff]  ">
                 Cancel
               </button>
               <button

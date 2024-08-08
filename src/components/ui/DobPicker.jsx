@@ -162,15 +162,18 @@ export function DobPicker({ onsubmit }) {
                     }
                     initialFocus
                   />
-                  <div className="flex justify-end space-x-4 p-2">
+                  <div className="flex justify-between flex-1 space-x-4 p-2">
                     <Button
+                      className="w-[136px]"
                       type="button"
                       variant="outline"
                       onClick={() => form.reset()}
                     >
                       Cancel
                     </Button>
-                    <Button type="submit">Save</Button>
+                    <Button className="w-[136px]" type="submit">
+                      Set date
+                    </Button>
                   </div>
                 </PopoverContent>
               </Popover>

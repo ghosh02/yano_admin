@@ -262,7 +262,7 @@ function Navbar() {
               </p>
             </div>
             <img
-              src={patient}
+              src={"/src/assets/country-flags/ad.png"}
               alt=""
               className="w-[40px] h-[40px] rounded-[50%] object-cover"
             />

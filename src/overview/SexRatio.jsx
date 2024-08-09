@@ -267,7 +267,7 @@ function SexRatio() {
   };
 
   return (
-    <div className="h-[404px] w-[30%] bg-[#fff] rounded-[8px]  relative shadow-lg">
+    <div className="h-[404px] w-[30%] bg-[#fff] rounded-[8px]  relative shadow">
       <div className="p-[16px]">
         <h2 className="text-[#00263E] font-[600] text-[16px]">Usage by Sex</h2>
         <div className="flex flex-col items-center">

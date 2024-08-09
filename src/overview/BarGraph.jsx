@@ -215,7 +215,7 @@ function BarGraph() {
   // ];
   const domainMapping = {};
   return (
-    <div className=" h-[404px] w-[45%] bg-[#fff] rounded-[8px]  relative shadow-lg">
+    <div className=" h-[404px] w-[45%] bg-[#fff] rounded-[8px]  relative shadow">
       <h1 className="text-[#00263E] font-[600] text-[16px] p-[16px]">Age</h1>
       <BarChart
         width={520}

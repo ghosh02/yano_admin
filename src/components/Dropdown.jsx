@@ -154,8 +154,8 @@
 // export default Dropdown;
 
 import React, { useState, useEffect, useRef } from "react";
-import uparrow from "../assets/icons/uparrow.png";
-import downarrow from "../assets/icons/downarrow.png";
+import downArrowDarkGray from "../assets/icons/downArrowDarkGray.png";
+import upArrowDarkGray from "../assets/icons/upArrowDarkGray.png";
 
 const Dropdown = ({ options, onOptionSelect, defaultValue, width = 160 }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -211,9 +211,17 @@ const Dropdown = ({ options, onOptionSelect, defaultValue, width = 160 }) => {
         >
           {selectedOption ? `${selectedOption.label} ` : "Options"}
           {isOpen ? (
-            <img src={uparrow} alt="" />
+            <img
+              src={upArrowDarkGray}
+              alt=""
+              className="w-[10px] h-[5px] object-contain"
+            />
           ) : (
-            <img src={downarrow} alt="" />
+            <img
+              src={downArrowDarkGray}
+              alt=""
+              className="w-[10px] h-[5px] object-contain"
+            />
           )}
         </button>
       </div>

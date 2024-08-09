@@ -687,7 +687,7 @@ const CustomTooltip = ({ active, payload, label }) => {
     const unit = unitMapping[payload[0].dataKey] || "";
 
     return (
-      <div className="bg-white p-2  shadow rounded">
+      <div className="bg-white p-2  shadow-3xl rounded">
         {/* <p className="label">{`Date: ${label}`}</p> */}
         <p className="text-[#72849A] text-[12px]">Wed 25</p>
         <p className="text-[#00263E] text-[14px] font-medium">Avg. 17 mmol/L</p>

@@ -119,9 +119,10 @@ const CountryDropdown = ({ onSelect }) => {
         className="inline-flex cursor-pointer gap-1 items-center px-3 py-3 rounded-[6px] border bg-[#fafafa] text-[#00263E] font-medium text-sm"
         onClick={toggleDropdown}
       >
+        {/* /public/country-flags */}
         {/* ${selectedCountry.flag} */}
         <img
-          src={`/public/country-flags/${selectedCountry.flag}`}
+          src={`/${selectedCountry.flag}`}
           className="mr-2 w-[24px] h-[24px] object-contain"
         />
         <p className="text-[14px] text-[#00263E] font-medium">
@@ -142,8 +143,9 @@ const CountryDropdown = ({ onSelect }) => {
               onClick={() => handleSelectCountry(countryCode)}
               className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer"
             >
+              {/* /public/country-flags */}
               <img
-                src={`/public/country-flags/${CountryFlags[countryCode]}`}
+                src={`/${CountryFlags[countryCode]}`}
                 alt={countryNames[countryCode]}
                 className="w-[24px] h-[24px] object-contain"
               />

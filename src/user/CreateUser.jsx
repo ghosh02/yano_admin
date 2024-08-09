@@ -238,6 +238,8 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import PhoneForm from "@/components/PhoneForm";
 import check from "../assets/icons/check.png";
+import date from "../assets/icons/date.png";
+import SingleCalender from "@/components/SingleCalender";
 
 function CreateUser() {
   const containerStyle = {
@@ -247,6 +249,7 @@ function CreateUser() {
     borderRadius: "8px",
   };
   const [show, setShow] = useState(false);
+  const [showCalender, setShowCalender] = useState(false);
   const [phone, setPhone] = useState("");
   const [startDate, setStartDate] = useState(new Date());
   const [userData, setUserData] = useState({
@@ -304,7 +307,7 @@ function CreateUser() {
             <div className="mt-[20px]">
               <label
                 htmlFor="firstName"
-                className="text-[14px] mb-[4px] font-[500]"
+                className="text-[14px] text-[#00263E] mb-[4px] font-[500]"
               >
                 First Name
               </label>
@@ -321,7 +324,7 @@ function CreateUser() {
             <div className="mt-[20px]">
               <label
                 htmlFor="lastName"
-                className="text-[14px] mb-[4px] font-[500]"
+                className="text-[14px] text-[#00263E] mb-[4px] font-[500]"
               >
                 Last Name
               </label>
@@ -338,7 +341,7 @@ function CreateUser() {
             <div className="mt-[20px]">
               <label
                 htmlFor="email"
-                className="text-[14px] mb-[4px] font-[500]"
+                className="text-[14px] mb-[4px] text-[#00263E] font-[500]"
               >
                 Email address
               </label>
@@ -354,6 +357,34 @@ function CreateUser() {
             </div>
             <PhoneForm label="Phone number" />
             <PhoneForm label="Emergency contact" />
+            <div className="mt-[20px] mb-[16px]">
+              <label
+                htmlFor="email"
+                className="text-[14px] text-[#00263E] mb-[4px] font-[500]"
+              >
+                Date of birth
+              </label>
+              <div className="flex items-center justify-between w-full h-[49px] shadow-none border py-[14px] px-[16px] bg-[#FAFAFA] rounded-[8px]">
+                <p>Select a date of birth</p>
+                <img
+                  onClick={() => {
+                    setShowCalender(true);
+                  }}
+                  src={date}
+                  alt=""
+                  className="w-[16px] h-[16px] cursor-pointer object-contain"
+                />
+              </div>
+              {/* <input
+                className="w-full h-[49px] shadow-none border outline-none pl-2 bg-[#FAFAFA] rounded-[8px]"
+                type="text"
+                id="email"
+                name="email"
+                autoComplete="false"
+                value={userData.email}
+                onChange={handleInputs}
+              /> */}
+            </div>
             <div className="flex items-center gap-3">
               <label
                 className={`inline-flex items-center mt-3 border-2 w-[228px] h-[50px] justify-center rounded-[8px] ${
@@ -452,6 +483,13 @@ function CreateUser() {
           </form>
         </div>
       </div>
+      {showCalender && (
+        <SingleCalender
+          handleSetDate={() => {
+            setShowCalender(false);
+          }}
+        />
+      )}
       {showSuccessMessage && (
         <div className="fixed  inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
           <div className="bg-white p-[48px] rounded-lg text-center flex flex-col items-center">

@@ -1,5 +1,5 @@
 import Sidebar from "@/components/Sidebar";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { IoMdArrowBack } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -52,6 +52,9 @@ const admin = [
 function AdminList() {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortConfig, setSortConfig] = useState(null);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 });
+  const popupRef = useRef(null);
   //   const navigate = useNavigate();
   const filteredAdmins = useMemo(() => {
     return admin.filter(
@@ -92,6 +95,30 @@ function AdminList() {
   const handleRowClick = (user) => {
     navigate("/settings/adminList/createAdmin");
   };
+  const handleActionClick = (event, user) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    setPopupPosition({
+      top: rect.bottom + window.scrollY - 3,
+      left: rect.left + window.scrollX - 40,
+    });
+    setSelectedUser(user);
+  };
+
+  const closePopup = () => {
+    setSelectedUser(null);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (popupRef.current && !popupRef.current.contains(event.target)) {
+        closePopup();
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [popupRef]);
   return (
     <div className="h-[calc(100vh-80px)] flex">
       <Sidebar />
@@ -217,7 +244,10 @@ function AdminList() {
                       <p>{admin?.status}</p>
                     </div>
                   </TableCell>
-                  <TableCell className="pl-[35px]">
+                  <TableCell
+                    onClick={(event) => handleActionClick(event, user)}
+                    className="pl-[35px] cursor-pointer"
+                  >
                     <img src={threedot} alt="" />
                   </TableCell>
                 </TableRow>
@@ -239,6 +269,60 @@ function AdminList() {
           </div>
         </div>
       </div>
+      {selectedUser && (
+        <div
+          className="  absolute shadow  bg-white border rounded"
+          style={{ top: popupPosition.top, left: popupPosition.left }}
+          ref={popupRef}
+        >
+          <ul className="flex flex-col gap-[2px] m-[4px]">
+            <li
+              className=" flex items-center gap-[10px] rounded-[6px] px-[16px] py-[12px] cursor-pointer hover:bg-[#F5F5F5]"
+              onClick={closePopup}
+            >
+              <img
+                src={edit}
+                alt=""
+                className="w-[16px] h-[16px] object-contain"
+              />
+              <p className="text-[#455560] text-[14px]">Edit user</p>
+            </li>
+            <li
+              className="flex items-center gap-[10px] rounded-[6px] px-[16px] py-[12px] cursor-pointer hover:bg-[#F5F5F5]"
+              onClick={closePopup}
+            >
+              <img
+                src={sendnoti}
+                alt=""
+                className="w-[16px] h-[16px] object-contain"
+              />
+              <p className="text-[#455560] text-[14px]">Send notification</p>
+            </li>
+            <li
+              className="flex items-center gap-[10px] rounded-[6px] px-[16px] py-[12px] cursor-pointer hover:bg-[#F5F5F5]   "
+              onClick={closePopup}
+            >
+              <img
+                src={exportreport}
+                alt=""
+                className="w-[16px] h-[16px] object-contain"
+              />
+              <p className="text-[#455560] text-[14px]">Export report</p>
+            </li>
+            <li
+              className="flex items-center gap-[10px] rounded-[6px] px-[16px] py-[12px] cursor-pointer hover:bg-[#F5F5F5]"
+              onClick={closePopup}
+            >
+              <img
+                src={deactivate}
+                alt=""
+                className="w-[16px] h-[16px] object-contain"
+              />
+              <p className="text-[#455560] text-[14px]">Deactivate user</p>
+            </li>
+          </ul>
+        </div>
+      )}
     </div>
   );
 }

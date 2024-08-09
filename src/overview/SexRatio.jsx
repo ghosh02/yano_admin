@@ -267,33 +267,34 @@ function SexRatio() {
   };
 
   return (
-    <div className="h-[404px] w-[30%] bg-[#fff] rounded-[8px] p-[16px] relative shadow-lg">
-      <h2 className="text-[#00263E] font-[600] text-[16px]">Usage by Sex</h2>
-      <div className="flex flex-col items-center">
-        <PieChart width={200} height={250}>
-          <Pie
-            data={chartData}
-            cx="50%"
-            cy="50%"
-            outerRadius={100}
-            fill="#8884d8"
-            dataKey="value"
-            className="outline-none"
-            labelLine={false}
-            label={renderCustomizedLabel}
-          >
-            {chartData.map((entry, index) => (
-              <Cell
-                key={`cell-${index}`}
-                fill={COLORS[index % COLORS.length]}
-              />
-            ))}
-          </Pie>
-          <Legend content={<CustomLegend />} />
-        </PieChart>
+    <div className="h-[404px] w-[30%] bg-[#fff] rounded-[8px]  relative shadow-lg">
+      <div className="p-[16px]">
+        <h2 className="text-[#00263E] font-[600] text-[16px]">Usage by Sex</h2>
+        <div className="flex flex-col items-center">
+          <PieChart width={200} height={250}>
+            <Pie
+              data={chartData}
+              cx="50%"
+              cy="50%"
+              outerRadius={100}
+              fill="#8884d8"
+              dataKey="value"
+              className="outline-none"
+              labelLine={false}
+              label={renderCustomizedLabel}
+            >
+              {chartData.map((entry, index) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={COLORS[index % COLORS.length]}
+                />
+              ))}
+            </Pie>
+            <Legend content={<CustomLegend />} />
+          </PieChart>
+        </div>
       </div>
-      <div className="border-t-2 border-[#eee] mt-[45px] " />
-      <div className="flex items-center justify-center w-full absolute  bottom-[15px]">
+      <div className="flex items-start justify-start pl-[20px] w-full pt-[11px] absolute border-t-2 border-[#eee]  bottom-[15px]">
         <div className="w-full flex-1 flex items-center">
           <Dropdown
             width={190}

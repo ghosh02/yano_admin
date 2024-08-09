@@ -241,7 +241,7 @@ const initialData = [
   },
   {
     date: "2024-08-03",
-    bloodGlucose: 25,
+    bloodGlucose: 10,
     oxygenSat: 26,
     bodytemp: 40.1,
     heartrate: 78,
@@ -265,7 +265,7 @@ const initialData = [
   },
   {
     date: "2024-08-05",
-    bloodGlucose: 20,
+    bloodGlucose: 15,
     oxygenSat: 26,
     bodytemp: 40.1,
     heartrate: 78,
@@ -277,7 +277,7 @@ const initialData = [
   },
   {
     date: "2024-08-06",
-    bloodGlucose: 22,
+    bloodGlucose: 16,
     oxygenSat: 26,
     bodytemp: 40.1,
     heartrate: 78,
@@ -289,7 +289,7 @@ const initialData = [
   },
   {
     date: "2024-08-07",
-    bloodGlucose: 22,
+    bloodGlucose: 14,
     oxygenSat: 26,
     bodytemp: 40.1,
     heartrate: 78,
@@ -301,7 +301,7 @@ const initialData = [
   },
   {
     date: "2024-08-08",
-    bloodGlucose: 22,
+    bloodGlucose: 18,
     oxygenSat: 26,
     bodytemp: 40.1,
     heartrate: 78,
@@ -313,7 +313,7 @@ const initialData = [
   },
   {
     date: "2024-08-09",
-    bloodGlucose: 22,
+    bloodGlucose: 25,
     oxygenSat: 26,
     bodytemp: 40.1,
     heartrate: 78,

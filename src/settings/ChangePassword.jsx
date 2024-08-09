@@ -71,7 +71,7 @@ function ChangePassword() {
             </div>
             <button
               type="submit"
-              className=" w-[160px] h-[50px] bg-[#00263E] text-[#fff] rounded-[8px] mt-[25px] "
+              className=" w-[83px] h-[45px] bg-[#00263E] text-[#fff] rounded-[8px] mt-[25px] "
             >
               Save
             </button>

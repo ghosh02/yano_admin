@@ -387,6 +387,7 @@ import edit from "../assets/icons/edit.png";
 import sendnoti from "../assets/icons/sendnoti.png";
 import exportreport from "../assets/icons/export.png";
 import deactivate from "../assets/icons/deactivate.png";
+import CalenderTwoSide from "./CalenderTwoSide";
 
 const data = [
   {
@@ -430,6 +431,10 @@ const data = [
     status: "active",
   },
 ];
+const statusList = [
+  { label: "Active", value: "active" },
+  { label: "Inactive", value: "inactive" },
+];
 
 export default function User() {
   const [country, setCountry] = useState(null);
@@ -440,19 +445,31 @@ export default function User() {
   const [selectedUser, setSelectedUser] = useState(null);
   const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 });
   const popupRef = useRef(null);
-  const navigate = useNavigate();
 
+  const countryList = [
+    { label: "Mexico", value: "Mexico" },
+    { label: "Brazil", value: "Brazil" },
+    { label: "Venezuela", value: "Venezuela" },
+    { label: "Colombia", value: "Colombia" },
+  ];
+  const statusList = [
+    { label: "Active", value: "active" },
+    { label: "Inactive", value: "inactive" },
+  ];
+  const typeList = [
+    { label: "Patient", value: "patient" },
+    { label: "Helthcare provider", value: "helthcareProvider" },
+  ];
   const handleCountryChange = (option) => {
     setCountry(option);
   };
-
   const handleStatus = (option) => {
     setStatus(option);
   };
-
   const handleType = (option) => {
     setType(option);
   };
+  const navigate = useNavigate();
 
   const handleRowClick = (user) => {
     navigate(`/user/${user?.user_id}`, { state: { user } });
@@ -484,6 +501,7 @@ export default function User() {
     };
   }, [popupRef]);
 
+  // const [showCalender,setShowCalender]=useState(false)
   return (
     <div className="grid min-h-screen max-w-screen">
       <div className="flex w-full">
@@ -496,7 +514,7 @@ export default function User() {
             </div>
 
             <Link to="createUser">
-              <Button className="flex gap-3 items-center justify-center">
+              <Button className="flex gap-3 items-center justify-center bg-[#00263E]">
                 <span>
                   <FaPlus size={12} />
                 </span>
@@ -566,9 +584,15 @@ export default function User() {
                             className="w-[16px] h-[16px]"
                           />
                         </Link>
+                        {}
                         {showCalender ? (
                           <div className="bg-[#fafafa]  absolute right-[80px] bottom-[80px] z-50">
-                            <div className="flex">
+                            <CalenderTwoSide
+                              handleSetDate={() => {
+                                setShowCalender(false);
+                              }}
+                            />
+                            {/* <div className="flex">
                               <Calendar
                                 className="rounded-md border  bg-[#fafafa] z-50"
                                 mode="single"
@@ -591,8 +615,8 @@ export default function User() {
                                 }
                                 initialFocus
                               />
-                            </div>
-                            <div className="flex items-center justify-end z-50 space-x-4 p-2">
+                            </div> */}
+                            {/* <div className="flex items-center justify-end z-50 space-x-4 p-2">
                               <Button
                                 className="w-[136px]"
                                 type="button"
@@ -604,7 +628,7 @@ export default function User() {
                               <Button className="w-[136px] z-50" type="submit">
                                 Set date
                               </Button>
-                            </div>
+                            </div> */}
                           </div>
                         ) : (
                           ""

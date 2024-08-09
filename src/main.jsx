@@ -22,6 +22,8 @@ import Overview from "./pages/Overview.jsx";
 import CallCenter from "./pages/CallCenter.jsx";
 import VideoCall from "./pages/VideoCall.jsx";
 import UserDetail from "./pages/UserDetail.jsx";
+import UserContextProvider from "./context/UserContextProvider.jsx";
+import CalenderTwoSide from "./pages/CalenderTwoSide.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -39,11 +41,14 @@ const router = createBrowserRouter(
       <Route path="/ForgotPassword" element={<ForgotPassword />} />
       <Route path="/ResetPasswordLink" element={<ResetPasswordLink />} />
       <Route path="/user/:userID" element={<UserDetail />} />
+      <Route path="/calender" element={<CalenderTwoSide />} />
     </Route>
   )
 );
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
+  <UserContextProvider>
+    <React.StrictMode>
+      <RouterProvider router={router} />
+    </React.StrictMode>
+  </UserContextProvider>
 );

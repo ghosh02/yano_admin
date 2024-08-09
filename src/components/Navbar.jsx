@@ -142,7 +142,7 @@
 
 // export default Navbar;
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import Logo from "../assets/Logo.png";
 import patient from "../assets/patient.png";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
@@ -152,6 +152,7 @@ import spain from "../assets/icons/spa.png";
 import us from "../assets/icons/usa.png";
 import brazil from "../assets/icons/brasil.png";
 import downside from "../assets/icons/downside.png";
+import UserContext from "@/context/UserContext";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -169,6 +170,8 @@ function Navbar() {
     { label: "Portuguese", img: brazil, value: "PO" },
   ];
 
+  const { user, setUser } = useContext(UserContext);
+  console.log(user);
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -199,6 +202,7 @@ function Navbar() {
 
   const handleClick = () => {
     setIsLogin(false);
+    setUser(false);
   };
 
   return (
@@ -248,32 +252,35 @@ function Navbar() {
           )}
         </div>
         {/* dropdown end  */}
-        <div className="flex items-center gap-2 ">
-          <div>
-            <p className="text-darkblue font-[600]">Dr. Roger Hopkins</p>
-            <p className="text-lightgray text-[12px] text-right">
-              General medicine
-            </p>
+        {user && (
+          <div className="flex items-center gap-2 ">
+            <div>
+              <p className="text-darkblue font-[600]">Dr. Roger Hopkins</p>
+              <p className="text-lightgray text-[12px] text-right">
+                General medicine
+              </p>
+            </div>
+            <img
+              src={patient}
+              alt=""
+              className="w-[40px] h-[40px] rounded-[50%] object-cover"
+            />
+            {isLogin ? (
+              <IoIosArrowUp
+                size={25}
+                className="cursor-pointer"
+                onClick={() => setIsLogin(!isLogin)}
+              />
+            ) : (
+              <IoIosArrowDown
+                size={25}
+                className="cursor-pointer"
+                onClick={() => setIsLogin(!isLogin)}
+              />
+            )}
           </div>
-          <img
-            src={patient}
-            alt=""
-            className="w-[40px] h-[40px] rounded-[50%] object-cover"
-          />
-          {isLogin ? (
-            <IoIosArrowUp
-              size={25}
-              className="cursor-pointer"
-              onClick={() => setIsLogin(!isLogin)}
-            />
-          ) : (
-            <IoIosArrowDown
-              size={25}
-              className="cursor-pointer"
-              onClick={() => setIsLogin(!isLogin)}
-            />
-          )}
-        </div>
+        )}
+
         {isLogin && (
           <Link
             to="/"

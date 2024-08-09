@@ -687,7 +687,7 @@ const CustomTooltip = ({ active, payload, label }) => {
     const unit = unitMapping[payload[0].dataKey] || "";
 
     return (
-      <div className="bg-white p-2 shadow-lg rounded">
+      <div className="bg-white p-2  shadow rounded">
         {/* <p className="label">{`Date: ${label}`}</p> */}
         <p className="text-[#72849A] text-[12px]">Wed 25</p>
         <p className="text-[#00263E] text-[14px] font-medium">Avg. 17 mmol/L</p>
@@ -699,7 +699,7 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 const domainMapping = {
-  bloodGlucose: [0, 30],
+  bloodGlucose: [0, 40],
   oxygenSat: [0, 60],
   bodytemp: [30, 45],
   heartrate: [50, 100],
@@ -712,8 +712,8 @@ const LineGraph = ({ data, valueKey }) => {
   return (
     <div className="w-[100%] h-[330px]">
       <ResponsiveContainer>
-        <LineChart data={data}>
-          <CartesianGrid vertical={false} />
+        <LineChart data={data} margin={{ left: 20, right: 10 }}>
+          <CartesianGrid stroke="#EEEEEE" vertical={false} />
           <XAxis dataKey="date" tickFormatter={tickFormatter} />
           <YAxis
             domain={domainMapping[valueKey]}
@@ -724,15 +724,22 @@ const LineGraph = ({ data, valueKey }) => {
             tick={{ fill: "#455560", fontSize: 12 }}
           />
 
-          {/* <YAxis domain={domainMapping[valueKey]} orientation="right" /> */}
-          <Tooltip content={<CustomTooltip />} />
+          <Tooltip
+            content={<CustomTooltip />}
+            cursor={{
+              stroke: "#ABABAB",
+              strokeDasharray: "2 4",
+              strokeWidth: 1,
+              strokeDashoffset: 5,
+            }}
+          />
           <Line
-            type="monotone"
+            type="linear"
             dataKey={valueKey}
             stroke="#76BC21"
             strokeWidth={3}
             activeDot={{
-              stroke: "#76BC21", // Change this to your desired color
+              stroke: "#76BC21",
               strokeWidth: 10, // Increase the width
               strokeDasharray: "3 0", // Make the line dotted
             }}
@@ -985,7 +992,7 @@ const Overview = () => {
             ))}
           </div>
           <div className="mt-[16px] px-[16px]">
-            <LineGraph data={filteredData} valueKey={valueKey} />
+            <LineGraph type="" data={filteredData} valueKey={valueKey} />
           </div>
           <div className="mb-4 flex gap-4 p-[16px] border-[#eee] border-t-2">
             <div>

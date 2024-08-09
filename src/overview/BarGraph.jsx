@@ -223,7 +223,7 @@ function BarGraph() {
         data={ageRangeData}
         // className="w-[90%]"
       >
-        <CartesianGrid vertical={false} />
+        <CartesianGrid stroke="#EEEEEE" vertical={false} />
         <XAxis
           dataKey="ageRange"
           tick={{ fill: "#455560", fontSize: 14 }}

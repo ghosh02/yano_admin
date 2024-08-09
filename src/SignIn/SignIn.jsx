@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { MdOutlineMail } from "react-icons/md";
 import { CiLock } from "react-icons/ci";
 import { Link, useNavigate } from "react-router-dom";
+import UserContext from "@/context/UserContext";
 
 function SignIn() {
   const [email, setEmail] = useState("");
@@ -13,13 +14,15 @@ function SignIn() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmitted(true);
+
     // navigate("/user");
     if (email && password) {
       navigate("/overview");
+      setUser(true);
     }
     // console.log(email);
   };
-
+  const { setUser } = useContext(UserContext);
   const isEmailError = isSubmitted && !email;
   const isPasswordError = isSubmitted && !password;
   return (

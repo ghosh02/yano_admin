@@ -13,7 +13,7 @@ const ToggleButton = ({ on, toggle }) => {
         />
         <div
           className={`w-[34px] h-[14px] rounded-[7px] shadow-inner transition-colors duration-300 ${
-            on ? "bg-[#76BC2161]" : "bg-[#212121]"
+            on ? "bg-[#76BC2161]" : "bg-[#ededed]"
           }`}
         ></div>
         <div

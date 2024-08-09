@@ -122,6 +122,10 @@ function CallCenter() {
       <Sidebar />
       <div className="p-[32px] flex gap-[30px] bg-[#fff] flex-1  h-[calc(100vh-80px)]">
         <div
+          style={{
+            boxShadow:
+              " -2px 2px 5px rgba(0, 0, 0, 0.1), 2px -2px 5px rgba(0, 0, 0, 0.1)",
+          }}
           ref={liveConsultationRef}
           className={`h-[550px] p-[16px] shadow-2xl bg-[#fff] w-[343px] rounded-[8px] transition-all  ${
             mode ? "block" : "hidden"
@@ -228,6 +232,10 @@ function CallCenter() {
           </div>
         </div>
         <div
+          style={{
+            boxShadow:
+              " -2px 2px 5px rgba(0, 0, 0, 0.1), 2px -2px 5px rgba(0, 0, 0, 0.1)",
+          }}
           className={`h-[550px] p-[16px]  bg-[#fff] shadow-2xl w-[343px] rounded-[8px] ${
             showProfile ? "block" : "hidden"
           }`}
@@ -447,8 +455,12 @@ function CallCenter() {
         </div>
         {/* doctor profile */}
         <div
+          style={{
+            boxShadow:
+              " -2px 2px 5px rgba(0, 0, 0, 0.1), 2px -2px 5px rgba(0, 0, 0, 0.1)",
+          }}
           ref={doctor}
-          className="p-[16px] bg-[#fff] w-[343px] shadow-2xl rounded-[8px] h-[412px]"
+          className="p-[16px] bg-[#fff] w-[343px] shadow-2xl rounded-[8px] h-[415px]"
         >
           <img
             src={patient}
@@ -525,7 +537,7 @@ function CallCenter() {
               </div>
             </div>
           </div>
-          <div className="flex justify-end mb-4">
+          <div className="flex justify-end pb-[20px]">
             <Dropdown
               width={190}
               options={daysfilter}

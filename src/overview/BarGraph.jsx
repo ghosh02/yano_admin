@@ -224,7 +224,11 @@ function BarGraph() {
         // className="w-[90%]"
       >
         <CartesianGrid vertical={false} />
-        <XAxis dataKey="ageRange" tick={{ fill: "#455560", fontSize: 14 }} />
+        <XAxis
+          dataKey="ageRange"
+          tick={{ fill: "#455560", fontSize: 14 }}
+          tickLine={false}
+        />
         <YAxis
           domain={[0, 40]}
           axisLine={false}
@@ -232,8 +236,8 @@ function BarGraph() {
           tick={{
             fill: "#455560",
             fontSize: 14,
-            formatter: (value) => `${value}`, // Add '%' symbol to Y-axis values
           }}
+          tickFormatter={(value) => `${value}%`}
         />
         {/* <Tooltip /> */}
         <Bar dataKey="avgMetric">

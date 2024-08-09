@@ -235,69 +235,72 @@ function CountryRatio() {
   };
 
   return (
-    <div className="w-[22%] h-[405px] p-[16px] bg-[#fff] rounded-[8px] relative shadow-lg">
-      <h2 className="text-[#00263E] font-[600] text-[16px]">
-        Usage by Country
-      </h2>
-      <div className="flex justify-between">
-        <div>
-          <p className="text-[14px] font-[500] text-[#00263E]">
-            {topCountry.name}
-          </p>
-          <p className="text-[20px] font-[700] text-[#00263E]">
-            {topCountry.percent}%
-          </p>
-          <p className="text-[13px] font-[400] text-[#72849A]">Top Country</p>
+    <div className="w-[22%] h-[405px]  bg-[#fff] rounded-[8px] relative shadow-lg">
+      <div className="p-[16px]">
+        <h2 className="text-[#00263E] font-semibold text-[16px]">
+          Usage by Country
+        </h2>
+        <div className="flex justify-between mt-[24px]">
+          <div>
+            <p className="text-[14px] py-[6px] font-medium text-[#00263E]">
+              {topCountry.name}
+            </p>
+            <p className="text-[20px] font-bold text-[#00263E]">
+              {topCountry.percent}%
+            </p>
+            <p className="text-[13px]  text-[#72849A]">Top Country</p>
+          </div>
+          <PieChart width={100} height={100} className="">
+            <Pie
+              data={top4Data}
+              cx="50%"
+              cy="50%"
+              outerRadius={40}
+              fill="#8884d8"
+              dataKey="value"
+              className="outline-none"
+            >
+              {top4Data.map((entry, index) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={COLORS[index % COLORS.length]}
+                />
+              ))}
+            </Pie>
+          </PieChart>
         </div>
-        <PieChart width={100} height={100} className="">
-          <Pie
-            data={top4Data}
-            cx="50%"
-            cy="50%"
-            outerRadius={40}
-            fill="#8884d8"
-            dataKey="value"
-            className="outline-none"
-          >
-            {top4Data.map((entry, index) => (
-              <Cell
-                key={`cell-${index}`}
-                fill={COLORS[index % COLORS.length]}
-              />
-            ))}
-          </Pie>
-        </PieChart>
+        <ul>
+          {top4Data.map((country, index) => (
+            <li
+              key={index}
+              style={{ display: "flex", alignItems: "center", gap: 10 }}
+              className="my-[10px] flex items-center justify-between"
+            >
+              <div className="flex items-center gap-2">
+                <div
+                  style={{
+                    backgroundColor: COLORS[index % COLORS.length],
+                    width: 10,
+                    height: 10,
+                    borderRadius: 10,
+                  }}
+                />
+                <p className="text-[14px] text-[#455560]">{country.name} :</p>
+              </div>
+              <p className="text-[#455560] font-semibold">{country.percent}%</p>
+            </li>
+          ))}
+        </ul>
       </div>
-      <ul>
-        {top4Data.map((country, index) => (
-          <li
-            key={index}
-            style={{ display: "flex", alignItems: "center", gap: 10 }}
-            className="my-[10px] flex items-center justify-between"
-          >
-            <div className="flex items-center gap-2">
-              <div
-                style={{
-                  backgroundColor: COLORS[index % COLORS.length],
-                  width: 10,
-                  height: 10,
-                  borderRadius: 10,
-                }}
-              />
-              <p className="text-[14px] text-[#455560]">{country.name} :</p>
-            </div>
-            <p className="text-[#455560] font-semibold">{country.percent}%</p>
-          </li>
-        ))}
-      </ul>
-      <div className="border-[#eee] border-t-2 mt-[93px]" />
-      <div className="w-full flex items-center  pt-[20px] justify-center absolute bottom-[15px] right-6">
-        <Dropdown
-          width={190}
-          options={options1}
-          onOptionSelect={handleDayChange}
-          defaultValue="7"
-        />
+      <div className="w-full flex items-start justify-start border-t-2   pt-[15px]     absolute bottom-[15px] ">
+        <div className="pl-[20px]">
+          <Dropdown
+            width={190}
+            options={options1}
+            onOptionSelect={handleDayChange}
+            defaultValue="7"
+          />
+        </div>
       </div>
     </div>
   );

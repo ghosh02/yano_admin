@@ -549,7 +549,11 @@ export default function User() {
                         }}
                         className="flex items-center flex-wrap gap-[8px] border-2 px-[12px] py-[8px] rounded-[8px]"
                       >
-                        <img src={filterimg} alt="" />
+                        <img
+                          src={filterimg}
+                          alt=""
+                          className="w-[16px] h-[16px] object-contain"
+                        />
                         <p className="text-[#455560] font-medium">Add filter</p>
                       </Link>
                     ) : (
@@ -658,7 +662,11 @@ export default function User() {
                             <p className="text-[#1A3353] font-medium">
                               User ID
                             </p>
-                            <img src={downgray} alt="" />
+                            <img
+                              src={downgray}
+                              alt=""
+                              className="w-[10px] h-[5px] object-contain"
+                            />
                           </div>
                         </div>
                       </TableHead>
@@ -667,19 +675,31 @@ export default function User() {
                           <p className="text-[#1A3353] font-medium">
                             Full name
                           </p>
-                          <img src={downgray} alt="" />
+                          <img
+                            src={downgray}
+                            alt=""
+                            className="w-[10px] h-[5px] object-contain"
+                          />
                         </div>
                       </TableHead>
                       <TableHead>
                         <div className="flex items-center gap-3">
                           <p className="text-[#1A3353] font-medium">Country</p>
-                          <img src={downgray} alt="" />
+                          <img
+                            src={downgray}
+                            alt=""
+                            className="w-[10px] h-[5px] object-contain"
+                          />
                         </div>
                       </TableHead>
                       <TableHead>
                         <div className="flex items-center gap-3">
                           <p className="text-[#1A3353] font-medium">Type</p>
-                          <img src={downgray} alt="" />
+                          <img
+                            src={downgray}
+                            alt=""
+                            className="w-[10px] h-[5px] object-contain"
+                          />
                         </div>
                       </TableHead>
                       <TableHead>
@@ -687,19 +707,31 @@ export default function User() {
                           <p className="text-[#1A3353] font-medium">
                             Date of creation
                           </p>
-                          <img src={downgray} alt="" />
+                          <img
+                            src={downgray}
+                            alt=""
+                            className="w-[10px] h-[5px] object-contain"
+                          />
                         </div>
                       </TableHead>
                       <TableHead>
                         <div className="flex items-center gap-3">
                           <p className="text-[#1A3353] font-medium">Status</p>
-                          <img src={downgray} alt="" />
+                          <img
+                            src={downgray}
+                            alt=""
+                            className="w-[10px] h-[5px] object-contain"
+                          />
                         </div>
                       </TableHead>
                       <TableHead>
                         <div className="flex items-center gap-3">
                           <p className="text-[#1A3353] font-medium">Actions</p>
-                          <img src={downgray} alt="" />
+                          <img
+                            src={downgray}
+                            alt=""
+                            className="w-[10px] h-[5px] object-contain"
+                          />
                         </div>
                       </TableHead>
                     </TableRow>
@@ -753,7 +785,11 @@ export default function User() {
                     <p className="text-[#72849A] ">
                       Rows per page: <span className="text-[#455560]">8</span>
                     </p>
-                    <img src={downgray} alt="" />
+                    <img
+                      src={downgray}
+                      alt=""
+                      className="w-[10px] h-[5px] object-contain"
+                    />
                   </div>
                   <div className="flex items-center gap-3">
                     <p className="text-[#72849A]">1-8 of 1240</p>

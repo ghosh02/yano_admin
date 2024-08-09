@@ -4,14 +4,7 @@ import person from "../assets/person.png";
 import Sidebar from "@/components/Sidebar";
 import { IoMdArrowBack } from "react-icons/io";
 import UserCard from "@/components/UserCard";
-import { BsPersonRaisedHand } from "react-icons/bs";
-import { CiCalendar } from "react-icons/ci";
-import { MdOutlineBloodtype } from "react-icons/md";
-import { FaArrowsAltV } from "react-icons/fa";
-import { MdOutlineMonitorWeight } from "react-icons/md";
-import { MdOutlineLocationOn } from "react-icons/md";
 import InfoCard from "@/components/InfoCard";
-import { PiShieldPlusBold } from "react-icons/pi";
 import blood from "../assets/icons/blood.png";
 import weight from "../assets/icons/weight.png";
 import height from "../assets/icons/height.png";
@@ -123,6 +116,7 @@ const UserDetail = () => {
         </div>
         <div className="flex gap-[16px] mt-[24px]">
           <InfoCard
+            // to={"/basicInfo"}
             title="Basic Information"
             text="Name,email,password..."
             img={
@@ -133,6 +127,7 @@ const UserDetail = () => {
               />
             }
           />
+
           <InfoCard
             title="Helth Profile"
             text="Medical history summary"
@@ -144,6 +139,7 @@ const UserDetail = () => {
               />
             }
           />
+
           <InfoCard
             title="Health tracker"
             text="Reading history"

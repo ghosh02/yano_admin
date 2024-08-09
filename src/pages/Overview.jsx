@@ -1033,37 +1033,61 @@ const Overview = () => {
                 <TableHead className="text-[#00263E] font-[500]">
                   <div className="flex items-center gap-3">
                     <p>User ID</p>
-                    <img src={downgray} alt="" />
+                    <img
+                      src={downgray}
+                      alt=""
+                      className="w-[10px] h-[5px] object-contain"
+                    />
                   </div>
                 </TableHead>
                 <TableHead className="text-[#00263E] font-[500]">
                   <div className="flex items-center gap-3">
                     <p>Full name</p>
-                    <img src={downgray} alt="" />
+                    <img
+                      src={downgray}
+                      alt=""
+                      className="w-[10px] h-[5px] object-contain"
+                    />
                   </div>
                 </TableHead>
                 <TableHead className="text-[#00263E] font-[500]">
                   <div className="flex items-center gap-3">
                     <p>Country</p>
-                    <img src={downgray} alt="" />
+                    <img
+                      src={downgray}
+                      alt=""
+                      className="w-[10px] h-[5px] object-contain"
+                    />
                   </div>
                 </TableHead>
                 <TableHead className="text-[#00263E] font-[500]">
                   <div className="flex items-center gap-3">
                     <p>Type</p>
-                    <img src={downgray} alt="" />
+                    <img
+                      src={downgray}
+                      alt=""
+                      className="w-[10px] h-[5px] object-contain"
+                    />
                   </div>
                 </TableHead>
                 <TableHead className="text-[#00263E] font-[500]">
                   <div className="flex items-center gap-3">
                     <p>Last time active</p>
-                    <img src={downgray} alt="" />
+                    <img
+                      src={downgray}
+                      alt=""
+                      className="w-[10px] h-[5px] object-contain"
+                    />
                   </div>
                 </TableHead>
                 <TableHead className="text-[#00263E] font-[500]">
                   <div className="flex items-center gap-3">
                     <p>#Session</p>
-                    <img src={downgray} alt="" />
+                    <img
+                      src={downgray}
+                      alt=""
+                      className="w-[10px] h-[5px] object-contain"
+                    />
                   </div>
                 </TableHead>
               </TableRow>

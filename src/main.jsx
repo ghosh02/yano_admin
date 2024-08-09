@@ -24,6 +24,7 @@ import VideoCall from "./pages/VideoCall.jsx";
 import UserDetail from "./pages/UserDetail.jsx";
 import UserContextProvider from "./context/UserContextProvider.jsx";
 import CalenderTwoSide from "./pages/CalenderTwoSide.jsx";
+import BasicInfo from "./user/BasicInfo.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -42,6 +43,7 @@ const router = createBrowserRouter(
       <Route path="/ResetPasswordLink" element={<ResetPasswordLink />} />
       <Route path="/user/:userID" element={<UserDetail />} />
       <Route path="/calender" element={<CalenderTwoSide />} />
+      <Route path="/basicInfo" element={<BasicInfo />} />
     </Route>
   )
 );

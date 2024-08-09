@@ -122,7 +122,7 @@ function AdminList() {
   return (
     <div className="h-[calc(100vh-80px)] flex">
       <Sidebar />
-      <div className="flex-1 h-screen mx-[32px] mt-[32px]">
+      <div className="flex-1 mx-[32px] mt-[32px]">
         <div className="flex justify-between items-center">
           <Link to="/settings">
             <div className="w-[92px] h-[40px] flex justify-center items-center bg-[#fff] my-3 gap-2 rounded-[8px]">
@@ -167,7 +167,11 @@ function AdminList() {
                     <div className="h-[18px] w-[18px] border-[#C3C4C3] border-[3px]" />
                     <div className="flex items-center gap-3">
                       <p className="text-[#1A3353] font-medium">User ID</p>
-                      <img src={downgray} alt="" />
+                      <img
+                        src={downgray}
+                        alt=""
+                        className="w-[10px] h-[5px] object-contain"
+                      />
                     </div>
                   </div>
                 </TableHead>
@@ -177,7 +181,11 @@ function AdminList() {
                 >
                   <div className="flex items-center gap-3">
                     <p className="text-[#1A3353] font-medium">Full name</p>
-                    <img src={downgray} alt="" />
+                    <img
+                      src={downgray}
+                      alt=""
+                      className="w-[10px] h-[5px] object-contain"
+                    />
                   </div>
                 </TableHead>
                 <TableHead
@@ -186,7 +194,11 @@ function AdminList() {
                 >
                   <div className="flex items-center gap-3">
                     <p className="text-[#1A3353] font-medium">Permissions</p>
-                    <img src={downgray} alt="" />
+                    <img
+                      src={downgray}
+                      alt=""
+                      className="w-[10px] h-[5px] object-contain"
+                    />
                   </div>
                 </TableHead>
                 <TableHead
@@ -197,7 +209,11 @@ function AdminList() {
                     <p className="text-[#1A3353] font-medium">
                       Date of creation
                     </p>
-                    <img src={downgray} alt="" />
+                    <img
+                      src={downgray}
+                      alt=""
+                      className="w-[10px] h-[5px] object-contain"
+                    />
                   </div>
                 </TableHead>
                 <TableHead
@@ -206,13 +222,21 @@ function AdminList() {
                 >
                   <div className="flex items-center gap-3">
                     <p className="text-[#1A3353] font-medium">Status</p>
-                    <img src={downgray} alt="" />
+                    <img
+                      src={downgray}
+                      alt=""
+                      className="w-[10px] h-[5px] object-contain"
+                    />
                   </div>
                 </TableHead>
                 <TableHead>
                   <div className="flex items-center gap-3">
                     <p className="text-[#1A3353] font-medium">Actions</p>
-                    <img src={downgray} alt="" />
+                    <img
+                      src={downgray}
+                      alt=""
+                      className="w-[10px] h-[5px] object-contain"
+                    />
                   </div>
                 </TableHead>
               </TableRow>
@@ -228,7 +252,7 @@ function AdminList() {
                   </TableCell>
                   <TableCell
                     onClick={handleRowClick}
-                    className="text-[#3E79F7]"
+                    className="text-[#3E79F7] cursor-pointer"
                   >
                     {admin?.full_name}
                   </TableCell>
@@ -259,7 +283,11 @@ function AdminList() {
               <p className="text-[#72849A] ">
                 Rows per page: <span className="text-[#455560]">8</span>
               </p>
-              <img src={downgray} alt="" />
+              <img
+                src={downgray}
+                alt=""
+                className="w-[10px] h-[5px] object-contain"
+              />
             </div>
             <div className="flex items-center gap-3">
               <p className="text-[#72849A]">1-8 of 1240</p>

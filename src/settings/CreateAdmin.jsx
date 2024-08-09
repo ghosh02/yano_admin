@@ -5,6 +5,7 @@ import { CiLock } from "react-icons/ci";
 import { IoMdArrowBack } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import check from "../assets/icons/check.png";
+import password from "../assets/icons/password.png";
 import {
   TableHead,
   TableRow,
@@ -188,7 +189,11 @@ function CreateAdmin() {
                 Password(8+ characters)
               </label>
               <div className="flex items-center justify-between h-[49px] border bg-[#FAFAFA] px-[16px] py-[16px] rounded-[8px]">
-                <CiLock />
+                <img
+                  src={password}
+                  alt=""
+                  className="w-[16px] h-[16px] object-contain"
+                />
                 <input
                   className="flex-1 h-[46px] bg-transparent  shadow-none border-none outline-none pl-2  rounded-[8px] "
                   type={show ? "text" : "password"}

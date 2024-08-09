@@ -171,7 +171,7 @@ function Navbar() {
   ];
 
   const { user, setUser } = useContext(UserContext);
-  console.log(user);
+  // console.log(user);
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -207,9 +207,9 @@ function Navbar() {
 
   return (
     <div className="h-[80px] bg-[#fff] flex items-center flex-row justify-between px-[32px] sticky z-50 top-0 border-b">
-      <div>
+      <Link to={user ? "/overview" : "/"}>
         <img src={Logo} alt="" className="w-[104px] h-[40px]" />
-      </div>
+      </Link>
       <div className="flex gap-[20px] items-center">
         <div className="relative inline-block text-left" ref={dropdownRef}>
           <div>

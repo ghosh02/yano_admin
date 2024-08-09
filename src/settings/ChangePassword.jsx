@@ -5,6 +5,7 @@ import { IoMdArrowBack } from "react-icons/io";
 import Sidebar from "@/components/Sidebar";
 import { CiLock } from "react-icons/ci";
 import check from "../assets/icons/check.png";
+import password from "../assets/icons/password.png";
 import closegreen from "../assets/icons/closegreen.png";
 function ChangePassword() {
   const [oldPassword, setOldPassword] = useState("");
@@ -59,7 +60,11 @@ function ChangePassword() {
               Current Password
             </p>
             <div className="flex items-center h-[49px] border border-[#DADCE0] bg-[#fafafa] px-[16px] py-[16px] rounded-[8px] focus-within:border-green-500">
-              <CiLock />
+              <img
+                src={password}
+                alt=""
+                className="w-[16px] h-[16px] object-contain"
+              />
               <input
                 type={showold ? "text" : "password"}
                 value={oldPassword}
@@ -77,7 +82,11 @@ function ChangePassword() {
             </div>
             <p className="text-[#00263E] text-[14px] mt-[20px]">New Password</p>
             <div className="flex items-center h-[49px] border border-[#DADCE0] bg-[#fafafa] px-[16px] py-[16px] rounded-[8px] focus-within:border-green-500">
-              <CiLock />
+              <img
+                src={password}
+                alt=""
+                className="w-[16px] h-[16px] object-contain"
+              />
               <input
                 type={shownew ? "text" : "password"}
                 value={newPassword}

@@ -2,7 +2,7 @@ import React from "react";
 
 function UserCard({ title, data, img }) {
   return (
-    <div className="flex items-center gap-3 border px-[16px] py-[8px] rounded-[8px] bg-white ">
+    <div className="flex flex-1 items-center gap-3 border px-[16px] py-[8px] rounded-[8px] bg-white ">
       <div className="w-[32px] h-[32px] rounded-[50%] flex items-center justify-center bg-lightgreen">
         {img}
       </div>

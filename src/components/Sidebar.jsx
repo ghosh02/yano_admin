@@ -40,7 +40,11 @@ function Sidebar() {
                 }
                 to={item.navigate}
               >
-                <img src={item.img} alt="" className="" />
+                <img
+                  src={item.img}
+                  alt=""
+                  className="w-[20px] h-[20px] object-contain"
+                />
                 {item.name}
               </NavLink>
             ))}
@@ -55,7 +59,11 @@ function Sidebar() {
               }
               to="/Settings"
             >
-              <img src={settings} alt="" className="" />
+              <img
+                src={settings}
+                alt=""
+                className="w-[20px] h-[20px] object-contain"
+              />
               Settings
             </NavLink>
           </nav>

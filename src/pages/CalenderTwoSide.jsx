@@ -33,7 +33,7 @@ function CalenderTwoSide({ handleSetDate }) {
     <div class="flex w-[650px] bg-white shadow-lg rounded-xl">
       <div class="flex flex-col">
         <div class="flex divide-x">
-          <div class="flex flex-col px-6 pt-5 pb-6 border-b border-gray-100">
+          <div class="flex flex-col px-6 pt-5 pb-6">
             <div class="flex items-center justify-between">
               <button class="flex items-center justify-center p-2 rounded-xl hover:bg-gray-50">
                 <svg class="w-6 h-6 text-gray-900 stroke-current" fill="none">
@@ -45,8 +45,12 @@ function CalenderTwoSide({ handleSetDate }) {
                   />
                 </svg>
               </button>
-              <div class="text-sm font-semibold">February</div>
-              <div class="text-sm font-semibold">2021</div>
+              <div class="text-sm font-semibold bg-[#FAFAFA] py-[8px] px-[16px] rounded-[8px]">
+                February
+              </div>
+              <div class="text-sm font-semibold bg-[#FAFAFA] py-[8px] px-[16px] rounded-[8px]">
+                2021
+              </div>
               <button class="flex items-center justify-center p-2 rounded-xl hover:bg-gray-50">
                 <svg class="w-6 h-6 text-gray-900 stroke-current" fill="none">
                   <path
@@ -192,7 +196,7 @@ function CalenderTwoSide({ handleSetDate }) {
               </span>
             </div>
           </div>
-          <div class="flex flex-col px-6 pt-5 pb-6 border-b border-gray-100">
+          <div class="flex flex-col px-6 pt-5 pb-6 ">
             <div class="flex items-center justify-between">
               <button class="flex items-center justify-center p-2 rounded-xl hover:bg-gray-50">
                 <svg class="w-6 h-6 text-gray-900 stroke-current" fill="none">
@@ -204,10 +208,10 @@ function CalenderTwoSide({ handleSetDate }) {
                   />
                 </svg>
               </button>
-              <div class="text-sm font-semibold rounded-[6px] border border-[#00263E] px-[10px] py-[6px]">
+              <div class="text-sm font-semibold bg-[#FAFAFA] py-[8px] px-[16px] rounded-[8px]">
                 February
               </div>
-              <div class="text-sm font-semibold rounded-[6px] border border-[#00263E] px-[10px] py-[6px]">
+              <div class="text-sm font-semibold bg-[#FAFAFA] py-[8px] px-[16px] rounded-[8px]">
                 2021
               </div>
               <button class="flex items-center justify-center p-2 rounded-xl hover:bg-gray-50">

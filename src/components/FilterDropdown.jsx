@@ -154,11 +154,12 @@ const FilterDropdown = ({
   };
 
   return (
-    <div className="relative inline-block text-left" ref={dropdownRef}>
+    <div className="relative inline-block  text-left" ref={dropdownRef}>
       <div>
         <button
+          style={{ width: width }}
           type="button"
-          className="flex items-center gap-[30px] bg-[#fafafa] text-[#00263E] font-medium justify-between h-[40px] rounded-md border border-gray-300 shadow-sm px-4 py-2 "
+          className="flex  items-center gap-[30px] bg-[#fafafa] text-[#00263E] font-medium justify-between h-[40px] rounded-md border border-gray-300 shadow-sm px-4 py-2 "
           onClick={toggleDropdown}
         >
           {name}

@@ -30,7 +30,7 @@ const UserDetail = () => {
   return (
     <div className="h-[calc(100vh-80px)] flex">
       <Sidebar />
-      <div className=" mx-[32px] mt-[32px] ">
+      <div className="flex-1 mx-[32px] mt-[32px] ">
         <Link
           to="/overview"
           className="w-[92px] h-[40px] flex justify-center items-center bg-[#fff] my-3 gap-2 rounded-[8px]"
@@ -39,18 +39,18 @@ const UserDetail = () => {
           <p>Back</p>
         </Link>
 
-        <div className="flex bg-white rounded-[8px] p-[20px] shadow">
+        <div className="flex flex-1 bg-white rounded-[8px] p-[20px] shadow">
           <img
             src={person}
             alt=""
             className="w-[80px] h-[80px] rounded-[50%] border"
           />
           <div className="border mx-[24px]" />
-          <div>
+          <div className="flex-1 ">
             <h1 className="text-[24px] text-darkblue font-[700] mb-[16px] ">
               {user?.fullName}
             </h1>
-            <div className="grid grid-cols-6 gap-3">
+            <div className=" flex-1 flex items-center justify-between flex-wrap gap-3 pr-[40px]">
               <UserCard
                 title="Sex"
                 data="Female"

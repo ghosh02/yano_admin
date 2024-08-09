@@ -251,6 +251,7 @@ function Navbar() {
             </div>
           )}
         </div>
+        {user && <div className="border-2 h-[40px] border-[#EEEEEE] " />}
         {/* dropdown end  */}
         {user && (
           <div className="flex items-center gap-2 ">

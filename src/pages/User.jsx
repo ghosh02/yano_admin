@@ -541,7 +541,7 @@ export default function User() {
                       // onChange={(e) => setSearchQuery(e.target.value)}
                     />
                   </div>
-                  <div>
+                  <div className="flex-1 flex justify-end items-center">
                     {filter === false ? (
                       <Link
                         onClick={() => {
@@ -555,11 +555,13 @@ export default function User() {
                     ) : (
                       <div className="flex gap-[24px]">
                         <FilterDropdown
+                          width={180}
                           options={statusList}
                           onOptionSelect={handleStatus}
                           name="Status"
                         />
                         <FilterDropdown
+                          width={180}
                           options={countryList}
                           onOptionSelect={handleCountryChange}
                           name="country"
@@ -569,13 +571,13 @@ export default function User() {
                           options={typeList}
                           onOptionSelect={handleType}
                           name="Type"
-                          width={200}
+                          width={180}
                         />
                         <Link
                           onClick={() => {
                             setShowCalender(!showCalender);
                           }}
-                          className="flex items-center gap-2 px-[12px] py-[8px] border-2 rounded-[6px] bg-[#fafafa]"
+                          className="flex items-center gap-2 px-[12px] py-[6px] border-2 rounded-[6px] bg-[#fafafa]"
                         >
                           <p className="text-[#455560]">May 8 - June 8, 1992</p>
                           <img
@@ -638,7 +640,7 @@ export default function User() {
                           onClick={() => {
                             setFilter(false);
                           }}
-                          className="flex items-center justify-center px-[12px] py-[8px] border-2 rounded-[6px] bg-[#fafafa]"
+                          className="flex items-center justify-center px-[12px] py-[8px] border-2 rounded-[6px] bg-[#fff]"
                         >
                           <img src={close} alt="" />
                         </Link>

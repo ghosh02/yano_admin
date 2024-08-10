@@ -1,15 +1,43 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import CustomCheckbox from "../components/CheckBox";
 import { Button } from "@/components/ui/button";
 import downgray from "../assets/icons/downgray.png";
 import closegray from "../assets/icons/closegray.png";
+import check from "../assets/icons/check.png";
+import upArrowDarkGray from "../assets/icons/upArrowDarkGray.png";
+
+const Box = ({ checked, onChange }) => {
+  return (
+    <label>
+      <input
+        type="checkbox"
+        className="hidden"
+        checked={checked}
+        onChange={onChange}
+      />
+      <div
+        className={`w-[18px] h-[18px] flex items-center justify-center border-[3px] border-[#707070] transition-colors ${
+          checked ? " border-none" : "bg-white border-gray-400"
+        }`}
+      >
+        {checked && (
+          <img
+            src={check}
+            alt=""
+            className="w-[18px] h-[18px] object-contain"
+          />
+        )}
+      </div>
+    </label>
+  );
+};
 
 export default function Notification({ handleClose }) {
   const [pushNotification, setPushNotification] = useState(false);
   const [sms, setSms] = useState(false);
   const [email, setEmail] = useState(false);
-  const [isDropdownOpen, setDropdownOpen] = useState(true);
-
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
   useEffect(() => {
     // Disable scrolling when the modal is open
     document.body.style.overflow = "hidden";
@@ -53,17 +81,45 @@ export default function Notification({ handleClose }) {
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block font-medium text-[#00263E] mb-2">To</label>
-            <div className="flex justify-between items-center border px-[16px] py-[14px] rounded-[8px]">
+            <div
+              ref={dropdownRef}
+              onClick={() => {
+                setIsDropdownOpen(!isDropdownOpen);
+              }}
+              className="flex justify-between items-center cursor-pointer border px-[16px] py-[14px] rounded-[8px]"
+            >
               <p>Jenny Wilson</p>
-              <img
-                src={downgray}
-                alt=""
-                className="w-[10px] h-[5px] object-contain"
-              />
+              {isDropdownOpen === false ? (
+                <img
+                  src={downgray}
+                  alt=""
+                  className="w-[10px] h-[5px] object-contain cursor-pointer"
+                />
+              ) : (
+                <img
+                  src={upArrowDarkGray}
+                  alt=""
+                  className="w-[10px] h-[5px] object-contain cursor-pointer"
+                />
+              )}
             </div>
-            {/* {isDropdownOpen && (
-              <div className="absolute h-[200px] bg-black border rounded shadow-md w-[560px] mt-2 z-50"></div>
-            )} */}
+            {isDropdownOpen && (
+              <div className="absolute  bg-white shadow-3xl border rounded-[8px]  w-[560px] px-[8px] py-[8px] mt-2 z-50">
+                <div className="flex items-center gap-2 py-[8px] px-[14px] cursor-pointer rounded-[8px] hover:bg-[#fafafa]">
+                  <Box />
+                  <p>All the patient</p>
+                </div>
+                <div className="flex items-center gap-2 py-[8px] px-[14px] cursor-pointer rounded-[8px] hover:bg-[#fafafa]">
+                  <Box />
+                  <p>All the healrhcare provider</p>
+                </div>
+                <div className="border my-[8px]" />
+                <div className="flex items-center gap-2 py-[8px] px-[14px] cursor-pointer rounded-[8px] hover:bg-[#fafafa]">
+                  <Box />
+                  <p>Jenny wilson</p>
+                </div>
+              </div>
+            )}
           </div>
           <div className="my-5">
             <label className="block font-medium text-[#00263E] mb-2">

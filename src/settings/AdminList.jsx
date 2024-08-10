@@ -17,6 +17,11 @@ import threedot from "../assets/icons/threedot.jpg";
 import search from "../assets/icons/search.png";
 import arrowback from "../assets/icons/arrowback.png";
 import arrowforward from "../assets/icons/arrowforward.png";
+import edit from "../assets/icons/edit.png";
+import sendnoti from "../assets/icons/sendnoti.png";
+import exportreport from "../assets/icons/export.png";
+import deactivate from "../assets/icons/deactivate.png";
+import Notification from "@/utils/Notification";
 
 const admin = [
   {
@@ -52,9 +57,7 @@ const admin = [
 function AdminList() {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortConfig, setSortConfig] = useState(null);
-  const [selectedUser, setSelectedUser] = useState(null);
-  const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 });
-  const popupRef = useRef(null);
+
   //   const navigate = useNavigate();
   const filteredAdmins = useMemo(() => {
     return admin.filter(
@@ -95,30 +98,52 @@ function AdminList() {
   const handleRowClick = (user) => {
     navigate("/settings/adminList/createAdmin");
   };
-  const handleActionClick = (event, user) => {
-    const rect = event.currentTarget.getBoundingClientRect();
+
+  // three dot action functions
+  const [popupVisible, setPopupVisible] = useState(false);
+  const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 });
+  const [selectedAdmin, setSelectedAdmin] = useState(null);
+  const [showSendNotification, setShowSendNotification] = useState(false);
+  const popupRef = useRef(null);
+
+  const handleThreeDotClick = (event, admin) => {
+    const rect = event.target.getBoundingClientRect();
     setPopupPosition({
       top: rect.bottom + window.scrollY - 3,
       left: rect.left + window.scrollX - 40,
     });
-    setSelectedUser(user);
+    setSelectedAdmin(admin);
+    setPopupVisible(true);
   };
 
   const closePopup = () => {
-    setSelectedUser(null);
+    setPopupVisible(false);
+    setSelectedAdmin(null);
+  };
+
+  const handleClickOutside = (event) => {
+    if (popupRef.current && !popupRef.current.contains(event.target)) {
+      closePopup();
+    }
   };
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (popupRef.current && !popupRef.current.contains(event.target)) {
-        closePopup();
-      }
-    };
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [popupRef]);
+  }, []);
+  const handleClose = () => {
+    setShowSendNotification(false);
+  };
+  const handleSendNotificationClick = () => {
+    setShowSendNotification(true);
+    // setSelectedUser(null);
+    // popupVisible && selectedAdmin;
+    setSelectedAdmin(false);
+    setPopupVisible(null);
+  };
+
   return (
     <div className="h-[calc(100vh-80px)] flex">
       <Sidebar />
@@ -269,10 +294,14 @@ function AdminList() {
                     </div>
                   </TableCell>
                   <TableCell
-                    onClick={(event) => handleActionClick(event, user)}
-                    className="pl-[35px] cursor-pointer"
+                    onClick={(e) => handleThreeDotClick(e, admin)}
+                    className="pl-[35px]"
                   >
-                    <img src={threedot} alt="" />
+                    <img
+                      className="w-[16px] cursor-pointer"
+                      src={threedot}
+                      alt=""
+                    />
                   </TableCell>
                 </TableRow>
               ))}
@@ -297,15 +326,15 @@ function AdminList() {
           </div>
         </div>
       </div>
-      {selectedUser && (
+      {popupVisible && selectedAdmin && (
         <div
-          className="  absolute shadow  bg-white border rounded"
+          className="absolute shadow bg-white border rounded"
           style={{ top: popupPosition.top, left: popupPosition.left }}
           ref={popupRef}
         >
           <ul className="flex flex-col gap-[2px] m-[4px]">
             <li
-              className=" flex items-center gap-[10px] rounded-[6px] px-[16px] py-[12px] cursor-pointer hover:bg-[#F5F5F5]"
+              className="flex items-center gap-[10px] rounded-[6px] px-[16px] py-[12px] cursor-pointer hover:bg-[#F5F5F5]"
               onClick={closePopup}
             >
               <img
@@ -317,7 +346,7 @@ function AdminList() {
             </li>
             <li
               className="flex items-center gap-[10px] rounded-[6px] px-[16px] py-[12px] cursor-pointer hover:bg-[#F5F5F5]"
-              onClick={closePopup}
+              onClick={handleSendNotificationClick}
             >
               <img
                 src={sendnoti}
@@ -327,7 +356,7 @@ function AdminList() {
               <p className="text-[#455560] text-[14px]">Send notification</p>
             </li>
             <li
-              className="flex items-center gap-[10px] rounded-[6px] px-[16px] py-[12px] cursor-pointer hover:bg-[#F5F5F5]   "
+              className="flex items-center gap-[10px] rounded-[6px] px-[16px] py-[12px] cursor-pointer hover:bg-[#F5F5F5]"
               onClick={closePopup}
             >
               <img
@@ -351,6 +380,7 @@ function AdminList() {
           </ul>
         </div>
       )}
+      {showSendNotification && <Notification handleClose={handleClose} />}
     </div>
   );
 }

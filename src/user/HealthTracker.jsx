@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import person from "../assets/person.png";
 import InfoCard from "@/components/InfoCard";
 import blood from "../assets/icons/blood.png";
@@ -32,12 +32,16 @@ const data = [
   { name: "Oxygen saturation", data: "98 SpO2H", date: "04:04 PM VET, 31 Aug" },
 ];
 function HealthTracker() {
+  const navigate = useNavigate();
+  const handleGoBack = () => {
+    navigate(-1); // This navigates back to the previous page
+  };
   return (
     <div className="h-[calc(100vh-80px)] flex">
       <Sidebar />
       <div className="flex-1 mx-[32px] mt-[32px] ">
         <Link
-          to="/overview"
+          onClick={handleGoBack}
           className="w-[92px] h-[40px] flex justify-center items-center bg-[#fff] my-3 gap-2 rounded-[8px]"
         >
           <img src={back} alt="" className="w-[16px] h-[16px] object-contain" />

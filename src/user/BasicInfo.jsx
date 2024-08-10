@@ -3,7 +3,7 @@ import Sidebar from "@/components/Sidebar";
 import React, { useState } from "react";
 
 import { IoMdArrowBack } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-phone-input-2/lib/style.css";
 import PhoneForm from "@/components/PhoneForm";
@@ -33,6 +33,11 @@ function BasicInfo() {
     type: "patient",
   });
 
+  const navigate = useNavigate();
+  const handleGoBack = () => {
+    navigate(-1); // This navigates back to the previous page
+  };
+
   let name, value;
   const handleInputs = (e) => {
     name = e.target.name;
@@ -58,7 +63,7 @@ function BasicInfo() {
     <div className="flex">
       <Sidebar />
       <div className="flex-1 mx-[32px] mt-[32px]">
-        <Link to="/user/:userID">
+        <Link onClick={handleGoBack}>
           <div className="w-[92px] h-[40px] flex justify-center items-center bg-[#fff] my-3 gap-2 rounded-[8px]">
             <IoMdArrowBack />
             <p>Back</p>

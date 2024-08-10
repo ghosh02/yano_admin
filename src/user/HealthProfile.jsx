@@ -82,22 +82,23 @@ const hospitalizations = [
     dischargeReport: "None",
   },
 ];
-const socialHistory = {
-  occupation: "Engineer",
-  education: "Msc 2008",
-  birthplace: "Barquisimeto",
-  maritalStatus: "Married",
-  children: "2 daughters",
-  religion: "Agnostic",
-  generalDiet: "Vegan",
-  sexualOrientation: "Heterosexual",
-  smoking: "No",
-  alcoholConsumption: "No",
-  substanceUse: "None",
-  exercise: "Running",
-  stressFactor: "Relaxed",
-  languageSpoken: "Spanish",
-};
+const socialHistory = [
+  { label: "Occupation", value: "Engineer" },
+  { label: "Education", value: "Msc 2008" },
+  { label: "Birthplace", value: "Barquisimeto" },
+  { label: "Marital Status", value: "Married" },
+  { label: "Children", value: "2 daughters" },
+  { label: "Religion", value: "Agnostic" },
+  { label: "General Diet", value: "Vegan" },
+  { label: "Sexual Orientation", value: "Heterosexual" },
+  { label: "Smoking", value: "No" },
+  { label: "Alcohol Consumption", value: "No" },
+  { label: "Substance use", value: "None" },
+  { label: "Exercise", value: "Running" },
+  { label: "Stress Factor", value: "Relaxed" },
+  { label: "Language spoken", value: "Spanish" },
+];
+
 const allergies = [];
 const surgeriesImplants = [];
 function HealthProfile() {
@@ -200,7 +201,7 @@ function HealthProfile() {
           </div>
         </div>
         {/* first row */}
-        <div className="flex flex-col gap-[24px]">
+        <div className="flex flex-col gap-[24px] py-[50px]">
           <p className="text-[#00263E] my-[24px] font-bold text-[24px]">
             Health trackers
           </p>
@@ -508,7 +509,7 @@ function HealthProfile() {
           {/* sixth table */}
           <div className="bg-white rounded-[8px]">
             <h1 className="text-darkblue font-semibold px-4 py-5">
-              Health conditions
+              Hospitalizations
             </h1>
             <Table className=" shadow-3xl">
               <TableHeader className=" rounded-[8px] border-t border-[#eee]">
@@ -567,7 +568,7 @@ function HealthProfile() {
           {/* 7th table  */}
           <div className="bg-white rounded-[8px]">
             <h1 className="text-darkblue font-semibold px-4 py-5">
-              Health conditions
+              Surgeries / Implants
             </h1>
             <Table className=" shadow-3xl">
               <TableHeader className=" rounded-[8px] border-t border-[#eee]">
@@ -629,69 +630,48 @@ function HealthProfile() {
               </p>
             </div>
           </div>
+          {/* 8 th table */}
           <div className="bg-white rounded-[8px]">
             <h1 className="text-darkblue font-semibold px-4 py-5">
               Social history
             </h1>
-            <Table className=" shadow-3xl">
-              <TableHeader className=" rounded-[8px] border-t border-[#eee]">
-                <TableRow>
-                  <TableHead>
-                    <p className="text-[#1A3353] font-medium">Surgery</p>
-                  </TableHead>
-                  <TableHead>
-                    <p className="text-[#1A3353] font-medium">Implant</p>
-                  </TableHead>
-                  <TableHead>
-                    <div className="flex items-center gap-3">
-                      <p className="text-[#1A3353] font-medium">Done on</p>
-                      <img
-                        src={downgray}
-                        alt=""
-                        className="w-[10px] h-[5px] object-contain"
-                      />
-                    </div>
-                  </TableHead>
-
-                  <TableHead>
-                    <div className="flex items-center gap-3">
-                      <p className="text-[#1A3353] font-medium">By</p>
-                      <img
-                        src={downgray}
-                        alt=""
-                        className="w-[10px] h-[5px] object-contain"
-                      />
-                    </div>
-                  </TableHead>
-                  <TableHead>
-                    <p className="text-[#1A3353] font-medium">Notes</p>
-                  </TableHead>
-                </TableRow>
-              </TableHeader>
+            <Table className="shadow-3xl border border-[#eee]">
               <TableBody>
-                {surgeriesImplants?.map((data) => (
-                  <TableRow className="" key={data?.health}>
-                    <TableCell className="text-[#3E79F7] w-[25%]">
-                      {data?.reason}
-                    </TableCell>
-                    <TableCell className="text-[#455560]">
-                      {data?.when}
-                    </TableCell>
-                    <TableCell className="text-[#455560]">
-                      {data?.where}
-                    </TableCell>
-                    <TableCell className="text-[#455560]">
-                      {data?.dischargeReport}
-                    </TableCell>
-                  </TableRow>
-                ))}
+                <TableRow>
+                  <TableCell className="w-1/2 p-4 border-r border-[#eee]">
+                    <div className="flex flex-col space-y-2 gap-[8px]">
+                      {socialHistory
+                        .slice(0, Math.ceil(socialHistory.length / 2))
+                        .map((data, index) => (
+                          <div
+                            key={index}
+                            className="flex items-center gap-[3px]"
+                          >
+                            <span className="font-medium text-[#1A3353]">
+                              {data.label}:
+                            </span>
+                            <span className="text-[#455560]">{data.value}</span>
+                          </div>
+                        ))}
+                    </div>
+                  </TableCell>
+                  <TableCell className="w-1/2 p-4">
+                    <div className="flex flex-col gap-[8px] space-y-2">
+                      {socialHistory
+                        .slice(Math.ceil(socialHistory.length / 2))
+                        .map((data, index) => (
+                          <div key={index} className="flex items-center ">
+                            <span className="font-medium text-[#1A3353]">
+                              {data.label}:
+                            </span>
+                            <span className="text-[#455560]">{data.value}</span>
+                          </div>
+                        ))}
+                    </div>
+                  </TableCell>
+                </TableRow>
               </TableBody>
             </Table>
-            <div>
-              <p className="text-[#3E79F7] text-center py-[12px]">
-                This patient has no surgeries or Implants added.
-              </p>
-            </div>
           </div>
         </div>
       </div>

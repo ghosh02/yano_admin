@@ -7,34 +7,31 @@ import { Link } from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-phone-input-2/lib/style.css";
 import PhoneForm from "@/components/PhoneForm";
-import check from "../assets/icons/check.png";
+
 import date from "../assets/icons/date.png";
-import SingleCalender from "@/components/SingleCalender";
 import password from "../assets/icons/password.png";
+import check from "../assets/icons/check.png";
+import closegreen from "../assets/icons/closegreen.png";
+import profile from "../assets/icons/profile.png";
 
 function BasicInfo() {
-  const containerStyle = {
-    width: "100%",
-    height: "49px",
-    border: "1px solid #fff",
-    borderRadius: "8px",
-  };
   const [show, setShow] = useState(false);
   const [showCalender, setShowCalender] = useState(false);
   const [phone, setPhone] = useState("");
   const [startDate, setStartDate] = useState(new Date());
+  const [isSave, setIsSave] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const [userData, setUserData] = useState({
-    firstName: "",
-    lastName: "",
-    roleName: "",
-    email: "",
-    phone: "",
-    emergencycontact: "",
-    dob: "",
+    firstName: "Jenny",
+    lastName: "Wilson",
+
+    email: "jenny.wilson@gmail.com",
+    phone: "46582456",
+    emergencycontact: "46582456",
+    dob: "June 8, 1992",
     password: "",
-    type: "",
+    type: "patient",
   });
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   let name, value;
   const handleInputs = (e) => {
@@ -45,19 +42,14 @@ function BasicInfo() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(userData);
-    setShowSuccessMessage(true);
-    document.body.style.overflow = "hidden"; // Disable scrolling
-    // Optionally, send a request to the server here
+    // console.log(userData);
+
+    setIsSubmitted(true);
+    setIsSave(true);
   };
 
   const handleRoleChange = (event) => {
     setSelectedRole(event.target.value);
-  };
-
-  const closeSuccessMessage = () => {
-    setShowSuccessMessage(false);
-    document.body.style.overflow = "auto"; // Enable scrolling again
   };
 
   const [selectedRole, setSelectedRole] = useState("patient");
@@ -72,228 +64,225 @@ function BasicInfo() {
             <p>Back</p>
           </div>
         </Link>
+        <div
+          className={` items-center justify-between rounded-[8px] px-[20px] py-[16px] w-[626px] text-[#155724]  my-[24px]  font-medium bg-[#C3E6CB] ${
+            isSave ? "flex" : "hidden"
+          }`}
+        >
+          <img
+            src={check}
+            alt=""
+            className="w-[24px] h-[24px] object-contain"
+          />
+          <p className="">User's information successfully updated.</p>
+          <img
+            onClick={() => {
+              setIsSave(false);
+            }}
+            src={closegreen}
+            alt=""
+            className="w-[14px] h-[14px] object-contain cursor-pointer"
+          />
+        </div>
         <div className="w-[626px] p-[20px] bg-[#fff] rounded-[8px]">
-          <h1 className="font-[600] text-[20px]">General information</h1>
-          <form action="" onSubmit={handleSubmit}>
-            <div className="mt-[20px]">
-              <label
-                htmlFor="firstName"
-                className="text-[14px] text-[#00263E] mb-[4px] font-[500]"
-              >
-                First Name
-              </label>
+          <h1 className="font-[600] text-[20px]">Basic information</h1>
+          <div>
+            <p className="text-darkblue pb-1 mt-[24px]">Profile picture</p>
+            <div className="bg-[#fafafa] w-[140px] h-[140px] flex items-center justify-center border border-dashed border-[#DADCE0] rounded-[8px]">
+              <img
+                src={profile}
+                alt=""
+                className="w-[56px] h-[56px] object-cover"
+              />
+            </div>
+          </div>
+          <div className="mt-[20px]">
+            <label
+              htmlFor="firstName"
+              className="text-[14px] text-[#00263E] mb-[4px] font-[500]"
+            >
+              First Name
+            </label>
+            <input
+              className="w-full h-[49px] shadow-none border outline-none pl-2 bg-[#FAFAFA] rounded-[8px]"
+              type="text"
+              id="firstName"
+              name="firstName"
+              autoComplete="false"
+              value={userData.firstName}
+              // onChange={handleInputs}
+              disabled
+            />
+          </div>
+          <div className="mt-[20px]">
+            <label
+              htmlFor="lastName"
+              className="text-[14px] text-[#00263E] mb-[4px] font-[500]"
+            >
+              Last Name
+            </label>
+            <input
+              className="w-full h-[49px] shadow-none border outline-none pl-2 bg-[#FAFAFA] rounded-[8px]"
+              type="text"
+              id="lastName"
+              name="lastName"
+              autoComplete="false"
+              value={userData.lastName}
+              // onChange={handleInputs}
+              disabled
+            />
+          </div>
+          <div className="mt-[20px]">
+            <label
+              htmlFor="email"
+              className="text-[14px] mb-[4px] text-[#00263E] font-[500]"
+            >
+              Email address
+            </label>
+            <input
+              className="w-full h-[49px] shadow-none border outline-none pl-2 bg-[#FAFAFA] rounded-[8px]"
+              type="text"
+              id="email"
+              name="email"
+              autoComplete="false"
+              value={userData.email}
+              disabled
+              // onChange={handleInputs}
+            />
+          </div>
+
+          <PhoneForm label="Phone number" />
+
+          <PhoneForm label="Emergency contact " />
+          <div className="mt-[20px] mb-[16px]">
+            <label
+              htmlFor="email"
+              className="text-[14px] text-[#00263E] mb-[4px] font-[500]"
+            >
+              Date of birth
+            </label>
+            <div className="flex items-center justify-between w-full h-[49px] shadow-none border py-[14px] px-[16px] bg-[#FAFAFA] rounded-[8px]">
               <input
                 className="w-full h-[49px] shadow-none border outline-none pl-2 bg-[#FAFAFA] rounded-[8px]"
                 type="text"
-                id="firstName"
-                name="firstName"
+                id="dob"
+                name="dob"
                 autoComplete="false"
-                value={userData.firstName}
-                onChange={handleInputs}
+                value={userData.dob}
+                // onChange={handleInputs}
+                disabled
+              />
+              <img
+                src={date}
+                alt=""
+                className="w-[16px] h-[16px] object-contain"
               />
             </div>
-            <div className="mt-[20px]">
-              <label
-                htmlFor="lastName"
-                className="text-[14px] text-[#00263E] mb-[4px] font-[500]"
-              >
-                Last Name
-              </label>
-              <input
-                className="w-full h-[49px] shadow-none border outline-none pl-2 bg-[#FAFAFA] rounded-[8px]"
-                type="text"
-                id="lastName"
-                name="lastName"
-                autoComplete="false"
-                value={userData.lastName}
-                onChange={handleInputs}
-              />
-            </div>
-            <div className="mt-[20px]">
-              <label
-                htmlFor="email"
-                className="text-[14px] mb-[4px] text-[#00263E] font-[500]"
-              >
-                Email address
-              </label>
-              <input
-                className="w-full h-[49px] shadow-none border outline-none pl-2 bg-[#FAFAFA] rounded-[8px]"
-                type="text"
-                id="email"
-                name="email"
-                autoComplete="false"
-                value={userData.email}
-                onChange={handleInputs}
-              />
-            </div>
-            <PhoneForm label="Phone number" />
-            <PhoneForm label="Emergency contact" />
-            <div className="mt-[20px] mb-[16px]">
-              <label
-                htmlFor="email"
-                className="text-[14px] text-[#00263E] mb-[4px] font-[500]"
-              >
-                Date of birth
-              </label>
-              <div className="flex items-center justify-between w-full h-[49px] shadow-none border py-[14px] px-[16px] bg-[#FAFAFA] rounded-[8px]">
-                <p>Select a date of birth</p>
-                <img
-                  onClick={() => {
-                    setShowCalender(true);
-                  }}
-                  src={date}
-                  alt=""
-                  className="w-[16px] h-[16px] cursor-pointer object-contain"
-                />
-              </div>
-              {/* <input
-                className="w-full h-[49px] shadow-none border outline-none pl-2 bg-[#FAFAFA] rounded-[8px]"
-                type="text"
-                id="email"
-                name="email"
-                autoComplete="false"
-                value={userData.email}
-                onChange={handleInputs}
-              /> */}
-            </div>
-            <div className="flex items-center gap-3">
-              <label
-                className={`inline-flex items-center mt-3 border-2 w-[228px] h-[50px] justify-center rounded-[8px] ${
+          </div>
+          <div className="flex items-center gap-3 cursor-none">
+            <label
+              className={`inline-flex items-center mt-3 border-2 w-[228px] h-[50px] justify-center rounded-[8px] ${
+                selectedRole === "patient"
+                  ? "border-[#76BC21]"
+                  : "border-gray-300"
+              }`}
+            >
+              <div
+                className={`w-5 h-5 flex items-center justify-center rounded-full border-2 ${
                   selectedRole === "patient"
                     ? "border-[#76BC21]"
                     : "border-gray-300"
                 }`}
               >
-                <div
-                  className={`w-5 h-5 flex items-center justify-center rounded-full border-2 ${
-                    selectedRole === "patient"
-                      ? "border-[#76BC21]"
-                      : "border-gray-300"
-                  }`}
-                >
-                  {selectedRole === "patient" && (
-                    <div className="w-3 h-3 rounded-full bg-[#76BC21]"></div>
-                  )}
-                </div>
-                <input
-                  type="radio"
-                  className="hidden"
-                  name="role"
-                  value="patient"
-                  checked={selectedRole === "patient"}
-                  onChange={handleRoleChange}
-                />
-                <span className="ml-2 text-gray-700">Patient</span>
-              </label>
-              <label
-                className={`inline-flex items-center mt-3 border-2 w-[228px] h-[50px] justify-center rounded-[8px] ${
+                {selectedRole === "patient" && (
+                  <div className="w-3 h-3 rounded-full bg-[#76BC21]"></div>
+                )}
+              </div>
+              <input
+                type="radio"
+                className="hidden"
+                name="role"
+                value="patient"
+                checked={selectedRole === "patient"}
+                // onChange={handleRoleChange}
+              />
+              <span className="ml-2 text-gray-700">Patient</span>
+            </label>
+            <label
+              className={`inline-flex items-center mt-3 border-2 w-[228px] h-[50px] justify-center rounded-[8px] ${
+                selectedRole === "provider"
+                  ? "border-[#76BC21]"
+                  : "border-gray-300"
+              }`}
+            >
+              <div
+                className={`w-5 h-5 flex items-center justify-center rounded-full border-2 ${
                   selectedRole === "provider"
                     ? "border-[#76BC21]"
                     : "border-gray-300"
                 }`}
               >
-                <div
-                  className={`w-5 h-5 flex items-center justify-center rounded-full border-2 ${
-                    selectedRole === "provider"
-                      ? "border-[#76BC21]"
-                      : "border-gray-300"
-                  }`}
-                >
-                  {selectedRole === "provider" && (
-                    <div className="w-3 h-3 rounded-full bg-[#76BC21]"></div>
-                  )}
-                </div>
-                <input
-                  type="radio"
-                  className="hidden"
-                  name="role"
-                  value="provider"
-                  checked={selectedRole === "provider"}
-                  onChange={handleRoleChange}
-                />
-                <span className="ml-2 text-gray-700">Healthcare Provider</span>
-              </label>
-            </div>
-            <div className="mt-[20px]">
-              <label
-                htmlFor="password"
-                className="text-[14px] mb-[4px] font-[500]"
-              >
-                Password
-              </label>
-              <div className="flex items-center justify-between h-[49px] border bg-[#FAFAFA] px-[16px] py-[16px] rounded-[8px]">
-                <img
-                  src={password}
-                  alt=""
-                  className="w-[16px] h-[16px] object-contain"
-                />
-                <input
-                  className="flex-1 h-[46px] bg-transparent shadow-none border-none outline-none pl-2 rounded-[8px]"
-                  type={show ? "text" : "password"}
-                  id="password"
-                  name="password"
-                  autoComplete="false"
-                  value={userData.password}
-                  onChange={handleInputs}
-                />
-                <Link
-                  className="text-[#72849A80] text-[12px]"
-                  onClick={() => setShow(!show)}
-                >
-                  {show ? "Hide" : "Show"}
-                </Link>
+                {selectedRole === "provider" && (
+                  <div className="w-3 h-3 rounded-full bg-[#76BC21]"></div>
+                )}
               </div>
-            </div>
-            <div className="flex gap-[20px] mt-[20px]">
-              <Link className=" border-[#00263E] flex items-center justify-center font-medium   px-[24px] py-[12px] text-[#00263E] rounded-[8px] border-2  bg-[#fff]">
-                Cancel
+              <input
+                type="radio"
+                className="hidden"
+                name="role"
+                value="provider"
+                checked={selectedRole === "provider"}
+                // onChange={handleRoleChange}
+              />
+              <span className="ml-2 text-gray-700">Healthcare Provider</span>
+            </label>
+          </div>
+        </div>
+        <div className="w-[626px] my-[20px] p-[20px] rounded-[8px]  bg-white shadow">
+          <p className="text-[20px] text-darkblue font-bold pb-[32px]">
+            Change password
+          </p>
+          <form action="" onSubmit={handleSubmit}>
+            <label
+              htmlFor="password"
+              className="text-[14px] mb-[4px] font-[500]"
+            >
+              Password
+            </label>
+            <div className="flex items-center justify-between h-[49px] border bg-[#FAFAFA] px-[16px] py-[16px] rounded-[8px]">
+              <img
+                src={password}
+                alt=""
+                className="w-[16px] h-[16px] object-contain"
+              />
+              <input
+                className="flex-1 h-[46px] bg-transparent shadow-none border-none outline-none pl-2 rounded-[8px]"
+                type={show ? "text" : "password"}
+                id="password"
+                name="password"
+                autoComplete="false"
+                value={userData.password}
+                onChange={handleInputs}
+              />
+              <Link
+                className="text-[#72849A80] text-[12px]"
+                onClick={() => setShow(!show)}
+              >
+                {show ? "Hide" : "Show"}
               </Link>
+            </div>
+
+            <div className=" mt-[32px]">
               <button
                 type="submit"
-                className="  font-medium  px-[24px] py-[12px] text-white bg-[#00263E] rounded-[8px] "
+                className="  font-medium text-[14px]  px-[24px] py-[12px] text-white bg-[#00263E] rounded-[8px] "
               >
-                Save
+                Change password
               </button>
             </div>
           </form>
         </div>
       </div>
-      {showCalender && (
-        <SingleCalender
-          handleSetDate={() => {
-            setShowCalender(false);
-          }}
-        />
-      )}
-      {showSuccessMessage && (
-        <div className="fixed  inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white p-[48px] rounded-lg text-center flex flex-col items-center">
-            <div className="w-[88px] h-[88px] flex items-center justify-center rounded-full bg-lightgreen">
-              <img src={check} alt="" className="w-[29px] h-[22px]" />
-            </div>
-            <h2 className="text-[24px] text-[#00263E] pt-[16px] font-bold mb-2">
-              User successfully created
-            </h2>
-            <p className="text-[#455560]">
-              We send an email to the user to notify him of his registration in
-              Yano.
-            </p>
-            <div className="mt-[40px] flex gap-[8px] items-center">
-              <Link to="/user">
-                <button className="ml-2 bg-[#fff] text-[#00263E] font-medium border-[#00263E] border-2 px-[24px] py-[9px] rounded-[8px]">
-                  Go to user's database
-                </button>
-              </Link>
-              <button
-                className="bg-[#00263E] h-[45px] text-white font-medium px-[24px] py-[12px] rounded-[8px]"
-                onClick={closeSuccessMessage}
-              >
-                Create another user
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

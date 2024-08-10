@@ -25,6 +25,8 @@ import UserDetail from "./pages/UserDetail.jsx";
 import UserContextProvider from "./context/UserContextProvider.jsx";
 import CalenderTwoSide from "./pages/CalenderTwoSide.jsx";
 import BasicInfo from "./user/BasicInfo.jsx";
+import HealthTracker from "./user/HealthTracker.jsx";
+import HealthProfile from "./user/HealthProfile.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -43,7 +45,9 @@ const router = createBrowserRouter(
       <Route path="/ResetPasswordLink" element={<ResetPasswordLink />} />
       <Route path="/user/:userID" element={<UserDetail />} />
       <Route path="/calender" element={<CalenderTwoSide />} />
-      <Route path="/basicInfo" element={<BasicInfo />} />
+      <Route path="/user/basicInfo" element={<BasicInfo />} />
+      <Route path="/user/healthTracker" element={<HealthTracker />} />
+      <Route path="/user/healthProfile" element={<HealthProfile />} />
     </Route>
   )
 );

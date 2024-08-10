@@ -1,24 +1,31 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { MdDashboard } from "react-icons/md";
-import { MdWifiCalling3 } from "react-icons/md";
-import { MdOutlineSettings } from "react-icons/md";
-import { MdOutlinePeopleOutline } from "react-icons/md";
-import callcenter from "../assets/icons/callcenter.png";
 import overview from "../assets/icons/overview.png";
-import settings from "../assets/icons/settings.png";
 import user from "../assets/icons/user.png";
+import settings from "../assets/icons/settings.png";
+import callcenter from "../assets/icons/callcenter.png";
+import overviewgray from "../assets/icons/overviewgray.png";
+import usergray from "../assets/icons/usergray.png";
+import callcentergray from "../assets/icons/callcentergray.png";
+import settingsgray from "../assets/icons/settingsgray.png";
 const sidebarData = [
-  { navigate: "/overview", name: "Overview", img: overview },
+  {
+    navigate: "/overview",
+    name: "Overview",
+    imgActive: overview,
+    img: overviewgray,
+  },
   {
     navigate: "/user",
     name: "Users",
-    img: user,
+    imgActive: user,
+    img: usergray,
   },
   {
     navigate: "/callCenter",
     name: "Call Center",
-    img: callcenter,
+    imgActive: callcenter,
+    img: callcentergray,
   },
 ];
 
@@ -32,39 +39,46 @@ function Sidebar() {
               <NavLink
                 key={item.name}
                 className={({ isActive }) =>
-                  ` ml-[16px] flex items-center gap-3 rounded-l-[10px] px-3 py-4  transition-all hover:text-[#00263E] dark:text-gray-400 dark:hover:text-gray-50 ${
+                  ` ml-[16px] flex items-center text-[14px]  gap-3 rounded-l-[10px] pl-4 pr-9 py-3  transition-all hover:text-[#00263E] ${
                     isActive
-                      ? "bg-[#F5F5F5] border-r-4 border-darkgreen text-[#00263E] font-[600]"
+                      ? "bg-[#F5F5F5] border-r-4 border-darkgreen text-[#00263E] font-medium"
                       : "text-[#455560]"
                   }`
                 }
                 to={item.navigate}
               >
-                <img
-                  src={item.img}
-                  alt=""
-                  className="w-[20px] h-[20px] object-contain"
-                />
-                {item.name}
+                {({ isActive }) => (
+                  <>
+                    <img
+                      className="w-[18px] h-[18px] object-contain"
+                      src={isActive ? item.imgActive : item.img}
+                      alt={item.name}
+                    />
+                    {item.name}
+                  </>
+                )}
               </NavLink>
             ))}
-            <div className="border-t-2 w-full" />
+            <div className="border-t w-full" />
             <NavLink
               className={({ isActive }) =>
-                ` ml-[16px]  flex items-center gap-3 rounded-l-[10px] px-3 py-4 transition-all hover:text-[#00263E] dark:text-gray-400 dark:hover:text-gray-50 ${
+                ` ml-[16px]  flex items-center gap-3 rounded-l-[10px]  pl-4 pr-9 py-3 transition-all hover:text-[#00263E]  ${
                   isActive
-                    ? "bg-[#F5F5F5] border-r-4 border-darkgreen text-[#00263E] font-[600]"
+                    ? "bg-[#F5F5F5] border-r-4 border-darkgreen text-[#00263E] font-medium"
                     : "text-[#455560]"
                 }`
               }
               to="/Settings"
             >
-              <img
-                src={settings}
-                alt=""
-                className="w-[20px] h-[20px] object-contain"
-              />
-              Settings
+              {({ isActive }) => (
+                <>
+                  <img
+                    className="w-[18px] h-[18px] object-contain"
+                    src={isActive ? settings : settingsgray}
+                  />
+                  settings
+                </>
+              )}
             </NavLink>
           </nav>
         </div>

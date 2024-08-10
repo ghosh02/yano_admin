@@ -77,7 +77,7 @@ import countryCodes from "../assets/countrycode.json";
 import countryNames from "../assets/countries.json";
 import downgray from "../assets/icons/downgray.png";
 
-const CountryDropdown = ({ onSelect }) => {
+const CountryDropdown = ({ onSelect, cursor = "pointer" }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState({
     code: countryCodes.AD,
@@ -114,7 +114,11 @@ const CountryDropdown = ({ onSelect }) => {
   }, []);
 
   return (
-    <div ref={dropdownRef} className="relative ">
+    <div
+      style={{ pointerEvents: { cursor } }}
+      ref={dropdownRef}
+      className="relative "
+    >
       <span
         className="inline-flex cursor-pointer gap-1 items-center px-3 py-3 rounded-[6px] border bg-[#fafafa] text-[#00263E] font-medium text-sm"
         onClick={toggleDropdown}

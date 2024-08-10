@@ -50,7 +50,7 @@ const PhoneForm = ({ label, name }) => {
   };
 
   return (
-    <div className="mb-4 mt-4">
+    <div className="mb-4 mt-4 ">
       <label
         className="block text-sm text-[#00263E] font-medium"
         htmlFor={name}

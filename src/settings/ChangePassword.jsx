@@ -31,7 +31,7 @@ function ChangePassword() {
           </div>
         </Link>
         <div
-          className={` items-center justify-between rounded-[8px] px-[20px] py-[16px] w-[626px] text-[#155724] my-[24px]  font-medium bg-[#C3E6CB] ${
+          className={` items-center justify-between rounded-[8px] px-[20px] py-[16px] w-[626px] text-[#155724]  my-[24px]  font-medium bg-[#C3E6CB] ${
             isSave ? "flex" : "hidden"
           }`}
         >
@@ -47,7 +47,7 @@ function ChangePassword() {
             }}
             src={closegreen}
             alt=""
-            className="w-[14px] h-[14px] object-contain"
+            className="w-[14px] h-[14px] object-contain cursor-pointer"
           />
         </div>
         <div className="h-[347px] w-[626px] bg-[#fff] p-[20px] rounded-[8px] ">

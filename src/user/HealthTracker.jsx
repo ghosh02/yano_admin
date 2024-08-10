@@ -1,9 +1,6 @@
 import React from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import person from "../assets/person.png";
-import Sidebar from "@/components/Sidebar";
-import { IoMdArrowBack } from "react-icons/io";
-import UserCard from "@/components/UserCard";
 import InfoCard from "@/components/InfoCard";
 import blood from "../assets/icons/blood.png";
 import weight from "../assets/icons/weight.png";
@@ -14,12 +11,27 @@ import helth from "../assets/icons/helth.png";
 import detail from "../assets/icons/detail.png";
 import calender from "../assets/icons/calender.png";
 import peopleicon from "../assets/icons/peopleicon.png";
+import back from "../assets/icons/back.png";
+import Sidebar from "@/components/Sidebar";
+import UserCard from "@/components/UserCard";
+import downgray from "../assets/icons/downgray.png";
+import {
+  TableHead,
+  TableRow,
+  TableHeader,
+  TableCell,
+  TableBody,
+  Table,
+} from "@/components/ui/table";
 
-const UserDetail = () => {
-  const location = useLocation();
-  const { user } = location.state;
-
-  //   console.log(user);
+const data = [
+  { name: "Oxygen saturation", data: "98 SpO2H", date: "04:04 PM VET, 31 Aug" },
+  { name: "Oxygen saturation", data: "98 SpO2H", date: "04:04 PM VET, 31 Aug" },
+  { name: "Oxygen saturation", data: "98 SpO2H", date: "04:04 PM VET, 31 Aug" },
+  { name: "Oxygen saturation", data: "98 SpO2H", date: "04:04 PM VET, 31 Aug" },
+  { name: "Oxygen saturation", data: "98 SpO2H", date: "04:04 PM VET, 31 Aug" },
+];
+function HealthTracker() {
   return (
     <div className="h-[calc(100vh-80px)] flex">
       <Sidebar />
@@ -28,8 +40,8 @@ const UserDetail = () => {
           to="/overview"
           className="w-[92px] h-[40px] flex justify-center items-center bg-[#fff] my-3 gap-2 rounded-[8px]"
         >
-          <IoMdArrowBack />
-          <p>Back</p>
+          <img src={back} alt="" className="w-[16px] h-[16px] object-contain" />
+          <p className="text-[#455560] font-medium">Back</p>
         </Link>
 
         <div className="flex flex-1 bg-white rounded-[8px] p-[20px] shadow">
@@ -41,7 +53,7 @@ const UserDetail = () => {
           <div className="border mx-[24px]" />
           <div className="flex-1 ">
             <h1 className="text-[24px] text-darkblue font-[700] mb-[16px] ">
-              {user?.fullName}
+              {/* {user?.fullName} */}Jenny Wilson
             </h1>
             <div className=" flex-1 flex items-center justify-between flex-wrap gap-3 pr-[40px]">
               <UserCard
@@ -114,49 +126,58 @@ const UserDetail = () => {
             </div>
           </div>
         </div>
-        <div className="flex gap-[16px] mt-[24px]">
-          <InfoCard
-            to={"/user/basicInfo"}
-            title="Basic Information"
-            text="Name,email,password..."
-            img={
-              <img
-                src={detail}
-                alt=""
-                className="w-[24px] h-[24px] object-contain"
-              />
-            }
-          />
 
-          <InfoCard
-            to={"/user/healthProfile"}
-            title="Helth Profile"
-            text="Medical history summary"
-            img={
-              <img
-                src={helth}
-                alt=""
-                className="w-[24px] h-[24px] object-contain"
-              />
-            }
-          />
-
-          <InfoCard
-            to={"/user/healthTracker"}
-            title="Health tracker"
-            text="Reading history"
-            img={
-              <img
-                src={tracker}
-                alt=""
-                className="w-[24px] h-[24px] object-contain"
-              />
-            }
-          />
-        </div>
+        <p className="text-[#00263E] my-[24px] font-bold text-[24px]">
+          Health trackers
+        </p>
+        <Table className="bg-white rounded-[8px] shadow-3xl">
+          <TableHeader className=" rounded-[8px] border-t border-[#eee]">
+            <TableRow>
+              <TableHead>
+                <div className="flex items-center gap-3">
+                  <p className="text-[#1A3353] font-medium">Full name</p>
+                  <img
+                    src={downgray}
+                    alt=""
+                    className="w-[10px] h-[5px] object-contain"
+                  />
+                </div>
+              </TableHead>
+              <TableHead>
+                <div className="flex items-center gap-3">
+                  <p className="text-[#1A3353] font-medium">Country</p>
+                  <img
+                    src={downgray}
+                    alt=""
+                    className="w-[10px] h-[5px] object-contain"
+                  />
+                </div>
+              </TableHead>
+              <TableHead>
+                <div className="flex items-center gap-3">
+                  <p className="text-[#1A3353] font-medium">Type</p>
+                  <img
+                    src={downgray}
+                    alt=""
+                    className="w-[10px] h-[5px] object-contain"
+                  />
+                </div>
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {data?.map((user) => (
+              <TableRow className="" key={user?.name}>
+                <TableCell className="text-[#455560]">{user?.name}</TableCell>
+                <TableCell className="text-[#455560]">{user?.data}</TableCell>
+                <TableCell className="text-[#455560]">{user?.date}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
       </div>
     </div>
   );
-};
+}
 
-export default UserDetail;
+export default HealthTracker;

@@ -6,6 +6,20 @@
 .custom-option-bg option {
   @apply bg-gray-100; /* Use Tailwind's bg color class here */
 }
+/* In your global CSS file */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

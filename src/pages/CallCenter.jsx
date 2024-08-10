@@ -5,7 +5,7 @@ import { MdVideoCall } from "react-icons/md";
 import { IoMdCall } from "react-icons/io";
 import { MdCallEnd } from "react-icons/md";
 import { FaRegUserCircle } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ToggleButton from "@/components/ToggleButton";
 import { IoClose } from "react-icons/io5";
 import { gsap } from "gsap";
@@ -117,8 +117,29 @@ function CallCenter() {
   const handleDays = (option) => {
     setDay(option);
   };
+
+  const [loading, setLoading] = useState(false);
+  const LoadingScreen = () => {
+    return (
+      <div className="fixed inset-0 bg-[#0D223C] flex items-center justify-center z-50 flex-col">
+        <div className="loader border-t-4 border-blue-500 border-solid rounded-full w-12 h-12 animate-spin"></div>
+        <span className="text-white mt-4 transform scale-100">
+          Loading consultation...
+        </span>
+      </div>
+    );
+  };
+  const navigate = useNavigate();
+  const handleClick = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      navigate("/videoCall");
+    }, 10000);
+  };
   return (
     <div className="h-[calc(100vh-80px)] flex  ">
+      {loading && <LoadingScreen />}
       <Sidebar />
       <div className="p-[32px] flex gap-[30px] bg-[#fff] flex-1  h-[calc(100vh-80px)]">
         <div
@@ -171,7 +192,8 @@ function CallCenter() {
             </div>
             <div className="flex gap-[10px]">
               <Link
-                to="/videoCall"
+                onClick={handleClick}
+                // to="/videoCall"
                 className="w-[32px] h-[32px] rounded-[50%] bg-[#0F8D47] flex items-center justify-center "
               >
                 <IoMdCall color="#fff" />

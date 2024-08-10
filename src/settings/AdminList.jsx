@@ -22,6 +22,7 @@ import sendnoti from "../assets/icons/sendnoti.png";
 import exportreport from "../assets/icons/export.png";
 import deactivate from "../assets/icons/deactivate.png";
 import Notification from "@/utils/Notification";
+import BackBtn from "@/components/BackBtn";
 
 const admin = [
   {
@@ -149,12 +150,7 @@ function AdminList() {
       <Sidebar />
       <div className="flex-1 mx-[32px] mt-[32px]">
         <div className="flex justify-between items-center">
-          <Link to="/settings">
-            <div className="w-[92px] h-[40px] flex justify-center items-center bg-[#fff] my-3 gap-2 rounded-[8px]">
-              <IoMdArrowBack />
-              <p>Back</p>
-            </div>
-          </Link>
+          <BackBtn />
           <Link to="createAdmin">
             <Button className=" flex gap-3 items-center justify-center ">
               <span>

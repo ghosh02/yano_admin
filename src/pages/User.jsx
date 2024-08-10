@@ -27,6 +27,7 @@ import exportreport from "../assets/icons/export.png";
 import deactivate from "../assets/icons/deactivate.png";
 import CalenderTwoSide from "./CalenderTwoSide";
 import Notification from "@/utils/Notification";
+import CustomCheckBox from "@/components/CustomCheckBox";
 
 const data = [
   {
@@ -38,7 +39,7 @@ const data = [
     status: "active",
   },
   {
-    user_id: "1",
+    user_id: "2",
     fullName: "Jane Smith",
     country: "Canada",
     type: "patient",
@@ -46,7 +47,7 @@ const data = [
     status: "active",
   },
   {
-    user_id: "1",
+    user_id: "3",
     fullName: "Carlos Ramirez",
     country: "Mexico",
     type: "patient",
@@ -54,7 +55,7 @@ const data = [
     status: "active",
   },
   {
-    user_id: "1",
+    user_id: "4",
     fullName: "Anna Müller",
     country: "Germany",
     type: "patient",
@@ -62,7 +63,7 @@ const data = [
     status: "active",
   },
   {
-    user_id: "1",
+    user_id: "5",
     fullName: "Yuki Tanaka",
     country: "Japan",
     type: "patient",
@@ -84,6 +85,8 @@ export default function User() {
   const [selectedUser, setSelectedUser] = useState(null);
   const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 });
   const [showSendNotification, setShowSendNotification] = useState(false);
+  const [selectedRows, setSelectedRows] = useState([]);
+  const [selectAll, setSelectAll] = useState(false);
   const popupRef = useRef(null);
 
   const countryList = [
@@ -148,6 +151,61 @@ export default function User() {
   const handleClose = () => {
     setShowSendNotification(false);
   };
+
+  // row check box function
+  const handleRowSelection = ({ user_id, fullName }) => {
+    setSelectedRows((prevSelectedRows) =>
+      prevSelectedRows.some((user) => user.user_id === user_id)
+        ? prevSelectedRows.filter((user) => user.user_id !== user_id)
+        : [...prevSelectedRows, { user_id, fullName }]
+    );
+  };
+
+  const handleSelectAll = () => {
+    if (selectAll) {
+      setSelectedRows([]);
+    } else {
+      setSelectedRows(
+        data.map(({ user_id, fullName }) => ({ user_id, fullName }))
+      );
+    }
+    setSelectAll(!selectAll);
+  };
+
+  const CheckOption = () => {
+    return (
+      <div className="flex items-center gap-[8px]  ">
+        <div className="flex items-center bg-[#fafafa] border p-[10px] gap-[8px] rounded-[8px] ">
+          <img src={edit} alt="" className="w-[16px] h-[16px] object-contain" />
+          <p className="text-[#455560] text-[14px]">Edit user</p>
+        </div>
+        <div className="flex items-center bg-[#fafafa] border p-[10px] gap-[8px] rounded-[8px] ">
+          <img
+            src={deactivate}
+            alt=""
+            className="w-[16px] h-[16px] object-contain"
+          />
+          <p className="text-[#455560] text-[14px]">Deactivate</p>
+        </div>
+        <div className="flex items-center bg-[#fafafa] border p-[10px] gap-[8px] rounded-[8px] ">
+          <img
+            src={exportreport}
+            alt=""
+            className="w-[16px] h-[16px] object-contain"
+          />
+          <p className="text-[#455560] text-[14px]">Export</p>
+        </div>
+        <div className="flex items-center bg-[#fafafa] border p-[10px] gap-[8px] rounded-[8px] ">
+          <img
+            src={sendnoti}
+            alt=""
+            className="w-[16px] h-[16px] object-contain"
+          />
+          <p className="text-[#455560] text-[14px]">Send Message</p>
+        </div>
+      </div>
+    );
+  };
   return (
     <div className="grid min-h-screen max-w-screen">
       <div className="flex w-full">
@@ -160,7 +218,7 @@ export default function User() {
             </div>
 
             <Link to="createUser">
-              <Button className="flex gap-3 items-center justify-center bg-[#00263E]">
+              <Button className="flex gap-3 items-center justify-center bg-darkblue">
                 <span>
                   <FaPlus size={12} />
                 </span>
@@ -172,138 +230,149 @@ export default function User() {
           <div className="flex flex-col flex-1">
             <main className="flex flex-col gap-4">
               <div className="border shadow-sm rounded-lg bg-white">
-                <form className="p-[16px] flex justify-between items-center">
-                  <div
-                    className={`flex items-center border rounded-[8px]  bg-[#fafafa] h-[40px] px-2 ${
-                      filter ? "w-1/4" : "w-1/3"
-                    }`}
-                  >
-                    <img src={search} alt="" />
-                    <input
-                      className="w-full bg-transparent shadow-none border-none outline-none pl-2 placeholder-[#72849A]"
-                      placeholder="Search for users ..."
-                      type="search"
-                      // value={searchQuery}
-                      // onChange={(e) => setSearchQuery(e.target.value)}
-                    />
-                  </div>
-                  <div className="flex-1 flex justify-end items-center">
-                    {filter === false ? (
-                      <Link
-                        onClick={() => {
-                          setFilter(true);
-                        }}
-                        className="flex items-center flex-wrap gap-[8px] border-2 px-[12px] py-[8px] rounded-[8px]"
+                <div className="">
+                  {selectAll ? (
+                    <div className="flex items-center justify-between p-4">
+                      <p className="text-[#00263E] text-[16px] ">
+                        All the users on this database are selected.
+                      </p>
+                      <CheckOption />
+                    </div>
+                  ) : selectedRows.length === 1 ? (
+                    <div className="flex items-center justify-between p-4">
+                      <p className="text-darkblue text-[16px] ]">
+                        The user{" "}
+                        <span className="font-semibold">
+                          {selectedRows[0].fullName}
+                        </span>{" "}
+                        with the ID{" "}
+                        <span className="font-semibold">
+                          {selectedRows[0].user_id}
+                        </span>{" "}
+                        is selected.
+                      </p>
+                      <CheckOption />
+                    </div>
+                  ) : selectedRows.length > 1 ? (
+                    <div className="flex items-center justify-between p-4">
+                      <p className="text-darkblue text-[16px] ">
+                        The user{" "}
+                        <span className="font-semibold">
+                          {selectedRows[0].fullName}
+                        </span>{" "}
+                        with the ID{" "}
+                        <span className="font-semibold">
+                          {selectedRows[0].user_id}
+                        </span>{" "}
+                        and {selectedRows.length - 1} other users are selected.
+                      </p>
+                      <CheckOption />
+                    </div>
+                  ) : (
+                    <form className="p-[16px] flex justify-between items-center">
+                      <div
+                        className={`flex items-center border rounded-[8px]  bg-[#fafafa] h-[40px] px-2 ${
+                          filter ? "w-1/4" : "w-1/3"
+                        }`}
                       >
-                        <img
-                          src={filterimg}
-                          alt=""
-                          className="w-[16px] h-[16px] object-contain"
+                        <img src={search} alt="" />
+                        <input
+                          className="w-full bg-transparent shadow-none border-none outline-none pl-2 placeholder-[#72849A]"
+                          placeholder="Search for users ..."
+                          type="search"
+                          // value={searchQuery}
+                          // onChange={(e) => setSearchQuery(e.target.value)}
                         />
-                        <p className="text-[#455560] font-medium">Add filter</p>
-                      </Link>
-                    ) : (
-                      <div className="flex gap-[24px]">
-                        <FilterDropdown
-                          width={180}
-                          options={statusList}
-                          onOptionSelect={handleStatus}
-                          name="Status"
-                        />
-                        <FilterDropdown
-                          width={180}
-                          options={countryList}
-                          onOptionSelect={handleCountryChange}
-                          name="country"
-                        />
-
-                        <FilterDropdown
-                          options={typeList}
-                          onOptionSelect={handleType}
-                          name="Type"
-                          width={180}
-                        />
-                        <Link
-                          onClick={() => {
-                            setShowCalender(!showCalender);
-                          }}
-                          className="flex items-center gap-2 px-[12px] py-[6px] border-2 rounded-[6px] bg-[#fafafa]"
-                        >
-                          <p className="text-[#455560]">May 8 - June 8, 1992</p>
-                          <img
-                            src={calendar}
-                            alt=""
-                            className="w-[16px] h-[16px]"
-                          />
-                        </Link>
-                        {}
-                        {showCalender ? (
-                          <div className="bg-[#fafafa]  absolute right-[80px] bottom-[80px] z-50">
-                            <CalenderTwoSide
-                              handleSetDate={() => {
-                                setShowCalender(false);
-                              }}
-                            />
-                            {/* <div className="flex">
-                              <Calendar
-                                className="rounded-md border  bg-[#fafafa] z-50"
-                                mode="single"
-                                // selected={field.value}
-                                // onSelect={field.onChange}
-                                disabled={(date) =>
-                                  date > new Date() ||
-                                  date < new Date("1900-01-01")
-                                }
-                                initialFocus
-                              />
-                              <Calendar
-                                className="rounded-md border  bg-[#fafafa] z-50"
-                                mode="single"
-                                // selected={field.value}
-                                // onSelect={field.onChange}
-                                disabled={(date) =>
-                                  date > new Date() ||
-                                  date < new Date("1900-01-01")
-                                }
-                                initialFocus
-                              />
-                            </div> */}
-                            {/* <div className="flex items-center justify-end z-50 space-x-4 p-2">
-                              <Button
-                                className="w-[136px]"
-                                type="button"
-                                variant="outline"
-                                onClick={() => form.reset()}
-                              >
-                                Cancel
-                              </Button>
-                              <Button className="w-[136px] z-50" type="submit">
-                                Set date
-                              </Button>
-                            </div> */}
-                          </div>
-                        ) : (
-                          ""
-                        )}
-
-                        <Link
-                          onClick={() => {
-                            setFilter(false);
-                          }}
-                          className="flex items-center justify-center px-[12px] py-[8px] border-2 rounded-[6px] bg-[#fff]"
-                        >
-                          <img src={close} alt="" />
-                        </Link>
                       </div>
-                    )}
-                  </div>
-                </form>
+                      <div className="flex-1 flex justify-end items-center">
+                        {filter === false ? (
+                          <Link
+                            onClick={() => {
+                              setFilter(true);
+                            }}
+                            className="flex items-center flex-wrap gap-[8px] border-2 px-[12px] py-[8px] rounded-[8px]"
+                          >
+                            <img
+                              src={filterimg}
+                              alt=""
+                              className="w-[16px] h-[16px] object-contain"
+                            />
+                            <p className="text-[#455560] font-medium">
+                              Add filter
+                            </p>
+                          </Link>
+                        ) : (
+                          <div className="flex gap-[24px]">
+                            <FilterDropdown
+                              width={180}
+                              options={statusList}
+                              onOptionSelect={handleStatus}
+                              name="Status"
+                            />
+                            <FilterDropdown
+                              width={180}
+                              options={countryList}
+                              onOptionSelect={handleCountryChange}
+                              name="country"
+                            />
+
+                            <FilterDropdown
+                              options={typeList}
+                              onOptionSelect={handleType}
+                              name="Type"
+                              width={180}
+                            />
+                            <Link
+                              onClick={() => {
+                                setShowCalender(!showCalender);
+                              }}
+                              className="flex items-center gap-2 px-[12px] py-[6px] border-2 rounded-[6px] bg-[#fafafa]"
+                            >
+                              <p className="text-[#455560]">
+                                May 8 - June 8, 1992
+                              </p>
+                              <img
+                                src={calendar}
+                                alt=""
+                                className="w-[16px] h-[16px]"
+                              />
+                            </Link>
+                            {}
+                            {showCalender ? (
+                              <div className="bg-[#fafafa]  absolute right-[80px] bottom-[80px] z-50">
+                                <CalenderTwoSide
+                                  handleSetDate={() => {
+                                    setShowCalender(false);
+                                  }}
+                                />
+                              </div>
+                            ) : (
+                              ""
+                            )}
+
+                            <Link
+                              onClick={() => {
+                                setFilter(false);
+                              }}
+                              className="flex items-center justify-center px-[12px] py-[8px] border-2 rounded-[6px] bg-[#fff]"
+                            >
+                              <img src={close} alt="" />
+                            </Link>
+                          </div>
+                        )}
+                      </div>
+                    </form>
+                  )}
+                </div>
                 <Table className="">
                   <TableHeader className="border-t">
                     <TableRow>
                       <TableHead>
                         <div className="flex items-center gap-2 ">
-                          <div className="h-[18px] w-[18px] border-[#C3C4C3] border-[3px]" />
+                          <CustomCheckBox
+                            checked={selectAll}
+                            onChange={handleSelectAll}
+                          />
                           <div className="flex items-center gap-3">
                             <p className="text-[#1A3353] font-medium">
                               User ID
@@ -384,10 +453,26 @@ export default function User() {
                   </TableHeader>
                   <TableBody>
                     {data?.map((user) => (
-                      <TableRow className="cursor-pointer" key={user?.user_id}>
+                      <TableRow
+                        className={`cursor-pointer ${
+                          selectedRows.some(
+                            (selectedUser) =>
+                              selectedUser.user_id === user.user_id
+                          )
+                            ? "bg-[#ECF2FE] hover:bg-[#ECF2FE]"
+                            : ""
+                        }`}
+                        key={user?.user_id}
+                      >
                         <TableCell>
                           <div className="flex items-center gap-[30px] text-[#00263E]">
-                            <div className="h-[18px] w-[18px] border-[#C3C4C3] border-[3px]" />
+                            <CustomCheckBox
+                              checked={selectedRows.some(
+                                (selectedUser) =>
+                                  selectedUser.user_id === user.user_id
+                              )}
+                              onChange={() => handleRowSelection(user)}
+                            />
                             {user?.user_id}
                           </div>
                         </TableCell>

@@ -13,6 +13,7 @@ import password from "../assets/icons/password.png";
 import check from "../assets/icons/check.png";
 import closegreen from "../assets/icons/closegreen.png";
 import profile from "../assets/icons/profile.png";
+import BackBtn from "@/components/BackBtn";
 
 function BasicInfo() {
   const [show, setShow] = useState(false);
@@ -63,23 +64,13 @@ function BasicInfo() {
     <div className="flex">
       <Sidebar />
       <div className="flex-1 mx-[32px] mt-[32px]">
-        <Link onClick={handleGoBack}>
-          <div className="w-[92px] h-[40px] flex justify-center items-center bg-[#fff] my-3 gap-2 rounded-[8px]">
-            <IoMdArrowBack />
-            <p>Back</p>
-          </div>
-        </Link>
+        <BackBtn />
         <div
           className={` items-center justify-between rounded-[8px] px-[20px] py-[16px] w-[626px] text-[#155724]  my-[24px]  font-medium bg-[#C3E6CB] ${
             isSave ? "flex" : "hidden"
           }`}
         >
-          <img
-            src={check}
-            alt=""
-            className="w-[24px] h-[24px] object-contain"
-          />
-          <p className="">User's information successfully updated.</p>
+          <p className="">The user's password has been successfully changed.</p>
           <img
             onClick={() => {
               setIsSave(false);

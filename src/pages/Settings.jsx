@@ -19,7 +19,7 @@ function Settings() {
 
         <div className=" flex items-center gap-4">
           <Link to="changePassword">
-            <div className=" w-[305px] h-[85px] bg-[#FFFFFF] hover:shadow-3xl flex items-center justify-between px-4 rounded-[8px]">
+            <div className=" w-[305px] h-[85px] bg-[#FFFFFF] hover:shadow-3xl flex items-center justify-between px-4 rounded-[8px] border border-[#eee]">
               <div>
                 <h1 className="text-[14px] font-semibold">Security</h1>
                 <p className="text-[#72849A] text-[13px]">
@@ -35,8 +35,8 @@ function Settings() {
               </div>
             </div>
           </Link>
-          <Link to="adminList">
-            <div className=" w-[305px] h-[85px] bg-[#FFFFFF] hover:shadow-3xl flex items-center justify-between px-2 rounded-[8px]">
+          <Link to="adminList" className=" ">
+            <div className=" w-[305px] h-[85px] bg-[#FFFFFF] hover:shadow-3xl flex items-center justify-between px-2 rounded-[8px] border border-[#eee]">
               <div>
                 <h1 className="text-[14px] font-semibold">Manage Roles</h1>
                 <p className="text-[#72849A] text-[13px]">

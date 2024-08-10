@@ -14,6 +14,7 @@ import helth from "../assets/icons/helth.png";
 import detail from "../assets/icons/detail.png";
 import calender from "../assets/icons/calender.png";
 import peopleicon from "../assets/icons/peopleicon.png";
+import BackBtn from "@/components/BackBtn";
 
 const UserDetail = () => {
   const location = useLocation();
@@ -24,13 +25,7 @@ const UserDetail = () => {
     <div className="h-[calc(100vh-80px)] flex">
       <Sidebar />
       <div className="flex-1 mx-[32px] mt-[32px] ">
-        <Link
-          to="/overview"
-          className="w-[92px] h-[40px] flex justify-center items-center bg-[#fff] my-3 gap-2 rounded-[8px]"
-        >
-          <IoMdArrowBack />
-          <p>Back</p>
-        </Link>
+        <BackBtn />
 
         <div className="flex flex-1 bg-white rounded-[8px] p-[20px] shadow">
           <img

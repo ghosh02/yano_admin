@@ -23,6 +23,7 @@ import {
   TableBody,
   Table,
 } from "@/components/ui/table";
+import BackBtn from "@/components/BackBtn";
 
 const data = [
   { name: "Oxygen saturation", data: "98 SpO2H", date: "04:04 PM VET, 31 Aug" },
@@ -40,13 +41,7 @@ function HealthTracker() {
     <div className="h-[calc(100vh-80px)] flex">
       <Sidebar />
       <div className="flex-1 mx-[32px] mt-[32px] ">
-        <Link
-          onClick={handleGoBack}
-          className="w-[92px] h-[40px] flex justify-center items-center bg-[#fff] my-3 gap-2 rounded-[8px]"
-        >
-          <img src={back} alt="" className="w-[16px] h-[16px] object-contain" />
-          <p className="text-[#455560] font-medium">Back</p>
-        </Link>
+        <BackBtn />
 
         <div className="flex flex-1 bg-white rounded-[8px] p-[20px] shadow">
           <img

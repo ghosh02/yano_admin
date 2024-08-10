@@ -7,6 +7,7 @@ import { CiLock } from "react-icons/ci";
 import check from "../assets/icons/check.png";
 import password from "../assets/icons/password.png";
 import closegreen from "../assets/icons/closegreen.png";
+import BackBtn from "@/components/BackBtn";
 function ChangePassword() {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -24,12 +25,7 @@ function ChangePassword() {
     <div className="h-[calc(100vh-80px)] flex">
       <Sidebar />
       <div className=" ml-[32px] mt-[32px]">
-        <Link to="/settings">
-          <div className="w-[92px] h-[40px] flex justify-center items-center bg-[#fff] my-3 gap-2 rounded-[8px]">
-            <IoMdArrowBack />
-            <p>Back</p>
-          </div>
-        </Link>
+        <BackBtn />
         <div
           className={` items-center justify-between rounded-[8px] px-[20px] py-[16px] w-[626px] text-[#155724]  my-[24px]  font-medium bg-[#C3E6CB] ${
             isSave ? "flex" : "hidden"

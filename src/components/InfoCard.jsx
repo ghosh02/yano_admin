@@ -5,7 +5,7 @@ function InfoCard({ title, text, img, to }) {
   return (
     <Link
       to={to}
-      className=" w-[305px] h-[85px] bg-[#FFF] gap-[16px] flex items-center justify-between px-4 rounded-[8px]"
+      className=" w-[305px] h-[85px] bg-[#FFF] gap-[16px] border border-[#eee] flex items-center justify-between px-4 rounded-[8px] hover:shadow-3xl"
     >
       <div>
         <h1 className="text-[14px] font-semibold">{title}</h1>

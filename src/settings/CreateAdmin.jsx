@@ -14,6 +14,7 @@ import {
   TableBody,
   Table,
 } from "@/components/ui/table";
+import BackBtn from "@/components/BackBtn";
 const permission = [
   { id: 1, name: "createNewUser", permission: "Create a new user" },
   { id: 2, name: "editUser", permission: "Edit user" },
@@ -98,12 +99,7 @@ function CreateAdmin() {
     <div className="flex  flex-1">
       <Sidebar />
       <div className="flex-1  ml-[32px] mt-[32px]">
-        <Link to="/settings/adminList">
-          <div className="w-[92px] h-[40px] flex justify-center items-center bg-[#fff] my-3 gap-2 rounded-[8px]">
-            <IoMdArrowBack />
-            <p>Back</p>
-          </div>
-        </Link>
+        <BackBtn />
         <div className=" mb-[24px] ">
           <h1 className="text-[24px] font-[700]">Create a new admin</h1>
           <p className="text-[14px] font-[400] text-[#72849A]">

@@ -1,8 +1,7 @@
-import React from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import person from "../assets/person.png";
 import Sidebar from "@/components/Sidebar";
-import { IoMdArrowBack } from "react-icons/io";
 import UserCard from "@/components/UserCard";
 import InfoCard from "@/components/InfoCard";
 import blood from "../assets/icons/blood.png";
@@ -18,9 +17,38 @@ import BackBtn from "@/components/BackBtn";
 
 const UserDetail = () => {
   const location = useLocation();
-  const { user } = location.state;
+  const user = location.state?.user;
 
-  //   console.log(user);
+  const calculateAge = (dateOfBirthString) => {
+    const birthDate = new Date(dateOfBirthString);
+    const today = new Date();
+
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDifference = today.getMonth() - birthDate.getMonth();
+
+    // If the birth date has not occurred yet this year, subtract one year from the age
+    if (
+      monthDifference < 0 ||
+      (monthDifference === 0 && today.getDate() < birthDate.getDate())
+    ) {
+      age--;
+    }
+
+    return age;
+  };
+  // const [userData, setUserData] = useState(null);
+  // console.log(userData);
+  const navigate = useNavigate();
+  const handleDetails = (user) => {
+    // console.log("userdata", userData);
+    navigate(`/user/basicInfo/${user._id}`, { state: { user } });
+  };
+  // useEffect(() => {
+  //   return () => {
+  //     setUserData(user);
+  //   };
+  // }, []);
+
   return (
     <div className="h-[calc(100vh-80px)] flex">
       <Sidebar />
@@ -29,19 +57,19 @@ const UserDetail = () => {
 
         <div className="flex flex-1 bg-white rounded-[8px] p-[20px] shadow">
           <img
-            src={person}
+            src={user?.userImg?.secure_url || person}
             alt=""
             className="w-[80px] h-[80px] rounded-[50%] border"
           />
           <div className="border mx-[24px]" />
           <div className="flex-1 ">
             <h1 className="text-[24px] text-darkblue font-[700] mb-[16px] ">
-              {user?.fullName}
+              {user?.firstName} {user?.lastName}
             </h1>
             <div className=" flex-1 flex items-center justify-between flex-wrap gap-3 pr-[40px]">
               <UserCard
                 title="Sex"
-                data="Female"
+                data={user?.gender}
                 img={
                   <img
                     src={peopleicon}
@@ -52,7 +80,7 @@ const UserDetail = () => {
               />
               <UserCard
                 title="Age"
-                data="36"
+                data={calculateAge(user?.dateOfBirth)}
                 img={
                   <img
                     src={calender}
@@ -64,7 +92,7 @@ const UserDetail = () => {
 
               <UserCard
                 title="Blood type"
-                data="O+"
+                data={user?.bloodType || "B+"}
                 img={
                   <img
                     src={blood}
@@ -75,7 +103,7 @@ const UserDetail = () => {
               />
               <UserCard
                 title="Height"
-                data="165 cm"
+                data={user?.height || 170}
                 img={
                   <img
                     src={height}
@@ -86,7 +114,7 @@ const UserDetail = () => {
               />
               <UserCard
                 title="Weight"
-                data="60 kg"
+                data={user?.weight || 70}
                 img={
                   <img
                     src={weight}
@@ -111,7 +139,7 @@ const UserDetail = () => {
         </div>
         <div className="flex gap-[16px] mt-[24px]">
           <InfoCard
-            to={"/user/basicInfo"}
+            onClick={() => handleDetails(user)}
             title="Basic Information"
             text="Name,email,password..."
             img={
@@ -124,7 +152,7 @@ const UserDetail = () => {
           />
 
           <InfoCard
-            to={"/user/healthProfile"}
+            // onClick={() => handleDetails(user)}
             title="Helth Profile"
             text="Medical history summary"
             img={
@@ -137,7 +165,7 @@ const UserDetail = () => {
           />
 
           <InfoCard
-            to={"/user/healthTracker"}
+            // onClick={() => handleDetails(user)}
             title="Health tracker"
             text="Reading history"
             img={

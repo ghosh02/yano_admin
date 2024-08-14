@@ -1,9 +1,7 @@
 import Sidebar from "@/components/Sidebar";
 
-import React, { useState } from "react";
-
-import { IoMdArrowBack } from "react-icons/io";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-phone-input-2/lib/style.css";
 import PhoneForm from "@/components/PhoneForm";
@@ -21,29 +19,32 @@ function BasicInfo() {
   const [phone, setPhone] = useState("");
   const [startDate, setStartDate] = useState(new Date());
   const [isSave, setIsSave] = useState(false);
+  const [newPassword, setNewPassword] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [userData, setUserData] = useState({
-    firstName: "Jenny",
-    lastName: "Wilson",
+  // const [userData, setUserData] = useState({
+  //   firstName: "Jenny",
+  //   lastName: "Wilson",
 
-    email: "jenny.wilson@gmail.com",
-    phone: "46582456",
-    emergencycontact: "46582456",
-    dob: "June 8, 1992",
-    password: "",
-    type: "patient",
-  });
+  //   email: "jenny.wilson@gmail.com",
+  //   phone: "46582456",
+  //   emergencycontact: "46582456",
+  //   dob: "June 8, 1992",
+  //   password: "",
+  //   type: "patient",
+  // });
+  const params = useParams();
 
-  const navigate = useNavigate();
-  const handleGoBack = () => {
-    navigate(-1); // This navigates back to the previous page
-  };
+  const location = useLocation();
+
+  const { user } = params;
+
+  useEffect(() => {
+    console.log("Received user:", user);
+  }, []);
 
   let name, value;
   const handleInputs = (e) => {
-    name = e.target.name;
-    value = e.target.value;
-    setUserData({ ...userData, [name]: value });
+    setNewPassword(e.target.value);
   };
 
   const handleSubmit = (e) => {
@@ -93,6 +94,7 @@ function BasicInfo() {
             </div>
           </div>
           <div className="mt-[20px]">
+            <p>Name: {location?.state?.user}</p>
             <label
               htmlFor="firstName"
               className="text-[14px] text-[#00263E] mb-[4px] font-[500]"
@@ -105,9 +107,10 @@ function BasicInfo() {
               id="firstName"
               name="firstName"
               autoComplete="false"
-              value={userData.firstName}
+              // value={data?.firstName}
+              readOnly
               // onChange={handleInputs}
-              disabled
+              // disabled
             />
           </div>
           <div className="mt-[20px]">
@@ -123,7 +126,7 @@ function BasicInfo() {
               id="lastName"
               name="lastName"
               autoComplete="false"
-              value={userData.lastName}
+              // value={data?.lastName}
               // onChange={handleInputs}
               disabled
             />
@@ -141,7 +144,7 @@ function BasicInfo() {
               id="email"
               name="email"
               autoComplete="false"
-              value={userData.email}
+              // value={userData.email}
               disabled
               // onChange={handleInputs}
             />
@@ -164,7 +167,7 @@ function BasicInfo() {
                 id="dob"
                 name="dob"
                 autoComplete="false"
-                value={userData.dob}
+                // value={userData.dob}
                 // onChange={handleInputs}
                 disabled
               />
@@ -199,7 +202,7 @@ function BasicInfo() {
                 className="hidden"
                 name="role"
                 value="patient"
-                checked={selectedRole === "patient"}
+                // checked={selectedRole === "patient"}
                 // onChange={handleRoleChange}
               />
               <span className="ml-2 text-gray-700">Patient</span>
@@ -227,7 +230,7 @@ function BasicInfo() {
                 className="hidden"
                 name="role"
                 value="provider"
-                checked={selectedRole === "provider"}
+                // checked={selectedRole === "provider"}
                 // onChange={handleRoleChange}
               />
               <span className="ml-2 text-gray-700">Healthcare Provider</span>
@@ -257,7 +260,7 @@ function BasicInfo() {
                 id="password"
                 name="password"
                 autoComplete="false"
-                value={userData.password}
+                value={newPassword}
                 onChange={handleInputs}
               />
               <Link

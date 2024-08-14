@@ -12,12 +12,12 @@ const ToggleButton = ({ on, toggle }) => {
           onChange={toggle}
         />
         <div
-          className={`w-[34px] h-[14px] rounded-[7px]  transition-colors duration-300 ${
+          className={`w-[34px] h-[14px] rounded-[7px]  transition-colors duration-500 ${
             on ? "bg-[#76BC2161]" : "bg-[#ededed]"
           }`}
         ></div>
         <div
-          className={` absolute w-[20px] h-[20px] bg-[#76BC21] rounded-full shadow -left-1 -top-[3px] transition transform ${
+          className={` absolute w-[20px] h-[20px] bg-[#76BC21] rounded-full shadow -left-1 -top-[3px] transition-transform duration-500 ease-in-out transform ${
             on
               ? "translate-x-6 bg-[#76BC21]"
               : "translate-x-0 bg-white shadow-3xl"

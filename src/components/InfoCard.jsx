@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function InfoCard({ title, text, img, to }) {
+function InfoCard({ title, text, img, onClick }) {
   return (
     <Link
-      to={to}
+      onClick={onClick}
       className=" w-[305px] h-[85px] bg-[#FFF] gap-[16px] border border-[#eee] flex items-center justify-between px-4 rounded-[8px] hover:shadow-3xl"
     >
       <div>

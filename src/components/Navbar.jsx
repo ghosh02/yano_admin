@@ -3,12 +3,14 @@ import Logo from "../assets/Logo.png";
 import patient from "../assets/patient.png";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { MdLogout } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useNavigation } from "react-router-dom";
 import spain from "../assets/icons/spa.png";
 import us from "../assets/icons/usa.png";
 import brazil from "../assets/icons/brasil.png";
 import downside from "../assets/icons/downside.png";
 import UserContext from "@/context/UserContext";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../store/authSlice";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,6 +21,8 @@ function Navbar() {
   const [selectedValue, setSelectedValue] = useState("");
 
   const dropdownRef = useRef(null);
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
 
   const options = [
     { label: "English", img: us, value: "EN" },
@@ -26,7 +30,7 @@ function Navbar() {
     { label: "Portuguese", img: brazil, value: "PO" },
   ];
 
-  const { user, setUser } = useContext(UserContext);
+  // const { user, setUser } = useContext(UserContext);
   // console.log(user);
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -49,21 +53,28 @@ function Navbar() {
   const toggleDropdown = () => {
     setIsOption(!isOption);
   };
-
+  const navigate = useNavigate();
   const handleOptionClick = (option) => {
     setSelectedOption(option.label);
     setSelectedValue(option.value);
     setIsOption(false);
   };
 
-  const handleClick = () => {
+  // const handleClick = () => {
+  //   setIsLogin(false);
+  //   setUser(false);
+  // };
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/signin");
+    // setUser(null);
     setIsLogin(false);
-    setUser(false);
   };
 
   return (
     <div className="h-[80px] bg-[#fff] flex items-center flex-row justify-between px-[32px] sticky z-50 top-0 border-b">
-      <Link to={user ? "/overview" : "/"}>
+      {/* to={user ? "/overview" : "/signin"} */}
+      <Link>
         <img src={Logo} alt="" className="w-[104px] h-[40px]" />
       </Link>
       <div className="flex gap-[20px] items-center">
@@ -109,12 +120,16 @@ function Navbar() {
         </div>
         {user && <div className="border h-[40px] border-[#EEEEEE] " />}
         {/* dropdown end  */}
-        {user && (
+
+        {user ? (
           <div className="flex items-center gap-2 ">
             <div>
-              <p className="text-darkblue font-[600]">Dr. Roger Hopkins</p>
+              <p className="text-darkblue font-[600]">
+                {user.userData.firstName} {user.userData.lastName}
+              </p>
               <p className="text-lightgray text-[12px] text-right">
-                General medicine
+                {user.userData.speciality}
+                {user?.speciality}
               </p>
             </div>
             <img
@@ -136,17 +151,18 @@ function Navbar() {
               />
             )}
           </div>
+        ) : (
+          ""
         )}
 
         {isLogin && (
-          <Link
-            to="/"
-            onClick={handleClick}
-            className="w-[150px] h-[60px] bg-white absolute right-10 top-[70px] shadow rounded-[8px] flex justify-center items-center gap-2"
+          <div
+            onClick={handleLogout}
+            className="w-[150px] h-[60px] bg-white absolute right-10 top-[70px] cursor-pointer shadow rounded-[8px] flex justify-center items-center gap-2"
           >
             <MdLogout fontWeight={600} />
             <p className="text-darkblue font-[600]">Sign out</p>
-          </Link>
+          </div>
         )}
       </div>
     </div>

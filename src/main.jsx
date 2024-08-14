@@ -27,34 +27,162 @@ import CalenderTwoSide from "./pages/CalenderTwoSide.jsx";
 import BasicInfo from "./user/BasicInfo.jsx";
 import HealthTracker from "./user/HealthTracker.jsx";
 import HealthProfile from "./user/HealthProfile.jsx";
+import { Provider } from "react-redux";
+import store from "./store/Store.js";
+import Test from "./pages/Test.jsx";
+import PrivateRoute from "./layout/PrivateRoute.jsx";
+import PublicRoute from "./layout/PublicRoute.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />}>
-      <Route path="" element={<SignIn />} />
-      <Route path="/overview" element={<Overview />} />
-      <Route path="/user" element={<User />} />
-      <Route path="/callCenter" element={<CallCenter />} />
-      <Route path="/videoCall" element={<VideoCall />} />
-      <Route path="/settings" element={<Settings />} />
-      <Route path="/settings/changePassword" element={<ChangePassword />} />
-      <Route path="/settings/adminList" element={<AdminList />} />
-      <Route path="/settings/adminList/createAdmin" element={<CreateAdmin />} />
-      <Route path="/user/createUser" element={<CreateUser />} />
-      <Route path="/ForgotPassword" element={<ForgotPassword />} />
-      <Route path="/ResetPasswordLink" element={<ResetPasswordLink />} />
-      <Route path="/user/:userID" element={<UserDetail />} />
-      <Route path="/calender" element={<CalenderTwoSide />} />
-      <Route path="/user/basicInfo" element={<BasicInfo />} />
-      <Route path="/user/healthTracker" element={<HealthTracker />} />
-      <Route path="/user/healthProfile" element={<HealthProfile />} />
+      <Route
+        path="/signin"
+        element={
+          <PublicRoute>
+            <SignIn />
+          </PublicRoute>
+        }
+      />
+      <Route
+        path="/ForgotPassword"
+        element={
+          <PublicRoute>
+            <ForgotPassword />
+          </PublicRoute>
+        }
+      />
+      <Route
+        path="/ResetPasswordLink"
+        element={
+          <PublicRoute>
+            <ResetPasswordLink />
+          </PublicRoute>
+        }
+      />
+      <Route
+        path="/overview"
+        element={
+          <PrivateRoute>
+            <Overview />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/user"
+        element={
+          <PrivateRoute>
+            <User />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/callCenter"
+        element={
+          <PrivateRoute>
+            <CallCenter />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/videoCall"
+        element={
+          <PrivateRoute>
+            <VideoCall />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/settings"
+        element={
+          <PrivateRoute>
+            <Settings />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/settings/changePassword"
+        element={
+          <PrivateRoute>
+            <ChangePassword />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/settings/adminList"
+        element={
+          <PrivateRoute>
+            <AdminList />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/settings/adminList/createAdmin"
+        element={
+          <PrivateRoute>
+            <CreateAdmin />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/user/createUser"
+        element={
+          <PrivateRoute>
+            <CreateUser />
+          </PrivateRoute>
+        }
+      />
+
+      <Route
+        path="/user/:userID"
+        element={
+          <PrivateRoute>
+            <UserDetail />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/calender"
+        element={
+          <PrivateRoute>
+            <CalenderTwoSide />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/user/basicInfo/:userID"
+        element={
+          <PrivateRoute>
+            <BasicInfo />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/user/healthTracker"
+        element={
+          <PrivateRoute>
+            <HealthTracker />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/user/healthProfile"
+        element={
+          <PrivateRoute>
+            <HealthProfile />
+          </PrivateRoute>
+        }
+      />
+      <Route path="/test" element={<Test />} />
     </Route>
   )
 );
 ReactDOM.createRoot(document.getElementById("root")).render(
   <UserContextProvider>
-    <React.StrictMode>
-      <RouterProvider router={router} />
-    </React.StrictMode>
+    <Provider store={store}>
+      <React.StrictMode>
+        <RouterProvider router={router} />
+      </React.StrictMode>
+    </Provider>
   </UserContextProvider>
 );

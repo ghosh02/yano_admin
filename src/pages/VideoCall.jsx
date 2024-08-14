@@ -98,6 +98,21 @@ function VideoCall() {
   const handleMeasurement = () => {
     setMeasurement(true);
   };
+  // measurement process
+
+  const [measure, setMeasure] = useState(false);
+
+  const startMeasure = () => {
+    setMeasure(true);
+    setTimeout(() => {
+      setMeasure(false);
+    }, 3000);
+  };
+
+  const handleMeasure = () => {
+    setMeasurement(false);
+    // Handle additional close logic here
+  };
   return (
     <div className="flex justify-center  py-[48px] px-[68px] gap-[16px]">
       {/* <ChatMessenger /> */}
@@ -785,7 +800,7 @@ function VideoCall() {
                             beats/min
                           </p>
                         </div>
-                        <div className="h-full flex-1 flex flex-col items-center justify-center ">
+                        <div className="h-full flex-1 flex flex-col items-center justify-center">
                           <p className="text-[12px] text-darkblue">
                             Blood oxygen
                           </p>
@@ -812,9 +827,18 @@ function VideoCall() {
                         </div>
                       </div>
                     </div>
-                    <button className="w-full bg-darkblue py-3 rounded-[8px] text-white my-[16px]">
-                      start measuring
-                    </button>
+                    {!measure ? (
+                      <button
+                        className="w-full bg-darkblue py-3 rounded-[8px] text-white my-[16px]"
+                        onClick={startMeasure}
+                      >
+                        Start Measuring
+                      </button>
+                    ) : (
+                      <div className="w-full bg-red-500 py-3 rounded-[8px] text-white my-[16px] text-center">
+                        Stop Measurement
+                      </div>
+                    )}
                   </div>
                 )}
               </div>

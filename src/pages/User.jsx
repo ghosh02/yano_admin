@@ -28,6 +28,7 @@ import deactivate from "../assets/icons/deactivate.png";
 import CalenderTwoSide from "./CalenderTwoSide";
 import Notification from "@/utils/Notification";
 import CustomCheckBox from "@/components/CustomCheckBox";
+import axios from "axios";
 
 const data = [
   {
@@ -88,6 +89,71 @@ export default function User() {
   const [selectedRows, setSelectedRows] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
   const popupRef = useRef(null);
+  // fetch user from api
+  // const baseUrl = import.meta.env.BASE_URL;
+  // Function to fetch data from the first API using Axios
+
+  const [combinedData, setCombinedData] = useState([]);
+
+  useEffect(() => {
+    const fetchDoctorData = async () => {
+      try {
+        const response = await axios.get(
+          "https://yano-backend.onrender.com/api/userdoctor"
+        );
+        return response.data.userData; // Assuming 'userData' is the array we need
+      } catch (error) {
+        console.error("Error fetching doctor data:", error);
+        return [];
+      }
+    };
+
+    const fetchPatientData = async () => {
+      try {
+        const response = await axios.get(
+          "https://yano-backend.onrender.com/api/userpatient"
+        );
+        return response.data.userData; // Assuming 'userData' is the array we need
+      } catch (error) {
+        console.error("Error fetching patient data:", error);
+        return [];
+      }
+    };
+
+    const fetchAndCombineData = async () => {
+      try {
+        const doctorData = await fetchDoctorData();
+        const patientData = await fetchPatientData();
+
+        // Combine the data in an alternating fashion
+        const maxLength = Math.max(doctorData.length, patientData.length);
+        const combinedData = [];
+
+        for (let i = 0; i < maxLength; i++) {
+          if (i < doctorData.length) {
+            combinedData.push(doctorData[i]);
+          }
+          if (i < patientData.length) {
+            combinedData.push(patientData[i]);
+          }
+        }
+
+        setCombinedData(combinedData); // Store the combined data in state
+      } catch (error) {
+        console.error("Error combining data:", error);
+      }
+    };
+
+    fetchAndCombineData(); // Call the function to fetch and combine data
+  }, []);
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString(undefined, {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    });
+  };
 
   const countryList = [
     { label: "Mexico", value: "Mexico" },
@@ -101,7 +167,7 @@ export default function User() {
   ];
   const typeList = [
     { label: "Patient", value: "patient" },
-    { label: "Helthcare provider", value: "helthcareProvider" },
+    { label: "Helthcare provider", value: "doctor" },
   ];
   const handleCountryChange = (option) => {
     setCountry(option);
@@ -109,13 +175,14 @@ export default function User() {
   const handleStatus = (option) => {
     setStatus(option);
   };
-  const handleType = (option) => {
-    setType(option);
-  };
+  // const handleType = (option) => {
+  //   setType(option);
+  // };
   const navigate = useNavigate();
 
   const handleRowClick = (user) => {
-    navigate(`/user/${user?.user_id}`, { state: { user } });
+    navigate(`/user/${user?._id}`, { state: { user } });
+    // console.log(user?.firstName);
   };
 
   const handleActionClick = (event, user) => {
@@ -160,7 +227,7 @@ export default function User() {
         : [...prevSelectedRows, { user_id, fullName }]
     );
   };
-
+  const [searchQuery, setSearchQuery] = useState("");
   const handleSelectAll = () => {
     if (selectAll) {
       setSelectedRows([]);
@@ -171,6 +238,29 @@ export default function User() {
     }
     setSelectAll(!selectAll);
   };
+  // for search section and filtering functions
+  const [selectedTypes, setSelectedTypes] = useState([]);
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  // Handle type filter change
+  const handleTypeChange = (selectedOptions) => {
+    setSelectedTypes(selectedOptions.map((option) => option.value));
+  };
+
+  // Filter the data based on the search query and selected types
+  const filteredData = combinedData.filter((user) => {
+    const fullName = `${user.firstName} ${user.lastName}`.toLowerCase();
+    const matchesSearchQuery =
+      fullName.includes(searchQuery.toLowerCase()) ||
+      user._id.toLowerCase().includes(searchQuery.toLowerCase());
+
+    const matchesTypeFilter =
+      selectedTypes.length === 0 || selectedTypes.includes(user.userType);
+
+    return matchesSearchQuery && matchesTypeFilter;
+  });
 
   const CheckOption = () => {
     return (
@@ -206,6 +296,7 @@ export default function User() {
       </div>
     );
   };
+
   return (
     <div className="grid min-h-screen max-w-screen">
       <div className="flex w-full">
@@ -243,11 +334,11 @@ export default function User() {
                       <p className="text-darkblue text-[16px] ]">
                         The user{" "}
                         <span className="font-semibold">
-                          {selectedRows[0].fullName}
+                          {selectedRows[0].firstName}
                         </span>{" "}
                         with the ID{" "}
                         <span className="font-semibold">
-                          {selectedRows[0].user_id}
+                          {selectedRows[0]._id}
                         </span>{" "}
                         is selected.
                       </p>
@@ -258,11 +349,11 @@ export default function User() {
                       <p className="text-darkblue text-[16px] ">
                         The user{" "}
                         <span className="font-semibold">
-                          {selectedRows[0].fullName}
+                          {selectedRows[0].firstName}
                         </span>{" "}
                         with the ID{" "}
                         <span className="font-semibold">
-                          {selectedRows[0].user_id}
+                          {selectedRows[0]._id}
                         </span>{" "}
                         and {selectedRows.length - 1} other users are selected.
                       </p>
@@ -280,8 +371,8 @@ export default function User() {
                           className="w-full bg-transparent shadow-none border-none outline-none pl-2 placeholder-[#72849A]"
                           placeholder="Search for users ..."
                           type="search"
-                          // value={searchQuery}
-                          // onChange={(e) => setSearchQuery(e.target.value)}
+                          value={searchQuery}
+                          onChange={handleSearchChange}
                         />
                       </div>
                       <div className="flex-1 flex justify-end items-center">
@@ -318,7 +409,7 @@ export default function User() {
 
                             <FilterDropdown
                               options={typeList}
-                              onOptionSelect={handleType}
+                              onOptionSelect={handleTypeChange}
                               name="Type"
                               width={180}
                             />
@@ -452,48 +543,50 @@ export default function User() {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {data?.map((user) => (
+                    {filteredData?.map((user) => (
                       <TableRow
                         className={`cursor-pointer ${
                           selectedRows.some(
-                            (selectedUser) =>
-                              selectedUser.user_id === user.user_id
+                            (selectedUser) => selectedUser._id === user._id
                           )
                             ? "bg-[#ECF2FE] hover:bg-[#ECF2FE]"
                             : ""
                         }`}
-                        key={user?.user_id}
+                        key={user?._id}
                       >
                         <TableCell>
                           <div className="flex items-center gap-[30px] text-[#00263E]">
                             <CustomCheckBox
                               checked={selectedRows.some(
-                                (selectedUser) =>
-                                  selectedUser.user_id === user.user_id
+                                (selectedUser) => selectedUser._id === user._id
                               )}
                               onChange={() => handleRowSelection(user)}
                             />
-                            {user?.user_id}
+                            {user?._id}
                           </div>
                         </TableCell>
                         <TableCell
                           onClick={() => handleRowClick(user)}
                           className="text-[#3E79F7]"
                         >
-                          {user?.fullName}
+                          {user?.firstName} {user?.lastName}
                         </TableCell>
                         <TableCell className="text-[#455560]">
-                          {user?.country}
+                          {/* {user?.country} */}
+                          {/* {user?.firstName} */}
+                          India
                         </TableCell>
                         <TableCell className="text-[#455560]">
-                          {user?.type}
+                          {user?.userType}
                         </TableCell>
                         <TableCell className="text-[#455560]">
-                          {user?.date_of_creation}
+                          {formatDate(user?.createdAt)}
                         </TableCell>
                         <TableCell className="">
                           <div className="w-[55px] h-[23px] bg-[#E8F7F1] rounded-[4px] text-[#138F5B] p-[8px] flex justify-center items-center">
-                            <p>{user?.status}</p>
+                            {/* <p>{user?.status}</p> */}
+                            {/* {user?.firstName} */}
+                            active
                           </div>
                         </TableCell>
                         <TableCell

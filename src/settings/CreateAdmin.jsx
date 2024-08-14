@@ -15,82 +15,83 @@ import {
   Table,
 } from "@/components/ui/table";
 import BackBtn from "@/components/BackBtn";
+import { useDispatch, useSelector } from "react-redux";
+import { signupUser } from "../store/authSlice";
 const permission = [
-  { id: 1, name: "createNewUser", permission: "Create a new user" },
-  { id: 2, name: "editUser", permission: "Edit user" },
-  { id: 3, name: "sendMessage", permission: "Send message" },
-  { id: 4, name: "exportMedicalReport", permission: "Export medical report" },
-  { id: 5, name: "exportMedicalInfo", permission: "Export basic information" },
-  { id: 6, name: "useMedicalReport", permission: "View medical record" },
-  { id: 7, name: "editMedicalReport", permission: "Edit medical record" },
-  { id: 8, name: "deleteUser", permission: "Delete user" },
+  { id: 1, name: "canCreateNewUser", permission: "Create a new user" },
+  { id: 2, name: "canEditUser", permission: "Edit user" },
+  { id: 3, name: "canSendMessage", permission: "Send message" },
+  {
+    id: 4,
+    name: "canExportMedicalReport",
+    permission: "Export medical report",
+  },
+  { id: 5, name: "canExportBasicInfo", permission: "Export basic information" },
+  { id: 6, name: "canViewMedicalRecord", permission: "View medical record" },
+  // { id: 7, name: "canSendMessages", permission: "Edit medical record" },
+  { id: 7, name: "canDeleteUser", permission: "Delete user" },
+  { id: 8, name: "canViewMedicalReports", permission: "View medical reports" },
+  { id: 9, name: "canViewCountryReports", permission: "View country reports" },
+  { id: 10, name: "canExportReports", permission: "Export reports" },
 ];
-const reports = [
-  { id: 1, name: "viewMedicalReports", reports: "View medical reports" },
-  { id: 2, name: "viewCountryReports", reports: "View country reports" },
-  { id: 3, name: "exportReports", reports: "Export reports" },
-];
+
 function CreateAdmin() {
   // const navigate = useNavigate();
   const [show, setShow] = useState(false);
-  const [submit, setSubmit] = useState(false);
+  // const [submit, setSubmit] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [adminData, setAdminData] = useState({
     firstName: "",
     lastName: "",
-    roleName: "",
+    speciality: "",
     email: "",
     password: "",
     permission: {
-      createNewUser: true,
-      editUser: true,
-      sendMessage: true,
-      exportMedicalReport: true,
-      exportMedicalInfo: true,
-      useMedicalReport: true,
-      editMedicalReport: true,
-      deleteUser: true,
-    },
-    reports: {
-      viewMedicalReports: true,
-      viewCountryReports: true,
-      exportReports: true,
+      canCreateNewUser: true,
+      canEditUser: true,
+      canSendMessage: true,
+      canExportMedicalReport: true,
+      canExportBasicInfo: true,
+      canViewMedicalRecord: true,
+      // canSendMessages: true,
+      canDeleteUser: true,
+      canViewMedicalReports: true,
+      canViewCountryReports: true,
+      canExportReports: true,
     },
   });
-  let name, value;
+  const dispatch = useDispatch();
+  const { loading, error } = useSelector((state) => state.auth);
+
   const handleInputs = (e) => {
-    name = e.target.name;
-    value = e.target.value;
+    const { name, value } = e.target;
     setAdminData({ ...adminData, [name]: value });
   };
-  const handleToggle = (permission) => {
+  const handleToggle = (permissionName) => {
     setAdminData((prevState) => ({
       ...prevState,
       permission: {
         ...prevState.permission,
-        [permission]: !prevState.permission[permission],
-      },
-    }));
-  };
-  const handleReportToggle = (reports) => {
-    setAdminData((prevState) => ({
-      ...prevState,
-      reports: {
-        ...prevState.reports,
-        [reports]: !prevState.reports[reports],
+        [permissionName]: !prevState.permission[permissionName],
       },
     }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setShowSuccessMessage(true);
-    document.body.style.overflow = "hidden";
+    dispatch(signupUser(adminData)).then((result) => {
+      if (result.type === "auth/Settings/adminList/createAdmin/fulfilled") {
+        setShowSuccessMessage(true);
+        document.body.style.overflow = "hidden";
+      } else {
+        console.error(
+          "Failed to create a new admin:",
+          result.payload || result.error.message
+        );
+      }
+    });
   };
-  const handleSubmitform = () => {
-    setSubmit(true);
-    console.log(submit);
-  };
+
   const closeSuccessMessage = () => {
     setShowSuccessMessage(false);
     document.body.style.overflow = "auto"; // Enable scrolling again
@@ -153,10 +154,10 @@ function CreateAdmin() {
               <input
                 className="w-full h-[49px]  shadow-none border outline-none pl-2 bg-[#FAFAFA] rounded-[8px] "
                 type="text"
-                id="roleName"
-                name="roleName"
+                id="speciality"
+                name="speciality"
                 autoComplete="false"
-                value={adminData.roleName}
+                value={adminData.speciality}
                 onChange={handleInputs}
               />
             </div>
@@ -219,9 +220,9 @@ function CreateAdmin() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {permission?.map((permission) => (
-                  <TableRow key={permission?.id}>
-                    <TableCell>{permission?.permission}</TableCell>
+                {permission?.slice(0, 7).map((permission) => (
+                  <TableRow key={permission.id}>
+                    <TableCell>{permission.permission}</TableCell>
                     <TableCell>
                       <ToggleButton
                         on={adminData.permission[permission.name]}
@@ -242,15 +243,15 @@ function CreateAdmin() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {reports?.map((reports) => (
-                  <TableRow key={reports?.id}>
+                {permission?.slice(7).map((permission) => (
+                  <TableRow key={permission.id}>
                     <TableCell className="text-[#00263E]">
-                      {reports?.reports}
+                      {permission.permission}
                     </TableCell>
                     <TableCell>
                       <ToggleButton
-                        on={adminData.reports[reports.name]}
-                        toggle={() => handleReportToggle(reports.name)}
+                        on={adminData.permission[permission.name]}
+                        toggle={() => handleToggle(permission.name)}
                       />
                     </TableCell>
                   </TableRow>
@@ -265,11 +266,11 @@ function CreateAdmin() {
                 Cancel
               </Link>
               <button
-                onClick={handleSubmitform}
+                // onClick={handleSubmitform}
                 type="submit"
                 className="  font-medium  px-[24px] py-[12px] text-white rounded-[8px] border-none bg-[#00263E] "
               >
-                Save
+                {loading ? "Saving..." : "Save"}
               </button>
             </div>
           </form>

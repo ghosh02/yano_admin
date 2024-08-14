@@ -595,6 +595,8 @@ import uparr from "../assets/icons/uparr.png";
 import downgray from "../assets/icons/downgray.png";
 import Sidebar from "@/components/Sidebar";
 import { FaArrowRightLong } from "react-icons/fa6";
+import axios from "axios";
+import { data } from "autoprefixer";
 
 const userData = [
   {
@@ -662,15 +664,9 @@ const userData = [
     sessions: 115,
   },
 ];
-
-const data = [
-  { name: "Blood glucose", value: 68, rate: 2.3, parName: "bloodGlucose" },
-  { name: "Oxygen Saturation", value: 98, rate: 2.3, parName: "oxygenSat" },
-  { name: "Body Temperature", value: 36.8, rate: 2.3, parName: "bodytemp" },
-  { name: "Heart rate", value: 92, rate: 2.3, parName: "heartrate" },
-  { name: "Blood Pressure", value: 131 - 89, rate: 2.3, parName: "bp" },
-  { name: "Mood", value: 98, rate: 2.3, parName: "mood" },
-];
+const top5Users = userData
+  .sort((a, b) => b.sessions - a.sessions) // Sort by sessions in descending order
+  .slice(0, 5);
 
 const unitMapping = {
   bloodGlucose: "ml/mol",
@@ -846,6 +842,144 @@ const Overview = () => {
     setDays(parseInt(option.value));
   };
 
+  const [data, setData] = useState([]);
+  // Function to fetch and calculate the average
+  async function fetchDataAndCalculateAverage() {
+    const baseUrl = "https://yano-backend.onrender.com/api";
+
+    // Helper function to calculate average of a specific metric
+    const calculateAverage = (data, key) => {
+      if (!data || data.length === 0) {
+        return 0; // Return 0 or some default value if no data is found
+      }
+
+      const filteredData = data.filter((entry) => {
+        const entryDate = new Date(entry.createdAt);
+        const today = new Date();
+        const thirtyDaysAgo = new Date(today.setDate(today.getDate() - 30));
+        return entryDate >= thirtyDaysAgo;
+      });
+
+      if (filteredData.length === 0) {
+        return 0; // Return 0 if no data in the last 30 days
+      }
+
+      const sum = filteredData.reduce((total, item) => total + item[key], 0);
+      return sum / filteredData.length || 0;
+    };
+
+    // Fetch data from each endpoint
+    const endpoints = {
+      bloodPressure: "/blood-pressure",
+      bloodGlucose: "/blood-glucose",
+      oxygenSaturation: "/blood-oxygen",
+      bodyTemperature: "/body-temp",
+      heartRate: "/heart-rate",
+    };
+
+    try {
+      const [
+        bloodPressureResponse,
+        bloodGlucoseResponse,
+        oxygenSaturationResponse,
+        bodyTemperatureResponse,
+        heartRateResponse,
+      ] = await Promise.all([
+        axios.get(`${baseUrl}${endpoints.bloodPressure}`),
+        axios.get(`${baseUrl}${endpoints.bloodGlucose}`),
+        axios.get(`${baseUrl}${endpoints.oxygenSaturation}`),
+        axios.get(`${baseUrl}${endpoints.bodyTemperature}`),
+        axios.get(`${baseUrl}${endpoints.heartRate}`),
+      ]);
+
+      // Calculate the average values
+      const bloodPressureData = bloodPressureResponse.data || [];
+      const avgSystolic = calculateAverage(bloodPressureData, "systolic");
+      const avgDiastolic = calculateAverage(bloodPressureData, "diastolic");
+      const bloodPressureUnit = bloodPressureData[0]?.unit || "";
+      const avgBloodPressure = `${avgSystolic.toFixed(
+        0
+      )} - ${avgDiastolic.toFixed(0)}`;
+
+      const avgBloodGlucose = calculateAverage(
+        bloodGlucoseResponse.data || [],
+        "data"
+      );
+      const bloodGlucoseUnit = bloodGlucoseResponse.data[0]?.unit || "";
+      const avgOxygenSaturation = calculateAverage(
+        oxygenSaturationResponse.data || [],
+        "data"
+      );
+      const oxygenSaturationUnit = oxygenSaturationResponse.data[0]?.unit || "";
+      const avgBodyTemperature = calculateAverage(
+        bodyTemperatureResponse.data || [],
+        "data"
+      );
+      const bodyTemperatureUnit = bodyTemperatureResponse.data[0]?.unit || "";
+
+      const avgHeartRate = calculateAverage(
+        heartRateResponse.data || [],
+        "data"
+      );
+      const heartRateUnit = heartRateResponse.data[0]?.unit || "";
+      // Construct the data array
+      const newData = [
+        {
+          name: "Blood Pressure",
+          value: avgBloodPressure,
+          unit: bloodPressureUnit,
+          rate: 0, // You can calculate the rate of change if needed
+          parName: "bloodPressure",
+        },
+        {
+          name: "Blood Glucose",
+          value: avgBloodGlucose.toFixed(0),
+          unit: bloodGlucoseUnit,
+          rate: 0,
+          parName: "bloodGlucose",
+        },
+        {
+          name: "Oxygen Saturation",
+          value: avgOxygenSaturation.toFixed(0),
+          unit: oxygenSaturationUnit,
+          rate: 0,
+          parName: "oxygenSat",
+        },
+        {
+          name: "Body Temperature",
+          value: avgBodyTemperature.toFixed(0),
+          unit: bodyTemperatureUnit,
+          rate: 0,
+          parName: "bodytemp",
+        },
+        {
+          name: "Heart Rate",
+          value: avgHeartRate.toFixed(0),
+          unit: heartRateUnit,
+          rate: 0,
+          parName: "heartrate",
+        },
+        {
+          name: "Mood",
+          value: avgDiastolic.toFixed(0),
+          unit: bloodGlucoseUnit,
+          rate: 0,
+          parName: "mood",
+        },
+      ];
+
+      setData(newData); // Save the newData array in state
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setData([]); // Set to an empty array in case of error
+    }
+  }
+
+  // Fetch data when the component mounts
+  useEffect(() => {
+    fetchDataAndCalculateAverage();
+  }, []);
+
   return (
     <div className="flex">
       <Sidebar />
@@ -955,41 +1089,49 @@ const Overview = () => {
         </div>
         <div className="bg-[#fff] rounded-[8px]">
           <div className="grid grid-cols-6 mt-[24px] px-[16px]">
-            {data.map((item, index) => (
-              <Link
-                key={item.name}
-                className={`bg-[#EEEEEE] p-[16px] hover:bg-[#FAFAFA] transition-all border-t-4 h-[126px] ${
-                  activeIndex === index
-                    ? "border-[#76BC21] bg-[#fff]"
-                    : "border-none"
-                }`}
-                onClick={() => handleClick(index, item.parName)}
-              >
-                <p className="text-[#00263E]">{item.name}</p>
-                <p
-                  className={`text-[#00263E] ${
-                    activeIndex === index ? "font-[700]" : ""
-                  }`}
-                >
-                  Avg
-                </p>
-                <p
-                  className={`text-[#00263E] ${
-                    activeIndex === index ? "font-[700]" : ""
-                  }`}
-                >
-                  {item.value}
-                </p>
-                <div className="flex gap-1 items-center">
-                  <img
-                    src={uparr}
-                    alt=""
-                    className="w-[12px] h-[12px] object-cover"
-                  />
-                  <p className="text-[#76BC21] text-[13px]">{item.rate}%</p>
-                </div>
-              </Link>
-            ))}
+            {Array.isArray(data) && data.length > 0 ? (
+              data.map((item, index) => {
+                return (
+                  <Link
+                    key={item.name}
+                    className={`bg-[#EEEEEE] p-[16px] hover:bg-[#FAFAFA] transition-all border-t-4 h-[126px] ${
+                      activeIndex === index
+                        ? "border-[#76BC21] bg-[#fff]"
+                        : "border-none"
+                    }`}
+                    onClick={() => handleClick(index, item.parName)}
+                  >
+                    <p className="text-[#00263E]">{item?.name}</p>
+                    <p
+                      className={`text-[#00263E] ${
+                        activeIndex === index ? "font-[700]" : ""
+                      }`}
+                    >
+                      Avg
+                    </p>
+                    <p
+                      className={`text-[#00263E] ${
+                        activeIndex === index ? "font-[700]" : ""
+                      }`}
+                    >
+                      {item?.value} {item?.unit}
+                    </p>
+                    <div className="flex gap-1 items-center">
+                      <img
+                        src={uparr}
+                        alt=""
+                        className="w-[12px] h-[12px] object-cover"
+                      />
+                      <p className="text-[#76BC21] text-[13px]">
+                        {item?.rate}%
+                      </p>
+                    </div>
+                  </Link>
+                );
+              })
+            ) : (
+              <p>No data available</p>
+            )}
           </div>
           <div className="mt-[16px] px-[16px]">
             <LineGraph type="" data={filteredData} valueKey={valueKey} />
@@ -1093,7 +1235,7 @@ const Overview = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {userData.map((user) => (
+              {top5Users.map((user) => (
                 <TableRow
                   key={user.userID}
                   className="cursor-pointer"

@@ -17,7 +17,7 @@ import BackBtn from "@/components/BackBtn";
 
 const UserDetail = () => {
   const location = useLocation();
-  const user = location.state?.user;
+  const users = location.state?.user;
 
   const calculateAge = (dateOfBirthString) => {
     const birthDate = new Date(dateOfBirthString);
@@ -41,7 +41,7 @@ const UserDetail = () => {
   const navigate = useNavigate();
   const handleDetails = (user) => {
     // console.log("userdata", userData);
-    navigate(`/user/basicInfo/${user._id}`, { state: { user } });
+    navigate(`/user/basicInfo/${users._id}`, { state: { users } });
   };
   // useEffect(() => {
   //   return () => {
@@ -57,19 +57,19 @@ const UserDetail = () => {
 
         <div className="flex flex-1 bg-white rounded-[8px] p-[20px] shadow">
           <img
-            src={user?.userImg?.secure_url || person}
+            src={users?.userImg?.secure_url || person}
             alt=""
             className="w-[80px] h-[80px] rounded-[50%] border"
           />
           <div className="border mx-[24px]" />
           <div className="flex-1 ">
             <h1 className="text-[24px] text-darkblue font-[700] mb-[16px] ">
-              {user?.firstName} {user?.lastName}
+              {users?.firstName} {users?.lastName}
             </h1>
             <div className=" flex-1 flex items-center justify-between flex-wrap gap-3 pr-[40px]">
               <UserCard
                 title="Sex"
-                data={user?.gender}
+                data={users?.gender}
                 img={
                   <img
                     src={peopleicon}
@@ -80,7 +80,7 @@ const UserDetail = () => {
               />
               <UserCard
                 title="Age"
-                data={calculateAge(user?.dateOfBirth)}
+                data={calculateAge(users?.dateOfBirth)}
                 img={
                   <img
                     src={calender}
@@ -92,7 +92,7 @@ const UserDetail = () => {
 
               <UserCard
                 title="Blood type"
-                data={user?.bloodType || "B+"}
+                data={users?.bloodType || "B+"}
                 img={
                   <img
                     src={blood}
@@ -103,7 +103,7 @@ const UserDetail = () => {
               />
               <UserCard
                 title="Height"
-                data={user?.height || 170}
+                data={users?.height || 170}
                 img={
                   <img
                     src={height}
@@ -114,7 +114,7 @@ const UserDetail = () => {
               />
               <UserCard
                 title="Weight"
-                data={user?.weight || 70}
+                data={users?.weight || 70}
                 img={
                   <img
                     src={weight}
@@ -139,7 +139,7 @@ const UserDetail = () => {
         </div>
         <div className="flex gap-[16px] mt-[24px]">
           <InfoCard
-            onClick={() => handleDetails(user)}
+            onClick={() => handleDetails(users)}
             title="Basic Information"
             text="Name,email,password..."
             img={

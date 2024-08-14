@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/table";
 import BackBtn from "@/components/BackBtn";
 import { useDispatch, useSelector } from "react-redux";
-import { signupUser } from "../store/authSlice";
+import { clearState, createAdmin } from "../store/adminSlice";
 const permission = [
   { id: 1, name: "canCreateNewUser", permission: "Create a new user" },
   { id: 2, name: "canEditUser", permission: "Edit user" },
@@ -36,14 +36,12 @@ const permission = [
 ];
 
 function CreateAdmin() {
-  // const navigate = useNavigate();
   const [show, setShow] = useState(false);
-  // const [submit, setSubmit] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [adminData, setAdminData] = useState({
     firstName: "",
     lastName: "",
-    speciality: "",
+    userType: "",
     email: "",
     password: "",
     permission: {
@@ -53,20 +51,23 @@ function CreateAdmin() {
       canExportMedicalReport: true,
       canExportBasicInfo: true,
       canViewMedicalRecord: true,
-      // canSendMessages: true,
       canDeleteUser: true,
       canViewMedicalReports: true,
       canViewCountryReports: true,
       canExportReports: true,
     },
   });
+
   const dispatch = useDispatch();
-  const { loading, error } = useSelector((state) => state.auth);
+  const { loading, error, successMessage } = useSelector(
+    (state) => state.admin
+  );
 
   const handleInputs = (e) => {
     const { name, value } = e.target;
     setAdminData({ ...adminData, [name]: value });
   };
+
   const handleToggle = (permissionName) => {
     setAdminData((prevState) => ({
       ...prevState,
@@ -79,14 +80,15 @@ function CreateAdmin() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(signupUser(adminData)).then((result) => {
-      if (result.type === "auth/Settings/adminList/createAdmin/fulfilled") {
+    console.log(adminData);
+    dispatch(createAdmin(adminData)).then((result) => {
+      if (result.type === "admin/settings/adminList/createAdmin/fulfilled") {
         setShowSuccessMessage(true);
         document.body.style.overflow = "hidden";
       } else {
         console.error(
-          "Failed to create a new admin:",
-          result.payload || result.error.message
+          "Error creating admin:",
+          result.payload || "Server error"
         );
       }
     });
@@ -94,6 +96,7 @@ function CreateAdmin() {
 
   const closeSuccessMessage = () => {
     setShowSuccessMessage(false);
+    dispatch(clearState());
     document.body.style.overflow = "auto"; // Enable scrolling again
   };
   return (
@@ -154,10 +157,10 @@ function CreateAdmin() {
               <input
                 className="w-full h-[49px]  shadow-none border outline-none pl-2 bg-[#FAFAFA] rounded-[8px] "
                 type="text"
-                id="speciality"
-                name="speciality"
+                id="userType"
+                name="userType"
                 autoComplete="false"
-                value={adminData.speciality}
+                value={adminData.userType}
                 onChange={handleInputs}
               />
             </div>
@@ -270,6 +273,7 @@ function CreateAdmin() {
                 type="submit"
                 className="  font-medium  px-[24px] py-[12px] text-white rounded-[8px] border-none bg-[#00263E] "
               >
+                {/* save */}
                 {loading ? "Saving..." : "Save"}
               </button>
             </div>

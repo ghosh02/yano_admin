@@ -32,14 +32,13 @@ function BasicInfo() {
   //   password: "",
   //   type: "patient",
   // });
-  const params = useParams();
 
   const location = useLocation();
 
-  const { user } = params;
-
+  const userss = location.state?.users;
+  console.log(location.state);
   useEffect(() => {
-    console.log("Received user:", user);
+    console.log("Received user:", userss);
   }, []);
 
   let name, value;
@@ -94,7 +93,7 @@ function BasicInfo() {
             </div>
           </div>
           <div className="mt-[20px]">
-            <p>Name: {location?.state?.user}</p>
+            <p>Name: {userss?.firstName}</p>
             <label
               htmlFor="firstName"
               className="text-[14px] text-[#00263E] mb-[4px] font-[500]"
